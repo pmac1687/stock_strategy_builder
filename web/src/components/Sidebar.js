@@ -1,36 +1,44 @@
 /*eslint-disable*/
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { faChevronUp, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-//import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
-//import UserDropdown from "components/Dropdowns/UserDropdown.js";
+import { connect } from "react-redux";
+import { setMainGraphType } from "../js/actions/index";
 
-export default function Sidebar() {
+
+const mapStateToProps = state => {
+  return { 
+    mainGraphType: state.mainGraphType
+   };
+};
+
+
+function ConnectedSidebar(props) {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const [showStock, setShowStock] = useState(false);
   const [showGraph, setShowGraph] = useState(false);
+
+  
   function collapse(item, show, func, collapseItem){
     if(show===false){
       const ele = document.getElementById(item)
-      console.log(ele)
       ele.style.transform  = 'rotate(180deg)';
-      console.log(func)
       func(prev => true);
       const ele2 = document.getElementById(collapseItem)
       ele2.style.display = 'block'
     };
     if(show===true){
       const ele = document.getElementById(item)
-      console.log(ele)
       ele.style.transform  = 'rotate(360deg)';
       func(prev => false);
       const ele2 = document.getElementById(collapseItem)
       ele2.style.display = 'none'
     };
-
   }
+
+  
   return (
     <>
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
@@ -162,33 +170,11 @@ export default function Sidebar() {
                       <div class="flex flex-col items-start justify-center ">
                           <div class="flex flex-col">
                               <label class="inline-flex items-center mt-3">
-                                  <input type="radio" class="form-radio h-5 w-5 text-gray-600" checked/><span class="ml-2 text-gray-700">label</span>
+                                  <input checked={props.mainGraphType === 'candle'} type="radio" id='candle' onChange={() => props.setMainGraphType('candle')} class="form-radio h-5 w-5 text-gray-600" /><span class="ml-2 text-gray-700">Candlestick</span>
                               </label>
 
                               <label class="inline-flex items-center mt-3">
-                                  <input type="radio" class="form-radio h-5 w-5 text-red-600" checked/><span class="ml-2 text-gray-700">label</span>
-                              </label>
-
-                              <label class="inline-flex items-center mt-3">
-                                  <input type="radio" class="form-radio h-5 w-5 text-orange-600" checked/><span class="ml-2 text-gray-700">label</span>
-                              </label>
-
-                              <label class="inline-flex items-center mt-3">
-                                  <input type="radio" class="form-radio h-5 w-5 text-yellow-600" checked/><span class="ml-2 text-gray-700">label</span>
-                              </label>
-
-                              <label class="inline-flex items-center mt-3">
-                                  <input type="radio" class="form-radio h-5 w-5 text-green-600" checked/><span class="ml-2 text-gray-700">label</span>
-                              </label>
-
-                              <label class="inline-flex items-center mt-3">
-                                  <input type="radio" class="form-radio h-5 w-5 text-teal-600" checked/><span class="ml-2 text-gray-700">label</span>
-                              </label>
-                              
-                              <label style={{ marginLeft: '60%'}} class="inline-flex items-center mt-3">
-                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                                  Show
-                                </button>
+                                  <input type="radio" id='line' checked={props.mainGraphType === 'line'} onChange={() => props.setMainGraphType('line')} class="form-radio h-5 w-5 text-red-600" /><span class="ml-2 text-gray-700">Line Graph</span>
                               </label>
                           </div>
                       </div>
@@ -429,3 +415,10 @@ export default function Sidebar() {
     </>
   );
 }
+
+const Sidebar = connect(
+  mapStateToProps,
+  { setMainGraphType }
+  )(ConnectedSidebar);
+
+export default Sidebar;

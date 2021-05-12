@@ -3,8 +3,10 @@ import axios from 'axios';
 
 // components
 import CardHistoryChart from '../cards/CardHistoryChart';
-import CardLineChart from "../cards/CardLineChart.js";
+import CardCandleChart from "../cards/CardCandleChart.js";
+import CardLineChart from "../cards/CardLineChart";
 import CardBarChart from "../cards/CardBarChart.js";
+import MainGraph from "../components/mainGraph"
 import CardPageVisits from "../cards/CardPageVisits.js";
 import CardSocialTraffic from "../cards/CardSocialTraffic.js";
 import { connect } from "react-redux";
@@ -59,11 +61,8 @@ function Dashboard(props) {
   return (
     <>
         <div className="flex flex-wrap">
-          <div style={{ height: '70vh'}} className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-            <CardLineChart style={{ display: 'block'}} stockData={stockData} />
-          </div>
-          <div style={{ height: '70vh', zIndex: '1', display:'nonel.'}} className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-            <CardHistoryChart style={{ display:'none'}} setHistoryData={setHistoryData}  />
+          <div style={{ height: '70vh', backgroundColor:'black', zIndex:'10'}} className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+            <MainGraph  stockData={stockData} />
           </div>
           <div className="w-full xl:w-4/12 px-4">
             <CardBarChart historyData={historyData} />

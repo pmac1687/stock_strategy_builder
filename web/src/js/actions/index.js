@@ -10,7 +10,9 @@ import { ADD_STOCK,
   MOVE_BAR_LEFT,
   MOVE_BAR_RIGHT,
   SET_SOCIAL_DATA,
-  SET_PAGE_HISTORY_DATA_ARR, 
+  SET_PAGE_HISTORY_DATA_ARR,
+  /////////////
+  SET_MAIN_GRAPH_TYPE 
 } from "../constants/action-types";
 import axios from 'axios';
 
@@ -98,3 +100,8 @@ export function getData() {
   };
 }
 
+/////////// NEW STUFF /////////
+
+export function setMainGraphType(payload) {
+  return { type: SET_MAIN_GRAPH_TYPE, payload }
+};

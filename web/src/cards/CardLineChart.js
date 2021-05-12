@@ -1,5 +1,5 @@
 import React from 'react';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ErrorBar} from 'recharts'
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ErrorBar, ResponsiveContainer, LineChart, Line} from 'recharts'
 
 const data = [
       {name: 'Week 1', max: 4000, min: 1400, error: [200, 1000]},
@@ -10,20 +10,29 @@ const data = [
       {name: 'Week 6', max: 3000, min: 400, error: [-200, 2000]},
       {name: 'Week 7', max: 500, min: -1000, error: [200, 2000]},
 ];
-export default function CardLineChart(){
+export default function CardCandleChart(){
   	return (
-    	<BarChart width={600} height={300} data={data}
-            margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-       <XAxis xAxisId={0} dataKey="name" hide/>
-       <XAxis xAxisId={1} dataKey="name"/>
-       <YAxis/>
-       <Tooltip cursor={{fill: 'transparent'}}/>
-       <Bar barSize={30} xAxisId={0}  dataKey="max" fill="#035aa6" />
-       <Bar barSize={35} xAxisId={1} dataKey='min' fill="white">
-         <ErrorBar  dataKey="error" width={4} strokeWidth={2} stroke="#66c208" />
-         <ErrorBar dataKey="errorNegative" width={4} strokeWidth={2} stroke="#ff0044" />
-       </Bar>
-      </BarChart>
+        <ResponsiveContainer width="100%" height="100%">
+        <LineChart
+          width={500}
+          height={300}
+          data={data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        </LineChart>
+      </ResponsiveContainer>
     );
 }
 

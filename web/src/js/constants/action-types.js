@@ -11,3 +11,5 @@ export const MOVE_BAR_LEFT = "MOVE_BAR_LEFT";
 export const MOVE_BAR_RIGHT = "MOVE_BAR_RIGHT";
 export const SET_SOCIAL_DATA = "SET_SOCIAL_DATA";
 export const SET_PAGE_HISTORY_DATA_ARR = "SET_PAGE_HISTORY_DATA_ARR";
+/////// NEW STUFF //////
+export const SET_MAIN_GRAPH_TYPE = "SET_MAIN_GRAPH_TYPE";

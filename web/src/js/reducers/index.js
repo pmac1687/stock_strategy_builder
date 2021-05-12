@@ -11,7 +11,9 @@ import {
   MOVE_BAR_LEFT,
   MOVE_BAR_RIGHT,
   SET_SOCIAL_DATA,
-  SET_PAGE_HISTORY_DATA_ARR  
+  SET_PAGE_HISTORY_DATA_ARR,
+  ///////////
+  SET_MAIN_GRAPH_TYPE  
 } from "../constants/action-types";
 
 const initialState = {
@@ -27,6 +29,8 @@ const initialState = {
   cardBarIndex: [8,0],
   socialData: [],
   pageHistoryDataArr: [],
+  ///////////
+  mainGraphType: 'candle',
 };
 
 
@@ -70,6 +74,12 @@ function rootReducer(state = initialState, action) {
   if (action.type === SET_MASTER_BAR_DATA) {
     return {...state, masterCardBarData: action.payload}
   }
+  //////// NEW STUFF ////////
+  if (action.type === SET_MAIN_GRAPH_TYPE) {
+    console.log(action.payload)
+    return {...state, mainGraphType: action.payload}
+  }
+
   return state;
 }
 
