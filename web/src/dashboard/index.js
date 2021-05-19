@@ -5,6 +5,7 @@ import axios from 'axios';
 import CardHistoryChart from '../cards/CardHistoryChart';
 import CardCandleChart from "../cards/CardCandleChart.js";
 import CardLineChart from "../cards/CardLineChart";
+import CardBollChart from "../cards/CardBollChart";
 import CardBarChart from "../cards/CardBarChart.js";
 import MainGraph from "../components/mainGraph"
 import CardPageVisits from "../cards/CardPageVisits.js";
@@ -62,7 +63,7 @@ function Dashboard(props) {
     <>
         <div className="flex flex-wrap">
           <div style={{ height: '70vh', backgroundColor:'black', zIndex:'10'}} className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-            <MainGraph  stockData={stockData} />
+            <CardBollChart />
           </div>
           <div className="w-full xl:w-4/12 px-4">
             <CardBarChart historyData={historyData} />

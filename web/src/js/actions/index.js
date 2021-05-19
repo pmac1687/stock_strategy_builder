@@ -12,7 +12,9 @@ import { ADD_STOCK,
   SET_SOCIAL_DATA,
   SET_PAGE_HISTORY_DATA_ARR,
   /////////////
-  SET_MAIN_GRAPH_TYPE 
+  SET_MAIN_GRAPH_TYPE,
+  SET_STRATEGY_STOCK, 
+  LOAD_STRATEGY_DATA
 } from "../constants/action-types";
 import axios from 'axios';
 
@@ -105,3 +107,27 @@ export function getData() {
 export function setMainGraphType(payload) {
   return { type: SET_MAIN_GRAPH_TYPE, payload }
 };
+
+export function setStrategyStock(payload) {
+  return { type: SET_STRATEGY_STOCK, payload }
+};
+
+export function getStockData() {
+  return function(dispatch, getState) {
+    const { strategyStock } = getState()
+    console.log('strratta', strategyStock)
+    return   axios.get(`http://localhost:5000/${strategyStock}`, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          }
+        })  
+        .then(res => res.data)
+        .then(data => {
+          console.log('resdata', data)  
+          dispatch({ type: LOAD_STRATEGY_DATA, payload: data})
+        })
+        .catch(err => {  
+          console.log(err)  
+        });  
+  };
+}

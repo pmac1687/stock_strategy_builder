@@ -5,12 +5,13 @@ import { faChevronUp, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { connect } from "react-redux";
-import { setMainGraphType } from "../js/actions/index";
+import { setMainGraphType, setStrategyStock, getStockData } from "../js/actions/index";
 
 
 const mapStateToProps = state => {
   return { 
-    mainGraphType: state.mainGraphType
+    mainGraphType: state.mainGraphType,
+    strategyStock: state.strategyStock
    };
 };
 
@@ -136,8 +137,8 @@ function ConnectedSidebar(props) {
 
               <li id='stockSearch' style={{ display: 'none'}} className="items-center">
                 <div class="shadow flex">
-                    <input class="w-full rounded p-2" type="text" placeholder="Search..." />
-                    <button class="bg-white w-auto flex justify-end items-center text-blue-500 p-2 hover:text-blue-400">
+                    <input class="w-full rounded p-2" type="text" onChange={e => props.setStrategyStock(e.target.value)} placeholder="Search..." />
+                    <button onClick={props.getStockData} class="bg-white w-auto flex justify-end items-center text-blue-500 p-2 hover:text-blue-400">
                         <FontAwesomeIcon id='stock' icon={faSearch} size='lg'/>
                     </button>
                 </div>
@@ -418,7 +419,7 @@ function ConnectedSidebar(props) {
 
 const Sidebar = connect(
   mapStateToProps,
-  { setMainGraphType }
+  { setMainGraphType, setStrategyStock, getStockData }
   )(ConnectedSidebar);
 
 export default Sidebar;

@@ -13,7 +13,9 @@ import {
   SET_SOCIAL_DATA,
   SET_PAGE_HISTORY_DATA_ARR,
   ///////////
-  SET_MAIN_GRAPH_TYPE  
+  SET_MAIN_GRAPH_TYPE,
+  SET_STRATEGY_STOCK,
+  LOAD_STRATEGY_DATA  
 } from "../constants/action-types";
 
 const initialState = {
@@ -31,6 +33,8 @@ const initialState = {
   pageHistoryDataArr: [],
   ///////////
   mainGraphType: 'candle',
+  strategyStock: '',
+  stratStockData: [],
 };
 
 
@@ -78,6 +82,14 @@ function rootReducer(state = initialState, action) {
   if (action.type === SET_MAIN_GRAPH_TYPE) {
     console.log(action.payload)
     return {...state, mainGraphType: action.payload}
+  }
+  if (action.type === SET_STRATEGY_STOCK) {
+    console.log(action.payload)
+    return {...state, strategyStock: action.payload}
+  }
+  if (action.type === LOAD_STRATEGY_DATA) {
+    console.log(action.payload)
+    return {...state, stratStockData: action.payload}
   }
 
   return state;
