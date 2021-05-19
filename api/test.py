@@ -8,11 +8,10 @@ cur = conn.cursor()
 
 cur.execute(f"select * from master_ticker_list")
 
-#print(cur.fetchone())
+print(cur.fetchone())
 
 
 
 
 conn.commit()
-print("Records created successfully")
 conn.close()

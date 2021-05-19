@@ -1,0 +1,2 @@
+#!/home/pat/Desktop/stock_strategy_builder/stock_strategy_builder/api/venv/bin/python3
+echo "hey there, this is my first pip package"

@@ -3,7 +3,7 @@ import csv
 import random
 from fastquant import get_stock_data
 
-conn = psycopg2.connect(database="postgres", user="pat", password="1687", host="127.0.0.1", port="5432")
+conn = psycopg2.connect(database="postgres", user="pat", password="1687", host="34.229.138.224", port="5432")
 
 cur = conn.cursor()
 
