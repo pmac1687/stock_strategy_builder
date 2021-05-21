@@ -15,7 +15,8 @@ import {
   ///////////
   SET_MAIN_GRAPH_TYPE,
   SET_STRATEGY_STOCK,
-  LOAD_STRATEGY_DATA  
+  LOAD_STRATEGY_DATA,
+  LOAD_TICKER_LIST  
 } from "../constants/action-types";
 
 const initialState = {
@@ -35,6 +36,7 @@ const initialState = {
   mainGraphType: 'candle',
   strategyStock: '',
   stratStockData: [],
+  tickerList: [],
 };
 
 
@@ -90,6 +92,10 @@ function rootReducer(state = initialState, action) {
   if (action.type === LOAD_STRATEGY_DATA) {
     console.log(action.payload)
     return {...state, stratStockData: action.payload}
+  }
+  if (action.type === LOAD_TICKER_LIST) {
+    console.log(action.payload)
+    return {...state, tickerList: action.payload}
   }
 
   return state;

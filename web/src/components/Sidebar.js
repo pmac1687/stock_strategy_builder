@@ -5,13 +5,26 @@ import { faChevronUp, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { connect } from "react-redux";
-import { setMainGraphType, setStrategyStock, getStockData } from "../js/actions/index";
+import { setMainGraphType, setStrategyStock, getStockData, getTickerList } from "../js/actions/index";
+
+import Select from 'react-select';
+
+
+const aquaticCreatures = [
+  { label: 'Shark', value: 'Shark' },
+  { label: 'Dolphin', value: 'Dolphin' },
+  { label: 'Whale', value: 'Whale' },
+  { label: 'Octopus', value: 'Octopus' },
+  { label: 'Crab', value: 'Crab' },
+  { label: 'Lobster', value: 'Lobster' },
+];
 
 
 const mapStateToProps = state => {
   return { 
     mainGraphType: state.mainGraphType,
-    strategyStock: state.strategyStock
+    strategyStock: state.strategyStock,
+    tickerList: state.tickerList,
    };
 };
 
@@ -20,6 +33,13 @@ function ConnectedSidebar(props) {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const [showStock, setShowStock] = useState(false);
   const [showGraph, setShowGraph] = useState(false);
+  const [showIndicators, setShowIndicators] = useState(false);
+
+
+  useEffect(() => {
+    props.getTickerList();
+    console.log('lisssststs', props.tickerList)
+  }, [])
 
   
   function collapse(item, show, func, collapseItem){
@@ -137,10 +157,18 @@ function ConnectedSidebar(props) {
 
               <li id='stockSearch' style={{ display: 'none'}} className="items-center">
                 <div class="shadow flex">
+                  {/*
                     <input class="w-full rounded p-2" type="text" onChange={e => props.setStrategyStock(e.target.value)} placeholder="Search..." />
                     <button onClick={props.getStockData} class="bg-white w-auto flex justify-end items-center text-blue-500 p-2 hover:text-blue-400">
                         <FontAwesomeIcon id='stock' icon={faSearch} size='lg'/>
                     </button>
+                  */}
+                  <div style={{ width: '30vw'}}>
+                    <Select
+                      onChange={opt => {props.setStrategyStock(opt.label.split(' ')[0]); props.getStockData()}}
+                      options={props.tickerList}
+                    />
+                  </div>
                 </div>
               </li>
 
@@ -183,7 +211,7 @@ function ConnectedSidebar(props) {
               </li>
 
 
-              <li className="items-center">
+              <li onClick={() => collapse('indicators', showIndicators, setShowIndicators, 'indicatorDetails')} className="items-center">
                 <a
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -201,8 +229,46 @@ function ConnectedSidebar(props) {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Indicators
+                  Indicators <FontAwesomeIcon style={{ marginLeft:'40%'}} id='indicators' icon={faChevronUp} size='lg'/>
                 </a>
+              </li>
+
+              <li id='indicatorDetails' style={{ display: 'none'}}>
+                <div class="block">
+                  <span class="text-gray-700"></span>
+                  <div class="mt-2">
+                    <div>
+                      <label class="inline-flex items-center">
+                        <input type="checkbox" class="form-checkbox" />
+                        <span class="ml-2">Awesome Oscillator</span>
+                      </label>
+                    </div>
+                    <div>
+                      <label class="inline-flex items-center">
+                        <input type="checkbox" class="form-checkbox"/>
+                        <span class="ml-2">Bollinger Bands</span>
+                      </label>
+                    </div>
+                    <div>
+                      <label class="inline-flex items-center">
+                        <input type="checkbox" class="form-checkbox"/>
+                        <span class="ml-2">Moving Average(Trend)</span>
+                      </label>
+                    </div>
+                    <div>
+                      <label class="inline-flex items-center">
+                        <input type="checkbox" class="form-checkbox"/>
+                        <span class="ml-2">RSI</span>
+                      </label>
+                    </div>
+                    <div>
+                      <label class="inline-flex items-center">
+                        <input type="checkbox" class="form-checkbox"/>
+                        <span class="ml-2">MACD</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </li>
 
               <li className="items-center">
@@ -419,7 +485,7 @@ function ConnectedSidebar(props) {
 
 const Sidebar = connect(
   mapStateToProps,
-  { setMainGraphType, setStrategyStock, getStockData }
+  { setMainGraphType, setStrategyStock, getStockData, getTickerList }
   )(ConnectedSidebar);
 
 export default Sidebar;
