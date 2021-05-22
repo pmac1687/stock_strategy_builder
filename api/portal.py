@@ -9,6 +9,17 @@ import main
 app = Flask(__name__)
 CORS(app)
 
+@app.route("/tickerList")
+def get_tickers():
+    data = main.get_ticker_list()
+    arr = []
+    for i in data:
+        dic = {
+            "label": f'{i[1]}  {i[2]}',
+            "value": i[0],
+        }
+        arr.append(dic)
+    return json.dumps(arr)
 
 
 @app.route("/<ticker>")
@@ -32,7 +43,19 @@ def get_historical(ticker):
             'rsi_6': str(row['rsi_12']),
             #ma
             'ma' : str(row['ma']),
-            'ma_div': str(row['ma_div'])
+            'ma_div': str(row['ma_div']),
+            #trending
+            'trend_close': str(row['trend_close']),
+            'trend_ma': str(row['trend_ma']),
+            #fractals
+            'fractal_highs': row['fractal_highs'],
+            'fractal_lows': row['fractal_lows'],
+            'f_lows': str(row['f_low']),
+            'f_highs': str(row['f_high']),
+            #macd
+            'macd_value': str(row['macd_value']),
+            'macd_signal': str(row['macd_signal']),
+            'macd_h': str(row['macd_h']),
         }
         arr.append(dic)
     return json.dumps(arr)
