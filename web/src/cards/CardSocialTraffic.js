@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import '../App.css';
 import { connect } from "react-redux";
 import { addStock, getData, addSocialData } from "../js/actions/index";
@@ -13,16 +13,14 @@ const mapStateToProps = state => {
 };
 
 function ConnectedCardSocialTraffic(props) {
-  const [data, setData] = useState([]);
   const [bgColorButton, setBgColorButton] = useState('bg-red');
-  useEffect(() => {
-    props.getData();
-  }, [])
+
   useEffect(() => {
     if(props.remoteData !== undefined){
       console.log('effectsocial',props.remoteData)
       formatData(props.remoteData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.remoteData]);
   useEffect(() => {
     console.log('social data',props.data)
@@ -68,31 +66,8 @@ function ConnectedCardSocialTraffic(props) {
     }
   };
 
-  function highlightRow(e){
-    if(e.target.attributes.name){
-      const ids = e.target.attributes.name.value;
-      const eles = document.getElementsByName(ids);
-      for(let i=0;i<eles.length;i++){
-        eles[i].style.backgroundColor = 'green';
-      }
-    }
-  };
 
-  function dehighlightRow(e){
-    if(e.target.attributes.name){
-      const ids = e.target.attributes.name.value;
-      const eles = document.getElementsByName(ids);
-      for(let i=0;i<eles.length;i++){
-        eles[i].style.backgroundColor = '';
-      }
-      
-    }
-  };
 
-  function selectTarget(e){
-    e.preventDefault();
-    console.log(e.target.innerHTML);
-  };
 
   return (
     <>
@@ -138,41 +113,7 @@ function ConnectedCardSocialTraffic(props) {
                 </th>
               </tr>
             </thead>
-            <tbody>
-            {props.data.map((item, index) => (
-                <tr
-                  onMouseEnter={(e) => highlightRow(e)}
-                  onMouseLeave={(e) => dehighlightRow(e)}
-                  onClick={(e) => props.addStock(e.target.innerHTML)}
-                  key={`${item[0]}` + `${index}`}
-                  id={`${item[0]}` + `${index}`}
-                  name={`${item[0]}` + `${index}`}
-
-                  >
-                  <th name={`${item[0]}` + `${index}`} className={`border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left ${`${item[0]}${index}`}`}>
-                    {index }  { item[0]}
-                  </th>
-                  <td name={`${item[0]}` + `${index}`} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {Math.round(item[1] * 1000) / 1000}
-                  </td>
-                  <td name={`${item[0]}` + `${index}`} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    <div name={`${item[0]}` + `${index}`} className="flex items-center">
-                      <span className="mr-2">{Math.round((item[1]/ item[2]) * 100000) / 1000}%</span>
-                      <div className="relative w-full">
-                        <div className="overflow-hidden h-2 text-xs flex rounded bg-orange-200">
-                          <div
-                            style={{ width: `${parseInt(Math.abs(Math.round((item[1]/ item[2] * 100))))}%` }}
-                            className={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${(item[1] > 0) ? 'bg-green-500': 'bg-red-500'}`}
-                        ></div>
-                      </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-  
-                ))}
-             
-            </tbody>
+           
           </table>
         </div>
       </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import './assets/styles/tailwind.css';
 import './assets/styles/index.css';
@@ -8,7 +7,6 @@ import Sidebar from './components/Sidebar';
 import AdminNavbar from './components/AdminNavbar';
 import HeaderStats from './components/HeaderStats';
 import FooterAdmin from './components/FooterAdmin';
-import dataContext from './gData';
 
 function App() {
   return (

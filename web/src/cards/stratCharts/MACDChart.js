@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import { LineChart, Line,Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line,Bar, ResponsiveContainer } from 'recharts';
 import { connect } from "react-redux";
-import { addBarData, } from "../../js/actions/index";
 
 
 const mapStateToProps = state => {

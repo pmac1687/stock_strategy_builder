@@ -5,9 +5,10 @@ import { faChevronUp, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { connect } from "react-redux";
-import { setMainGraphType, setStrategyStock, getStockData, getTickerList } from "../js/actions/index";
+import { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes } from "../js/actions/index";
 
 import Select from 'react-select';
+
 
 
 const aquaticCreatures = [
@@ -34,6 +35,7 @@ function ConnectedSidebar(props) {
   const [showStock, setShowStock] = useState(false);
   const [showGraph, setShowGraph] = useState(false);
   const [showIndicators, setShowIndicators] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
 
 
   useEffect(() => {
@@ -47,22 +49,30 @@ function ConnectedSidebar(props) {
       const ele = document.getElementById(item)
       ele.style.transform  = 'rotate(180deg)';
       func(prev => true);
-      const ele2 = document.getElementById(collapseItem)
-      ele2.style.display = 'block'
+      if(collapseItem !== 'notesDetails'){
+        const ele2 = document.getElementById(collapseItem)
+        ele2.style.display = 'block'
+      }else{
+        props.setShowNotes(true)
+      }
     };
     if(show===true){
       const ele = document.getElementById(item)
       ele.style.transform  = 'rotate(360deg)';
       func(prev => false);
-      const ele2 = document.getElementById(collapseItem)
-      ele2.style.display = 'none'
+      if(collapseItem !== 'notesDetails'){
+        const ele2 = document.getElementById(collapseItem)
+        ele2.style.display = 'none'
+      }else {
+        props.setShowNotes(false)
+      }
     };
   }
 
   
   return (
     <>
-      <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
+      <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-no-wrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           {/* Toggler */}
           <button
@@ -190,7 +200,7 @@ function ConnectedSidebar(props) {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Graph Type <FontAwesomeIcon style={{ marginLeft:'40%'}} id='graph' icon={faChevronUp} size='lg'/>
+                  Graph Type <FontAwesomeIcon style={{ marginLeft:'39%'}} id='graph' icon={faChevronUp} size='lg'/>
                 </a>
               </li>
 
@@ -271,7 +281,7 @@ function ConnectedSidebar(props) {
                 </div>
               </li>
 
-              <li className="items-center">
+              <li onClick={() => collapse('notes', showNotes, setShowNotes, 'notesDetails')} className="items-center">
                 <a
                   className={
                     "text-xs uppercase py-3 font-bold block " +
@@ -289,9 +299,10 @@ function ConnectedSidebar(props) {
                         : "text-gray-400")
                     }
                   ></i>{" "}
-                  Notes
+                  Notes <FontAwesomeIcon style={{ marginLeft:'56%'}} id='notes' icon={faChevronUp} size='lg'/>
                 </a>
               </li>
+
               <li className="items-center">
                 <a
                   className={
@@ -485,7 +496,7 @@ function ConnectedSidebar(props) {
 
 const Sidebar = connect(
   mapStateToProps,
-  { setMainGraphType, setStrategyStock, getStockData, getTickerList }
+  { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes }
   )(ConnectedSidebar);
 
 export default Sidebar;

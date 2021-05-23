@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { useEffect, useState} from "react";
 import CardCandleChart from "../../cards/CardCandleChart";
 import CardLineChart from "../../cards/CardLineChart"
 import { connect } from "react-redux";
@@ -15,13 +15,12 @@ function ConnectedMainGraph(props){
     const [stateCount, setStateCount] = useState(0)
     const line = <CardLineChart key={keyCount} />;
     const candle = <CardCandleChart key={keyCount} />
-    //setGraphs(prev => [...prev, line])
     useEffect(() => {
         //to avoid initial state passed down from radio buttons on first load
      if(stateCount !== 0){
             chooseMainGraph()
         } else setStateCount(prev => prev + 1);
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.mainGraphType]);
 
     function chooseMainGraph(){

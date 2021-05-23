@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { useEffect, useState} from "react";
 import axios from 'axios';
 
 // components
@@ -7,6 +7,7 @@ import CardCandleChart from "../cards/CardCandleChart.js";
 import CardLineChart from "../cards/CardLineChart";
 import MACDChart from "../cards/stratCharts/MACDChart";
 import CardBarChart from "../cards/CardBarChart.js";
+import Notes from "../cards/Notes"
 import MainGraph from "../components/mainGraph"
 import CardPageVisits from "../cards/CardPageVisits.js";
 import CardSocialTraffic from "../cards/CardSocialTraffic.js";
@@ -16,54 +17,25 @@ import { getData } from "../js/actions/index";
 
 function Dashboard(props) {
 
-  const [stockData, setStockData] = useState([]);
-  const [stock, setStock] = useState('');
-  const [historyData, setHistoryData] = useState([]);
+  const [stockData] = useState([]);
+  const [setStock] = useState('');
+  const [historyData] = useState([]);
   useEffect(() => {
     props.getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   useEffect(() => {
     console.log('ceejwgcjhjhccjhj', props.dataAO)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.dataAO])
-  /*
-  useEffect(() => {
-    const arr = [];
-    axios(url, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      }
-    })
-    .then(response => {for(let x=0;x < response.data.length;x++){arr.push(response.data[x])}})
-    setStockData(arr)
-    if(stockData.length === 0){
-      getData()
-    };
-    console.log(stockData)
 
-  }, [stockData])*/
-  const getData = () => {  
-    axios.get(`http://localhost:5000/`, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      }
-    })  
-    .then((res) => {  
-      setStockData(res.data)
-      console.log(stockData) 
-    })
-    .catch(err => {  
-      console.log(err)  
-    });  
-  };
-  useEffect(() => {
-    console.log(stock);
-  }, [stock])
+
   
   return (
     <>
         <div className="flex flex-wrap">
           <div style={{ height: '70vh', backgroundColor:'black', zIndex:'10'}} className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-            <MACDChart />
+            <Notes />
           </div>
           <div className="w-full xl:w-4/12 px-4">
             <CardBarChart historyData={historyData} />

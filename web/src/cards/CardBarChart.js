@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar,XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { connect } from "react-redux";
 import { addBarData, addMasterBarData, incrementBarIndex, decrementBarIndex } from "../js/actions/index";
 
@@ -18,6 +18,7 @@ function ConnectedCardBarChart(props) {
     if(props.masterData.length > 1){
       formatData()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.masterData]);
 
   function formatData(){
@@ -27,7 +28,6 @@ function ConnectedCardBarChart(props) {
   };
 
   function panRight(){
-    const len = props.masterBarData.length;
     if(props.index[0] > 8){
       props.decrementBarIndex([props.index[0]-1, props.index[1] - 1])
       formatData();
@@ -35,7 +35,6 @@ function ConnectedCardBarChart(props) {
   };
 
   function panLeft(){
-    const len = props.masterBarData.length;
     if(props.index[0] < props.masterData.length){
       props.incrementBarIndex([props.index[0]+1, props.index[1] + 1])
       formatData();

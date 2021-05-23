@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer, useState} from "react";
+import React, {useEffect, useReducer} from "react";
 import { connect } from "react-redux";
 import { addPageHistory } from "../js/actions/index";
 
@@ -27,20 +27,18 @@ const reducer = (state, action) => {
 
 function ConnectedCardPageVisits(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [data, setData] = useState([]);
   useEffect(() => {
     //const p = state.historyDataArray;
     //dispatch({ type: 'addHistoryData', arr: p.push(props.historyData)});
     props.addPageHistory(props.historyData)
     formatData();
-    setData(prev => state.dataArray);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.historyData]);
   useEffect(() => {
     console.log('arrrrrrrrrrrrrray', state.dataArray);
   }, [state])
   function formatData(){
     if(props.historyDataArray.length > 0){
-      const arr = [];
       state.dataArray = [];
       const dat = props.historyDataArray;
       //unusual, i cant pop the empty array that apperates out of nowhere??
@@ -106,7 +104,6 @@ function ConnectedCardPageVisits(props) {
       res.push((result))
     };
     dispatch({ type: 'addNewTick', arr: res});
-    setData(prev => state.dataArray)
   };
   return (
     <>

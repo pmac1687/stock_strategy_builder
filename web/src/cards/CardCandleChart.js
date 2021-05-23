@@ -1,5 +1,5 @@
 import React from 'react';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ErrorBar, ResponsiveContainer} from 'recharts'
+import {BarChart, Bar, XAxis, YAxis, Tooltip, ErrorBar, ResponsiveContainer} from 'recharts'
 
 const data = [
       {name: 'Week 1', max: 4000, min: 1400, error: [200, 1000]},

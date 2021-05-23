@@ -1,16 +1,12 @@
-import React, { useEffect, useState, useReducer } from "react";
-import axios from 'axios';
+import React, { useEffect, useReducer } from "react";
 import {
     ComposedChart,
     Line,
-    Area,
     Bar,
     XAxis,
     YAxis,
-    CartesianGrid,
     Tooltip,
     Legend,
-    Scatter,
     ResponsiveContainer,
   } from 'recharts';
   import { connect } from "react-redux";
@@ -48,6 +44,7 @@ function ConnectedCardHistoryChart(props){
         if(state.master.length > 0){
             formatData();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.master]);
     
     useEffect(() => {
@@ -57,7 +54,8 @@ function ConnectedCardHistoryChart(props){
         if(props.stock.length > 0){
           console.log('stockkkkkkkkkk', props.stock);
           props.getHistoryData();
-        }    
+        }   
+        // eslint-disable-next-line react-hooks/exhaustive-deps 
       }, [props.stock]);
     useEffect(() => {
         console.log('!!!!!', props.data)
@@ -66,6 +64,7 @@ function ConnectedCardHistoryChart(props){
           dispatch({ type: 'set', arr: props.master});
           //formatData();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.master])
     /*
       const getData = () => {
