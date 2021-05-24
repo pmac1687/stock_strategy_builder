@@ -1,11 +1,15 @@
 import React, { useEffect, useState} from "react";
-import CardCandleChart from "../../cards/CardCandleChart";
-import CardLineChart from "../../cards/CardLineChart"
+import CardCandleChart from "./CardCandleChart";
+import CardLineChart from "./CardLineChart"
 import { connect } from "react-redux";
+import { addGraph } from "../../js/actions/index";
+
 
 const mapStateToProps = state => {
     return { 
-        mainGraphType: state.mainGraphType
+        mainGraphType: state.mainGraphType,
+        strategyStock: state.strategyStock,
+        graphs: state.graphs
      };
   };
 
@@ -23,6 +27,10 @@ function ConnectedMainGraph(props){
 // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.mainGraphType]);
 
+    useEffect(() => {
+        console.log(props.graphs)
+    }, [props.graphs])
+
     function chooseMainGraph(){
         if(props.mainGraphType === 'line'){
             if(graphs.length !== 0){
@@ -30,10 +38,10 @@ function ConnectedMainGraph(props){
                 const filtered = graphs.filter(function(value, index, arr){ 
                     return value.props.id !== 'candle';
                 });
-                setGraphs(prev => [...filtered, <CardLineChart id='line' key={keyCount} />]);
+                props.addGraph(<CardLineChart id='line' key={keyCount} />);
                 setKeyCount(prev => prev + 1)
             } else {
-                setGraphs(prev => [...prev, <CardLineChart id='line' key={keyCount} />]);
+                addGraph(<CardLineChart id='line' key={keyCount} />);
                 setKeyCount(prev => prev + 1)
             }
         };
@@ -42,17 +50,17 @@ function ConnectedMainGraph(props){
                 const filtered = graphs.filter(function(value, index, arr){ 
                     return value.props.id !== 'line';
                 });
-                setGraphs(prev => [...filtered, <CardCandleChart id='candle' key={keyCount} />]);
+                props.addGraph(<CardCandleChart id='candle' key={keyCount} />);
                 setKeyCount(prev => prev + 1)
             } else {
-                setGraphs(prev => [...prev, <CardCandleChart id='candle' key={keyCount} />]);
+                props.addGraph(<CardCandleChart id='candle' key={keyCount} />);
                 setKeyCount(prev => prev + 1)
             }
         }
     }
     return (
         <>
-        {graphs.map((item, index) => (
+        {props.graphs.map((item, index) => (
             <>
             {item}
             </>
@@ -63,7 +71,8 @@ function ConnectedMainGraph(props){
 }
 
 const MainGraph = connect(
-    mapStateToProps
+    mapStateToProps,
+    { addGraph }
     )(ConnectedMainGraph);
   
   export default MainGraph;

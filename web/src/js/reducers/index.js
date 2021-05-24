@@ -18,7 +18,8 @@ import {
   LOAD_STRATEGY_DATA,
   LOAD_TICKER_LIST,
   SHOW_NOTES,
-  LOAD_CANDLESTICK  
+  LOAD_CANDLESTICK,
+  ADD_GRAPH  
 } from "../constants/action-types";
 
 const initialState = {
@@ -41,6 +42,7 @@ const initialState = {
   tickerList: [],
   showNotes: false,
   candlestickData: [],
+  graphs: [],
 };
 
 
@@ -108,6 +110,23 @@ function rootReducer(state = initialState, action) {
   if (action.type === LOAD_CANDLESTICK) {
     console.log('notes', action.payload)
     return {...state, candlestickData: action.payload}
+  }
+
+  if (action.type === ADD_GRAPH) {
+    let exists = false
+    const arr = []
+    console.log(action.payload)
+    for(let i=0;state.graphs.length;i++){
+      arr.push(state.graphs[i])
+      if(state.graphs[i] === action.payload){
+        exists = true
+      }
+    }
+    if(exists === false){
+      console.log('addddding')
+      arr.push(action.payload)
+    }
+    return {...state, graphs: arr}
   }
 
   return state;

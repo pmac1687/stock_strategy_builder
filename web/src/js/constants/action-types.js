@@ -18,3 +18,4 @@ export const LOAD_STRATEGY_DATA = "LOAD_STRATEGY_DATA";
 export const LOAD_TICKER_LIST = "LOAD_TICKER_LIST";
 export const SHOW_NOTES = "SHOW_NOTES";
 export const LOAD_CANDLESTICK = "LOAD_CANDLESTICK";
+export const ADD_GRAPH = "ADD_GRAPH";

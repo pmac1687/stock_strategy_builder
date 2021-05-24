@@ -3,9 +3,10 @@ import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { faChevronUp, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CardAOChart from '../mainGraph/CardAOChart';
 
 import { connect } from "react-redux";
-import { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes, getCandlestickData } from "../js/actions/index";
+import { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes, getCandlestickData, addGraph } from "../../js/actions/index";
 
 import Select from 'react-select';
 
@@ -28,6 +29,10 @@ const mapStateToProps = state => {
     tickerList: state.tickerList,
    };
 };
+
+const indicators = {
+  'ao': <CardAOChart id='ao' />,
+}
 
 
 function ConnectedSidebar(props) {
@@ -67,6 +72,13 @@ function ConnectedSidebar(props) {
         props.setShowNotes(false)
       }
     };
+  }
+
+  function addIndicators(e, id){
+    if(e.target.checked){
+      props.addGraph(indicators[id])
+    }
+    console.log(e.target.checked)
   }
 
   
@@ -115,7 +127,6 @@ function ConnectedSidebar(props) {
                   <button
                     type="button"
                     className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-                    onClick={() => setCollapseShow("hidden")}
                   >
                     <i className="fas fa-times"></i>
                   </button>
@@ -143,36 +154,14 @@ function ConnectedSidebar(props) {
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li onClick={() => collapse('stock', showStock, setShowStock, 'stockSearch')} className="items-center">
-                <a
-                  style={{ display:'flex'}}
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/dashboard") !== -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-gray-800 hover:text-gray-600")
-                  }
-                  to="/admin/dashboard"
-                >
-                  <i
-                    className={
-                      "fas fa-tv mr-2 text-sm " +
-                      (window.location.href.indexOf("/admin/dashboard") !== -1
-                        ? "opacity-75"
-                        : "text-gray-400")
-                    }
-                  ></i>{" "}
+                <a style={{ display:'flex'}} className={"text-xs uppercase py-3 font-bold block " }>
+                  <i className={"fas fa-tv mr-2 text-sm "}></i>
                   Stock <div  style={{ marginLeft: '60%'}}><FontAwesomeIcon id='stock' icon={faChevronUp} size='lg'/></div>
                 </a>
               </li>
 
               <li id='stockSearch' style={{ display: 'none'}} className="items-center">
                 <div class="shadow flex">
-                  {/*
-                    <input class="w-full rounded p-2" type="text" onChange={e => props.setStrategyStock(e.target.value)} placeholder="Search..." />
-                    <button onClick={props.getStockData} class="bg-white w-auto flex justify-end items-center text-blue-500 p-2 hover:text-blue-400">
-                        <FontAwesomeIcon id='stock' icon={faSearch} size='lg'/>
-                    </button>
-                  */}
                   <div style={{ width: '30vw'}}>
                     <Select
                       onChange={opt => {props.setStrategyStock(opt.label.split(' ')[0]); props.getStockData();props.getCandlestickData()}}
@@ -181,25 +170,10 @@ function ConnectedSidebar(props) {
                   </div>
                 </div>
               </li>
-
+                
               <li onClick={() => collapse('graph', showGraph, setShowGraph, 'graphDetails')} className="items-center">
-                <a
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/dashboard") !== -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-gray-800 hover:text-gray-600")
-                  }
-                  to="/admin/dashboard"
-                >
-                  <i
-                    className={
-                      "fas fa-tv mr-2 text-sm " +
-                      (window.location.href.indexOf("/admin/dashboard") !== -1
-                        ? "opacity-75"
-                        : "text-gray-400")
-                    }
-                  ></i>{" "}
+                <a className={"text-xs uppercase py-3 font-bold block " }>
+                  <i className={"fas fa-tv mr-2 text-sm "}></i>
                   Graph Type <FontAwesomeIcon style={{ marginLeft:'39%'}} id='graph' icon={faChevronUp} size='lg'/>
                 </a>
               </li>
@@ -211,7 +185,6 @@ function ConnectedSidebar(props) {
                               <label class="inline-flex items-center mt-3">
                                   <input checked={props.mainGraphType === 'candle'} type="radio" id='candle' onChange={() => props.setMainGraphType('candle')} class="form-radio h-5 w-5 text-gray-600" /><span class="ml-2 text-gray-700">Candlestick</span>
                               </label>
-
                               <label class="inline-flex items-center mt-3">
                                   <input type="radio" id='line' checked={props.mainGraphType === 'line'} onChange={() => props.setMainGraphType('line')} class="form-radio h-5 w-5 text-red-600" /><span class="ml-2 text-gray-700">Line Graph</span>
                               </label>
@@ -222,23 +195,8 @@ function ConnectedSidebar(props) {
 
 
               <li onClick={() => collapse('indicators', showIndicators, setShowIndicators, 'indicatorDetails')} className="items-center">
-                <a
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/tables") !== -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-gray-800 hover:text-gray-600")
-                  }
-                  to="/admin/tables"
-                >
-                  <i
-                    className={
-                      "fas fa-table mr-2 text-sm " +
-                      (window.location.href.indexOf("/admin/tables") !== -1
-                        ? "opacity-75"
-                        : "text-gray-400")
-                    }
-                  ></i>{" "}
+                <a className={"text-xs uppercase py-3 font-bold block "}>
+                  <i className={"fas fa-table mr-2 text-sm "}></i>
                   Indicators <FontAwesomeIcon style={{ marginLeft:'40%'}} id='indicators' icon={faChevronUp} size='lg'/>
                 </a>
               </li>
@@ -249,7 +207,7 @@ function ConnectedSidebar(props) {
                   <div class="mt-2">
                     <div>
                       <label class="inline-flex items-center">
-                        <input type="checkbox" class="form-checkbox" />
+                        <input type="checkbox" onChange={e => addIndicators(e, 'ao')} class="form-checkbox" />
                         <span class="ml-2">Awesome Oscillator</span>
                       </label>
                     </div>
@@ -282,45 +240,15 @@ function ConnectedSidebar(props) {
               </li>
 
               <li onClick={() => collapse('notes', showNotes, setShowNotes, 'notesDetails')} className="items-center">
-                <a
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/maps") !== -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-gray-800 hover:text-gray-600")
-                  }
-                  to="/admin/maps"
-                >
-                  <i
-                    className={
-                      "fas fa-map-marked mr-2 text-sm " +
-                      (window.location.href.indexOf("/admin/maps") !== -1
-                        ? "opacity-75"
-                        : "text-gray-400")
-                    }
-                  ></i>{" "}
+                <a className={"text-xs uppercase py-3 font-bold block "}>
+                  <i className={"fas fa-map-marked mr-2 text-sm " }></i>
                   Notes <FontAwesomeIcon style={{ marginLeft:'56%'}} id='notes' icon={faChevronUp} size='lg'/>
                 </a>
               </li>
 
               <li className="items-center">
-                <a
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/maps") !== -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-gray-800 hover:text-gray-600")
-                  }
-                  to="/admin/maps"
-                >
-                  <i
-                    className={
-                      "fas fa-map-marked mr-2 text-sm " +
-                      (window.location.href.indexOf("/admin/maps") !== -1
-                        ? "opacity-75"
-                        : "text-gray-400")
-                    }
-                  ></i>{" "}
+                <a className={"text-xs uppercase py-3 font-bold block " }>
+                  <i className={"fas fa-map-marked mr-2 text-sm " }></i>
                   <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                     Show
                   </button>
@@ -391,102 +319,7 @@ function ConnectedSidebar(props) {
               </li>
             </ul>
 
-            {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
-            {/* Heading */}
-            <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Documentation
-            </h6>
-            {/* Navigation */}
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-              <li className="inline-flex">
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind/react/colors/webapp"
-                  target="_blank"
-                  className="text-gray-800 hover:text-gray-600 text-sm block mb-4 no-underline font-semibold"
-                >
-                  <i className="fas fa-paint-brush mr-2 text-gray-400 text-base"></i>
-                  Styles
-                </a>
-              </li>
 
-              <li className="inline-flex">
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind/react/alerts/webapp"
-                  target="_blank"
-                  className="text-gray-800 hover:text-gray-600 text-sm block mb-4 no-underline font-semibold"
-                >
-                  <i className="fab fa-css3-alt mr-2 text-gray-400 text-base"></i>
-                  CSS Components
-                </a>
-              </li>
-
-              <li className="inline-flex">
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind/angular/overview/webapp"
-                  target="_blank"
-                  className="text-gray-800 hover:text-gray-600 text-sm block mb-4 no-underline font-semibold"
-                >
-                  <i className="fab fa-angular mr-2 text-gray-400 text-base"></i>
-                  Angular
-                </a>
-              </li>
-
-              <li className="inline-flex">
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind/js/overview/webapp"
-                  target="_blank"
-                  className="text-gray-800 hover:text-gray-600 text-sm block mb-4 no-underline font-semibold"
-                >
-                  <i className="fab fa-js-square mr-2 text-gray-400 text-base"></i>
-                  Javascript
-                </a>
-              </li>
-
-              <li className="inline-flex">
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind/nextjs/overview/webapp"
-                  target="_blank"
-                  className="text-gray-800 hover:text-gray-600 text-sm block mb-4 no-underline font-semibold"
-                >
-                  <i className="fab fa-react mr-2 text-gray-400 text-base"></i>
-                  NextJS
-                </a>
-              </li>
-
-              <li className="inline-flex">
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind/react/overview/webapp"
-                  target="_blank"
-                  className="text-gray-800 hover:text-gray-600 text-sm block mb-4 no-underline font-semibold"
-                >
-                  <i className="fab fa-react mr-2 text-gray-400 text-base"></i>
-                  React
-                </a>
-              </li>
-
-              <li className="inline-flex">
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind/svelte/overview/webapp"
-                  target="_blank"
-                  className="text-gray-800 hover:text-gray-600 text-sm block mb-4 no-underline font-semibold"
-                >
-                  <i className="fas fa-link mr-2 text-gray-400 text-base"></i>
-                  Svelte
-                </a>
-              </li>
-
-              <li className="inline-flex">
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind/vue/overview/webapp"
-                  target="_blank"
-                  className="text-gray-800 hover:text-gray-600 text-sm block mb-4 no-underline font-semibold"
-                >
-                  <i className="fab fa-vuejs mr-2 text-gray-400 text-base"></i>
-                  VueJS
-                </a>
-              </li>
-            </ul>
           </div>
         </div>
       </nav>
@@ -496,7 +329,7 @@ function ConnectedSidebar(props) {
 
 const Sidebar = connect(
   mapStateToProps,
-  { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes, getCandlestickData }
+  { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes, getCandlestickData, addGraph }
   )(ConnectedSidebar);
 
 export default Sidebar;

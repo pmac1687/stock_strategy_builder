@@ -2,12 +2,8 @@ import React, { useEffect, useState} from "react";
 import axios from 'axios';
 
 // components
-import CardHistoryChart from '../cards/CardHistoryChart';
-import CardCandleChart from "../cards/CardCandleChart.js";
-import CardLineChart from "../cards/CardLineChart";
-import MACDChart from "../cards/stratCharts/MACDChart";
+
 import CardBarChart from "../cards/CardBarChart.js";
-import Notes from "../cards/Notes"
 import MainGraph from "../components/mainGraph"
 import CardPageVisits from "../cards/CardPageVisits.js";
 import CardSocialTraffic from "../cards/CardSocialTraffic.js";

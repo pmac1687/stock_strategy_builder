@@ -17,7 +17,8 @@ import { ADD_STOCK,
   LOAD_STRATEGY_DATA,
   LOAD_TICKER_LIST,
   SHOW_NOTES,
-  LOAD_CANDLESTICK
+  LOAD_CANDLESTICK,
+  ADD_GRAPH
 } from "../constants/action-types";
 import axios from 'axios';
 
@@ -117,6 +118,10 @@ export function setStrategyStock(payload) {
 
 export function setShowNotes(payload) {
   return { type: SHOW_NOTES, payload }
+};
+
+export function addGraph(payload) {
+  return { type: ADD_GRAPH, payload}
 };
 
 export function getStockData() {
