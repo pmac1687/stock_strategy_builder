@@ -12,7 +12,7 @@ import MainGraph from "../components/mainGraph"
 import CardPageVisits from "../cards/CardPageVisits.js";
 import CardSocialTraffic from "../cards/CardSocialTraffic.js";
 import { connect } from "react-redux";
-import { getData } from "../js/actions/index";
+import { getData, getCandlestickData } from "../js/actions/index";
 
 
 function Dashboard(props) {
@@ -35,7 +35,7 @@ function Dashboard(props) {
     <>
         <div className="flex flex-wrap">
           <div style={{ height: '70vh', backgroundColor:'black', zIndex:'10'}} className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-            <Notes />
+            <MainGraph />
           </div>
           <div className="w-full xl:w-4/12 px-4">
             <CardBarChart historyData={historyData} />
@@ -63,5 +63,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { getData }
+  { getData, getCandlestickData }
 )(Dashboard);

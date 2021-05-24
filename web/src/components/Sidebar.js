@@ -5,7 +5,7 @@ import { faChevronUp, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { connect } from "react-redux";
-import { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes } from "../js/actions/index";
+import { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes, getCandlestickData } from "../js/actions/index";
 
 import Select from 'react-select';
 
@@ -175,7 +175,7 @@ function ConnectedSidebar(props) {
                   */}
                   <div style={{ width: '30vw'}}>
                     <Select
-                      onChange={opt => {props.setStrategyStock(opt.label.split(' ')[0]); props.getStockData()}}
+                      onChange={opt => {props.setStrategyStock(opt.label.split(' ')[0]); props.getStockData();props.getCandlestickData()}}
                       options={props.tickerList}
                     />
                   </div>
@@ -496,7 +496,7 @@ function ConnectedSidebar(props) {
 
 const Sidebar = connect(
   mapStateToProps,
-  { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes }
+  { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes, getCandlestickData }
   )(ConnectedSidebar);
 
 export default Sidebar;

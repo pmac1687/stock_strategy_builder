@@ -16,7 +16,8 @@ import { ADD_STOCK,
   SET_STRATEGY_STOCK, 
   LOAD_STRATEGY_DATA,
   LOAD_TICKER_LIST,
-  SHOW_NOTES
+  SHOW_NOTES,
+  LOAD_CANDLESTICK
 } from "../constants/action-types";
 import axios from 'axios';
 
@@ -131,6 +132,26 @@ export function getStockData() {
         .then(data => {
           console.log('resdata', data)  
           dispatch({ type: LOAD_STRATEGY_DATA, payload: data})
+        })
+        .catch(err => {  
+          console.log(err)  
+        });  
+  };
+}
+
+export function getCandlestickData() {
+  return function(dispatch, getState) {
+    const { strategyStock } = getState()
+    console.log('strratta', strategyStock)
+    return   axios.get(`http://localhost:5000/candlestick/${strategyStock}`, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          }
+        })  
+        .then(res => res.data)
+        .then(data => {
+          console.log('resdata', data)  
+          dispatch({ type: LOAD_CANDLESTICK, payload: data})
         })
         .catch(err => {  
           console.log(err)  
