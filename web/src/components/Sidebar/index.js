@@ -6,20 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CardAOChart from '../mainGraph/CardAOChart';
 
 import { connect } from "react-redux";
-import { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes, getCandlestickData, addGraph } from "../../js/actions/index";
+import { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes, getCandlestickData, addGraph, incrementGraphCount, removeGraph, addFirstGraph } from "../../js/actions/index";
 
 import Select from 'react-select';
-
-
-
-const aquaticCreatures = [
-  { label: 'Shark', value: 'Shark' },
-  { label: 'Dolphin', value: 'Dolphin' },
-  { label: 'Whale', value: 'Whale' },
-  { label: 'Octopus', value: 'Octopus' },
-  { label: 'Crab', value: 'Crab' },
-  { label: 'Lobster', value: 'Lobster' },
-];
 
 
 const mapStateToProps = state => {
@@ -27,13 +16,10 @@ const mapStateToProps = state => {
     mainGraphType: state.mainGraphType,
     strategyStock: state.strategyStock,
     tickerList: state.tickerList,
+    graphCount: state.graphCount,
+    graphs: state.graphs,
    };
 };
-
-const indicators = {
-  'ao': <CardAOChart id='ao' />,
-}
-
 
 function ConnectedSidebar(props) {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
@@ -41,7 +27,13 @@ function ConnectedSidebar(props) {
   const [showGraph, setShowGraph] = useState(false);
   const [showIndicators, setShowIndicators] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
-
+  const indicators = {
+    'ao': <CardAOChart id='ao' key={props.graphCount} />,
+  }
+  
+  useEffect(() => {
+    props.addFirstGraph(props.mainGraphType)
+  },[props.mainGraphType])
 
   useEffect(() => {
     props.getTickerList();
@@ -74,11 +66,20 @@ function ConnectedSidebar(props) {
     };
   }
 
+  function addCloseGraph(e,id){
+    
+  }
+
   function addIndicators(e, id){
     if(e.target.checked){
-      props.addGraph(indicators[id])
+      props.addGraph(id);
+      props.incrementGraphCount()
+
+    } else {
+      props.removeGraph(id);
+      props.incrementGraphCount();
     }
-    console.log(e.target.checked)
+    console.log('checked',e.target.checked)
   }
 
   
@@ -213,25 +214,25 @@ function ConnectedSidebar(props) {
                     </div>
                     <div>
                       <label class="inline-flex items-center">
-                        <input type="checkbox" class="form-checkbox"/>
+                        <input onChange={e => addIndicators(e, 'bollinger')} type="checkbox" class="form-checkbox"/>
                         <span class="ml-2">Bollinger Bands</span>
                       </label>
                     </div>
                     <div>
                       <label class="inline-flex items-center">
-                        <input type="checkbox" class="form-checkbox"/>
+                        <input onChange={e => addIndicators(e, 'ma')} type="checkbox" class="form-checkbox"/>
                         <span class="ml-2">Moving Average(Trend)</span>
                       </label>
                     </div>
                     <div>
                       <label class="inline-flex items-center">
-                        <input type="checkbox" class="form-checkbox"/>
+                        <input onChange={e => addIndicators(e, 'rsi')} type="checkbox" class="form-checkbox"/>
                         <span class="ml-2">RSI</span>
                       </label>
                     </div>
                     <div>
                       <label class="inline-flex items-center">
-                        <input type="checkbox" class="form-checkbox"/>
+                        <input onChange={e => addIndicators(e, 'macd')} type="checkbox" class="form-checkbox"/>
                         <span class="ml-2">MACD</span>
                       </label>
                     </div>
@@ -329,7 +330,7 @@ function ConnectedSidebar(props) {
 
 const Sidebar = connect(
   mapStateToProps,
-  { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes, getCandlestickData, addGraph }
+  { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes, getCandlestickData, addGraph, incrementGraphCount, removeGraph, addFirstGraph }
   )(ConnectedSidebar);
 
 export default Sidebar;

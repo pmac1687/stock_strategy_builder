@@ -1,8 +1,13 @@
 import React, { useEffect, useState} from "react";
 import CardCandleChart from "./CardCandleChart";
-import CardLineChart from "./CardLineChart"
+import CardLineChart from "./CardLineChart";
+import CardBollChart from './CardBollChart';
+import CardMAChart from './CardMAChart';
+import CardRSIChart from './CardRSIChart';
+import MACDchart from './MACDChart';
 import { connect } from "react-redux";
 import { addGraph } from "../../js/actions/index";
+import CardAOChart from "./CardAOChart";
 
 
 const mapStateToProps = state => {
@@ -19,13 +24,16 @@ function ConnectedMainGraph(props){
     const [stateCount, setStateCount] = useState(0)
     const line = <CardLineChart key={keyCount} />;
     const candle = <CardCandleChart key={keyCount} />
-    useEffect(() => {
-        //to avoid initial state passed down from radio buttons on first load
-     if(stateCount !== 0){
-            chooseMainGraph()
-        } else setStateCount(prev => prev + 1);
-// eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.mainGraphType]);
+    const graphArr = {
+        'ao': <CardAOChart id='ao' key='1' />,
+        'bollinger': <CardBollChart id='bollinger' key='2' />,
+        'macd': <MACDchart id='macd' key='3' />,
+        'rsi': <CardRSIChart id='rsi' key='4' />,
+        'ma': <CardMAChart id='ma' key='5' />,
+        'candle': <CardCandleChart id='candle' key='6'/>,
+        'line': <CardLineChart id='line' key='7' />
+        
+    }
 
     useEffect(() => {
         console.log(props.graphs)
@@ -62,7 +70,7 @@ function ConnectedMainGraph(props){
         <>
         {props.graphs.map((item, index) => (
             <>
-            {item}
+            {graphArr[item]}
             </>
         ))}
         </>

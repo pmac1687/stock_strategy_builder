@@ -18,7 +18,10 @@ import { ADD_STOCK,
   LOAD_TICKER_LIST,
   SHOW_NOTES,
   LOAD_CANDLESTICK,
-  ADD_GRAPH
+  ADD_GRAPH,
+  INCREMENT_COUNT,
+  REMOVE_GRAPH,
+  ADD_CLOSE_GRAPH
 } from "../constants/action-types";
 import axios from 'axios';
 
@@ -120,8 +123,29 @@ export function setShowNotes(payload) {
   return { type: SHOW_NOTES, payload }
 };
 
-export function addGraph(payload) {
-  return { type: ADD_GRAPH, payload}
+export function addGraph(payload, getState) {
+  return function(dispatch, getState){
+    const { graphs } = getState();
+    console.log('payload', payload)
+    dispatch({ type: ADD_GRAPH, payload: payload})
+  }
+};
+
+export function removeGraph(payload, getState) {
+  return function(dispatch, getState){
+    const { graphs } = getState();
+    console.log('payload', payload)
+    dispatch({ type: REMOVE_GRAPH, payload: payload})
+
+  }
+};
+
+export function incrementGraphCount(payload) {
+  return { type: INCREMENT_COUNT, payload}
+};
+
+export function addFirstGraph(payload) {
+  return { type: ADD_CLOSE_GRAPH, payload}
 };
 
 export function getStockData() {

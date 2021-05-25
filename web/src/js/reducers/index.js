@@ -19,7 +19,10 @@ import {
   LOAD_TICKER_LIST,
   SHOW_NOTES,
   LOAD_CANDLESTICK,
-  ADD_GRAPH  
+  ADD_GRAPH,
+  INCREMENT_COUNT,
+  REMOVE_GRAPH,
+  ADD_CLOSE_GRAPH  
 } from "../constants/action-types";
 
 const initialState = {
@@ -42,7 +45,8 @@ const initialState = {
   tickerList: [],
   showNotes: false,
   candlestickData: [],
-  graphs: [],
+  graphs: ['candle'],
+  graphCount: 0,
 };
 
 
@@ -111,22 +115,34 @@ function rootReducer(state = initialState, action) {
     console.log('notes', action.payload)
     return {...state, candlestickData: action.payload}
   }
-
-  if (action.type === ADD_GRAPH) {
-    let exists = false
+  if (action.type === INCREMENT_COUNT) {
+    console.log('notes', action.payload)
+    return {...state, graphCount: state.graphCount + 1}
+  }
+  if (action.type === ADD_CLOSE_GRAPH) {
+    console.log('notes', action.payload)
     const arr = []
-    console.log(action.payload)
-    for(let i=0;state.graphs.length;i++){
-      arr.push(state.graphs[i])
-      if(state.graphs[i] === action.payload){
-        exists = true
+    for(let i=0;i<state.graphs.length;i++){
+      if(i===0){
+        arr.push(action.payload)
+      } else {
+        arr.push(state.graphs[i])
       }
     }
-    if(exists === false){
-      console.log('addddding')
-      arr.push(action.payload)
-    }
     return {...state, graphs: arr}
+  }
+
+  if (action.type === ADD_GRAPH) {
+    console.log('action.payload', action.payload)
+    return {...state, graphs: [...state.graphs, action.payload]}
+  }
+  if (action.type === REMOVE_GRAPH) {
+    console.log('action.payload', action.payload)
+    console.log('state.graphs', state.graphs)
+    const filtered = state.graphs.filter((item) => 
+      item !== action.payload
+    )
+    return {...state, graphs: filtered}
   }
 
   return state;
