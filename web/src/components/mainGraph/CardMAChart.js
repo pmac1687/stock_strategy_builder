@@ -19,10 +19,21 @@ import { connect } from "react-redux";
 const mapStateToProps = state => {
   return { 
     stratStockData: state.stratStockData,
+    graphCount: state.graphCount
    };
 };
 
 function ConnectedCardMAChart(props) {
+  const heights = [
+    '0%',
+    '0%',
+    '33%',
+    '25%',
+    '20%',
+    '16%',
+    '14%',
+    '12.5%'
+  ];
   useEffect(() => {
     console.log(2)
   }, [props.stratStockData]);
@@ -30,17 +41,11 @@ function ConnectedCardMAChart(props) {
 
   
   return (
-    <ResponsiveContainer  width="100%" height="100%">
+    <ResponsiveContainer  width="100%" height={heights[props.graphCount]}>
       <ComposedChart
         width={500}
         height={300}
         data={props.stratStockData}
-        margin={{
-          top: 20,
-          right: 20,
-          bottom: 20,
-          left: 20,
-        }}
       >
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="date"  />

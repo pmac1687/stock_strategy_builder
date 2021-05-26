@@ -7,10 +7,21 @@ import { addBarData, } from "../../js/actions/index";
 const mapStateToProps = state => {
   return { 
     stratStockData: state.stratStockData,
+    graphCount: state.graphCount
    };
 };
 
 function ConnectedCardBollChart(props) {
+  const heights = [
+    '0%',
+    '0%',
+    '33%',
+    '25%',
+    '20%',
+    '16%',
+    '14%',
+    '12.5%'
+  ];
   useEffect(() => {
     console.log(2)
   }, [props.stratStockData]);
@@ -18,19 +29,12 @@ function ConnectedCardBollChart(props) {
 
   
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height={heights[props.graphCount]}>
     <LineChart
       width={500}
-      height={500}
+      height={100}
       data={props.stratStockData}
-      margin={{
-        top: 10,
-        right: 30,
-        left: 20,
-        bottom: 5,
-      }}
     >
-      <CartesianGrid strokeDasharray="1 1" />
       <XAxis dataKey="date" />
       <YAxis />
       <Tooltip />

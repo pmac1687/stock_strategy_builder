@@ -20,5 +20,6 @@ export const SHOW_NOTES = "SHOW_NOTES";
 export const LOAD_CANDLESTICK = "LOAD_CANDLESTICK";
 export const ADD_GRAPH = "ADD_GRAPH";
 export const INCREMENT_COUNT = "INCREMENT_COUNT";
+export const DECREMENT_COUNT = "DECREMENT_COUNT";
 export const REMOVE_GRAPH = "REMOVE_GRAPH";
 export const ADD_CLOSE_GRAPH = "ADD_CLOSE_GRAPH";

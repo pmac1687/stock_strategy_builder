@@ -1,14 +1,18 @@
 import React, { useEffect, useState} from "react";
 import axios from 'axios';
-
-// components
-
 import CardBarChart from "../cards/CardBarChart.js";
 import MainGraph from "../components/mainGraph"
 import CardPageVisits from "../cards/CardPageVisits.js";
 import CardSocialTraffic from "../cards/CardSocialTraffic.js";
 import { connect } from "react-redux";
 import { getData, getCandlestickData } from "../js/actions/index";
+
+function mapStateToProps(state) {
+  return {
+    dataAO: state.remoteAOData,
+    graphCount: state.graphCount,
+  };
+}
 
 
 function Dashboard(props) {
@@ -30,7 +34,7 @@ function Dashboard(props) {
   return (
     <>
         <div className="flex flex-wrap">
-          <div style={{ height: '70vh', backgroundColor:'black', zIndex:'10'}} className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+          <div style={{ height: `${70 + (props.graphCount - 1) * 35}vh`, backgroundColor:'black', zIndex:'10'}} className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
             <MainGraph />
           </div>
           <div className="w-full xl:w-4/12 px-4">
@@ -47,13 +51,6 @@ function Dashboard(props) {
         </div>
     </>
   );
-}
-
-
-function mapStateToProps(state) {
-  return {
-    dataAO: state.remoteAOData
-  };
 }
 
 

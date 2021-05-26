@@ -21,7 +21,8 @@ import { ADD_STOCK,
   ADD_GRAPH,
   INCREMENT_COUNT,
   REMOVE_GRAPH,
-  ADD_CLOSE_GRAPH
+  ADD_CLOSE_GRAPH,
+  DECREMENT_COUNT
 } from "../constants/action-types";
 import axios from 'axios';
 
@@ -142,6 +143,10 @@ export function removeGraph(payload, getState) {
 
 export function incrementGraphCount(payload) {
   return { type: INCREMENT_COUNT, payload}
+};
+
+export function decrementGraphCount(payload) {
+  return { type: DECREMENT_COUNT, payload}
 };
 
 export function addFirstGraph(payload) {

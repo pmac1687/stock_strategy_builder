@@ -22,7 +22,8 @@ import {
   ADD_GRAPH,
   INCREMENT_COUNT,
   REMOVE_GRAPH,
-  ADD_CLOSE_GRAPH  
+  ADD_CLOSE_GRAPH,
+  DECREMENT_COUNT  
 } from "../constants/action-types";
 
 const initialState = {
@@ -46,7 +47,7 @@ const initialState = {
   showNotes: false,
   candlestickData: [],
   graphs: ['candle'],
-  graphCount: 0,
+  graphCount: 1,
 };
 
 
@@ -118,6 +119,10 @@ function rootReducer(state = initialState, action) {
   if (action.type === INCREMENT_COUNT) {
     console.log('notes', action.payload)
     return {...state, graphCount: state.graphCount + 1}
+  }
+  if (action.type === DECREMENT_COUNT) {
+    console.log('notes', action.payload)
+    return {...state, graphCount: state.graphCount - 1}
   }
   if (action.type === ADD_CLOSE_GRAPH) {
     console.log('notes', action.payload)

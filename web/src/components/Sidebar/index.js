@@ -6,7 +6,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CardAOChart from '../mainGraph/CardAOChart';
 
 import { connect } from "react-redux";
-import { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes, getCandlestickData, addGraph, incrementGraphCount, removeGraph, addFirstGraph } from "../../js/actions/index";
+import { 
+  setMainGraphType, 
+  setStrategyStock, 
+  getStockData, 
+  getTickerList, 
+  setShowNotes, 
+  getCandlestickData, 
+  addGraph, 
+  incrementGraphCount, 
+  removeGraph, 
+  addFirstGraph,
+  decrementGraphCount 
+} from "../../js/actions/index";
 
 import Select from 'react-select';
 
@@ -27,10 +39,7 @@ function ConnectedSidebar(props) {
   const [showGraph, setShowGraph] = useState(false);
   const [showIndicators, setShowIndicators] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
-  const indicators = {
-    'ao': <CardAOChart id='ao' key={props.graphCount} />,
-  }
-  
+
   useEffect(() => {
     props.addFirstGraph(props.mainGraphType)
   },[props.mainGraphType])
@@ -40,7 +49,6 @@ function ConnectedSidebar(props) {
     console.log('lisssststs', props.tickerList)
   }, [])
 
-  
   function collapse(item, show, func, collapseItem){
     if(show===false){
       const ele = document.getElementById(item)
@@ -77,7 +85,7 @@ function ConnectedSidebar(props) {
 
     } else {
       props.removeGraph(id);
-      props.incrementGraphCount();
+      props.decrementGraphCount();
     }
     console.log('checked',e.target.checked)
   }
@@ -330,7 +338,19 @@ function ConnectedSidebar(props) {
 
 const Sidebar = connect(
   mapStateToProps,
-  { setMainGraphType, setStrategyStock, getStockData, getTickerList, setShowNotes, getCandlestickData, addGraph, incrementGraphCount, removeGraph, addFirstGraph }
+  { 
+    setMainGraphType, 
+    setStrategyStock, 
+    getStockData, 
+    getTickerList, 
+    setShowNotes, 
+    getCandlestickData, 
+    addGraph, 
+    incrementGraphCount, 
+    removeGraph, 
+    addFirstGraph,
+    decrementGraphCount
+   }
   )(ConnectedSidebar);
 
 export default Sidebar;
