@@ -22,7 +22,9 @@ import { ADD_STOCK,
   INCREMENT_COUNT,
   REMOVE_GRAPH,
   ADD_CLOSE_GRAPH,
-  DECREMENT_COUNT
+  DECREMENT_COUNT,
+  FILTER_GRAPH_DATA,
+  GET_REF_COORDS
 } from "../constants/action-types";
 import axios from 'axios';
 
@@ -124,6 +126,10 @@ export function setShowNotes(payload) {
   return { type: SHOW_NOTES, payload }
 };
 
+export function addRefCoords(payload) {
+  return { type: GET_REF_COORDS, payload }
+};
+
 export function addGraph(payload, getState) {
   return function(dispatch, getState){
     const { graphs } = getState();
@@ -151,6 +157,10 @@ export function decrementGraphCount(payload) {
 
 export function addFirstGraph(payload) {
   return { type: ADD_CLOSE_GRAPH, payload}
+};
+
+export function filterGraphData() {
+  return { type: FILTER_GRAPH_DATA}
 };
 
 export function getStockData() {

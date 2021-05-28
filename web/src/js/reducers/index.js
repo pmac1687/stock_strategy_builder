@@ -23,7 +23,9 @@ import {
   INCREMENT_COUNT,
   REMOVE_GRAPH,
   ADD_CLOSE_GRAPH,
-  DECREMENT_COUNT  
+  DECREMENT_COUNT,
+  FILTER_GRAPH_DATA,
+  GET_REF_COORDS  
 } from "../constants/action-types";
 
 const initialState = {
@@ -48,6 +50,7 @@ const initialState = {
   candlestickData: [],
   graphs: ['candle'],
   graphCount: 1,
+  refCoords: [],
 };
 
 
@@ -148,6 +151,37 @@ function rootReducer(state = initialState, action) {
       item !== action.payload
     )
     return {...state, graphs: filtered}
+  }
+
+  if ( action.type === GET_REF_COORDS) {
+    console.log('action.REDUCER.FILTER', action.payload)
+    return {...state, refCoords: [...action.payload]}
+  }
+
+  if ( action.type === FILTER_GRAPH_DATA) {
+    console.log('action.REDUCER.FILTER', state.refCoords)
+    let withinRange = false
+    const stratArr = []
+    const candleArr = []
+    for(let i=0;i < state.stratStockData.length;i++){
+      const dat = state.stratStockData[i];
+      if(dat.date === state.refCoords[1]){
+        withinRange = false;
+        stratArr.push(dat);
+        candleArr.push(state.candlestickData[i]);
+        break
+      }
+      if(withinRange === true){
+        stratArr.push(dat);
+        candleArr.push(state.candlestickData[i]);
+      }
+      if(dat.date === state.refCoords[0]){
+        withinRange = true;
+        stratArr.push(dat);
+        candleArr.push(state.candlestickData[i]);
+      }
+    }
+    return {...state, candlestickData: [...candleArr], stratStockData: [...stratArr]}
   }
 
   return state;

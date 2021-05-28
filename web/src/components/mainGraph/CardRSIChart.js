@@ -31,6 +31,8 @@ function ConnectedCardRSIChart(props) {
   return (
     <ResponsiveContainer width="100%" height={heights[props.graphCount]}>
       <LineChart width={300} height={100} data={props.stratStockData}>
+        <Tooltip />
+        <Legend />
         <XAxis dataKey='date' />
         <YAxis />
         <Line type="monotone" dataKey="rsi_6" stroke="#8884d8" strokeWidth={2} dot={false} />

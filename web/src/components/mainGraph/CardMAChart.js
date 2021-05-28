@@ -47,7 +47,6 @@ function ConnectedCardMAChart(props) {
         height={300}
         data={props.stratStockData}
       >
-        <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="date"  />
         <YAxis scale='auto'  />
         <Tooltip />

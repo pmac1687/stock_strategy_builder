@@ -1,8 +1,8 @@
 import React, { useEffect, useState} from 'react';
-import {ComposedChart, Bar,Line, XAxis, YAxis, Tooltip, ErrorBar, ResponsiveContainer} from 'recharts'
+import {ComposedChart, ReferenceDot,ReferenceArea, Bar,Line, XAxis, YAxis, Tooltip, ErrorBar, ResponsiveContainer} from 'recharts'
 
 import { connect } from "react-redux";
-import { addBarData, } from "../../js/actions/index";
+import { addBarData, filterGraphData, addRefCoords  } from "../../js/actions/index";
 
 
 const mapStateToProps = state => {
@@ -13,34 +13,87 @@ const mapStateToProps = state => {
 };
 
 function ConnectedCardCandleChart(props){
+  const [refAreaLeft, setRefAreaLeft] = useState()
+  const [refAreaRight, setRefAreaRight] = useState()
+  const refArr = []
   const heights = [
-    '100%',
-    '66%',
-    '50%',
+    '90%',
+    '56%',
     '40%',
-    '33%',
-    '28%',
+    '30%',
+    '30%',
+    '25%',
     '25%'
   ]
 
+  useEffect(() => {
+    console.log(refAreaLeft);
+    console.log(refAreaRight)
+  },[refAreaLeft, refAreaRight])
+
+  function addRefs(){
+    const refs = document.getElementsByClassName('dot');
+    console.log(refs)
+    refs.style.display = 'block'
+  }
+
+  function zoom(){
+    const arr = [refAreaLeft, refAreaRight]
+    setRefAreaLeft(prev => '');
+    setRefAreaRight(prev => '');
+    if(refAreaRight && refAreaLeft){
+      props.addRefCoords(arr)
+    }
+    props.filterGraphData()
+  }
+
+
   	return (
-      <ResponsiveContainer width="100%" height={`${heights[props.graphCount -1 ]}`}>
-        <ComposedChart width={150} height={100} data={props.candlestickData}>
-          <XAxis dataKey='date' />
-          <YAxis />
-          <Bar dataKey="bar_green" fill="green">
-            {/*<ErrorBar dataKey="line_green" stroke='white'/>*/}
-          </Bar>
-          <Bar dataKey="bar_red" fill="red">
-            {/*<ErrorBar dataKey="line_red" stroke='white'/>*/}
-          </Bar>
-        </ComposedChart>
-      </ResponsiveContainer>
+      <>
+        <div style={{ width:"100%", height:'7vh', display:'flex', alignItems:'center', }}>
+          <button style={{ marginLeft: '2vw'}}  type="button" class="btn btn-secondary">Zoom Out</button>
+          <button style={{ marginLeft: '2vw'}} onClick={addRefs} type="button" class="btn btn-primary">Add Ref</button>
+          <button style={{ marginLeft: '2vw'}} type="button" class="btn btn-success btn-sm">Save</button>
+          <button style={{ marginLeft: '2vw'}} type="button" class="btn btn-danger btn-sm">Delete</button>
+        </div>
+        <ResponsiveContainer width="100%" height={`${heights[props.graphCount -1 ]}`}>
+          <ComposedChart
+          barCategoryGap='1%'
+          barGap='1%'
+          barSize='1'
+          minHeight='10'
+          width={150} 
+          height={100} 
+          data={props.candlestickData}
+          onMouseDown={(e) => setRefAreaLeft(prev => e.activeLabel)}
+          onMouseMove={(e) => refAreaLeft && setRefAreaRight(prev => e.activeLabel)}
+          // eslint-disable-next-line react/jsx-no-bind
+          onMouseUp={zoom}
+          >
+            <XAxis dataKey='date' />
+            <YAxis />
+            <Bar dataKey="bar_green" fill="green">
+              {/*<ErrorBar dataKey="line_green" stroke='white'/>*/}
+            </Bar>
+            <Tooltip />
+            <Bar dataKey="bar_red" fill="red">
+              {/*<ErrorBar dataKey="line_red" stroke='white'/>*/}
+            </Bar>
+            <Line type="linear" dataKey="close" stroke="#8884d8" strokeWidth={.5} dot={false}/>
+            <ReferenceDot  className='dot' style={{ display:'none'}} x='2019-08-06' y='0' r={20} fill="red" stroke="none" />
+            <ReferenceDot className='dot' style={{ display:'none'}} x='2019-08-06' y='0' r={20} fill="red" stroke="none" />
+            {refAreaLeft && refAreaRight ? (
+              <ReferenceArea x1={refAreaLeft} x2={refAreaRight} strokeOpacity={0.3} />
+            ) : null}
+          </ComposedChart>
+        </ResponsiveContainer>
+      </>
     );
 }
 
 const CardCandleChart = connect(
   mapStateToProps,
+  { filterGraphData, addRefCoords },
   )(ConnectedCardCandleChart);
 
 export default CardCandleChart;

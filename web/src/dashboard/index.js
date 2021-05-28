@@ -34,7 +34,7 @@ function Dashboard(props) {
   return (
     <>
         <div className="flex flex-wrap">
-          <div style={{ height: `${70 + (props.graphCount - 1) * 35}vh`, backgroundColor:'black', zIndex:'10'}} className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+          <div style={{ height: `${75 + (props.graphCount - 1) * 35}vh`, backgroundColor:'black', zIndex:'10'}} className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
             <MainGraph />
           </div>
           <div className="w-full xl:w-4/12 px-4">

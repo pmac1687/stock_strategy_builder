@@ -165,13 +165,13 @@ function ConnectedSidebar(props) {
               <li onClick={() => collapse('stock', showStock, setShowStock, 'stockSearch')} className="items-center">
                 <a style={{ display:'flex'}} className={"text-xs uppercase py-3 font-bold block " }>
                   <i className={"fas fa-tv mr-2 text-sm "}></i>
-                  Stock <div  style={{ marginLeft: '60%'}}><FontAwesomeIcon id='stock' icon={faChevronUp} size='lg'/></div>
+                  Stock <div  style={{ marginLeft: '41%'}}><FontAwesomeIcon id='stock' icon={faChevronUp} size='lg'/></div>
                 </a>
               </li>
 
               <li id='stockSearch' style={{ display: 'none'}} className="items-center">
                 <div class="shadow flex">
-                  <div style={{ width: '30vw'}}>
+                  <div style={{ width: '15vw'}}>
                     <Select
                       onChange={opt => {props.setStrategyStock(opt.label.split(' ')[0]); props.getStockData();props.getCandlestickData()}}
                       options={props.tickerList}
@@ -183,7 +183,7 @@ function ConnectedSidebar(props) {
               <li onClick={() => collapse('graph', showGraph, setShowGraph, 'graphDetails')} className="items-center">
                 <a className={"text-xs uppercase py-3 font-bold block " }>
                   <i className={"fas fa-tv mr-2 text-sm "}></i>
-                  Graph Type <FontAwesomeIcon style={{ marginLeft:'39%'}} id='graph' icon={faChevronUp} size='lg'/>
+                  Graph Type <FontAwesomeIcon style={{ marginLeft:'18%'}} id='graph' icon={faChevronUp} size='lg'/>
                 </a>
               </li>
 
@@ -206,7 +206,7 @@ function ConnectedSidebar(props) {
               <li onClick={() => collapse('indicators', showIndicators, setShowIndicators, 'indicatorDetails')} className="items-center">
                 <a className={"text-xs uppercase py-3 font-bold block "}>
                   <i className={"fas fa-table mr-2 text-sm "}></i>
-                  Indicators <FontAwesomeIcon style={{ marginLeft:'40%'}} id='indicators' icon={faChevronUp} size='lg'/>
+                  Indicators <FontAwesomeIcon style={{ marginLeft:'20%'}} id='indicators' icon={faChevronUp} size='lg'/>
                 </a>
               </li>
 
@@ -251,7 +251,7 @@ function ConnectedSidebar(props) {
               <li onClick={() => collapse('notes', showNotes, setShowNotes, 'notesDetails')} className="items-center">
                 <a className={"text-xs uppercase py-3 font-bold block "}>
                   <i className={"fas fa-map-marked mr-2 text-sm " }></i>
-                  Notes <FontAwesomeIcon style={{ marginLeft:'56%'}} id='notes' icon={faChevronUp} size='lg'/>
+                  Notes <FontAwesomeIcon style={{ marginLeft:'37%'}} id='notes' icon={faChevronUp} size='lg'/>
                 </a>
               </li>
 

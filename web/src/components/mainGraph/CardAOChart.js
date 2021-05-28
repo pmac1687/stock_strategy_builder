@@ -33,6 +33,8 @@ function ConnectedCardAOChart(props) {
       <BarChart width={400} height={400} data={props.stratStockData}>
         <XAxis dataKey='date' />
         <YAxis />
+        <Tooltip />
+        <Legend />
         <Bar dataKey="ao" fill="#8884d8" />
       </BarChart>
     </ResponsiveContainer>

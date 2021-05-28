@@ -39,9 +39,9 @@ function ConnectedCardBollChart(props) {
       <YAxis />
       <Tooltip />
       <Legend />
-      <Line type="monotone" dataKey="boll" stroke="#8884d8" dot={false} />
-      <Line type="monotone" dataKey="boll_ub" stroke="#82ca9d" dot={false}/>
-      <Line type="monotone" dataKey="boll_lb" stroke="#82ca9d" dot={false} />
+      <Line type="monotone" dataKey="boll" stroke="white" dot={false} />
+      <Line type="monotone" dataKey="boll_ub" stroke="green" dot={false}/>
+      <Line type="monotone" dataKey="boll_lb" stroke="red" dot={false} />
     </LineChart>
   </ResponsiveContainer>
   );
