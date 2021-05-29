@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/pat/Desktop/stock_strategy_builder/stock_strategy_builder/api/venv"
+set -gx VIRTUAL_ENV "/home/pat/Desktop/stock_strat/stock_strategy_builder/api/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

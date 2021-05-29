@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/pat/Desktop/stock_strategy_builder/stock_strategy_builder/api/venv"
+VIRTUAL_ENV="/home/pat/Desktop/stock_strat/stock_strategy_builder/api/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

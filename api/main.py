@@ -3,6 +3,7 @@ import pandas as pd
 import stockstats
 import keys
 from tapy import Indicators
+import numpy as np
 
 
 
@@ -60,8 +61,40 @@ def convert_to_pandas(data):
 
     df = get_trend(df)
 
+    df = get_candle_stats(df)
+
+    df = remove_NANs(df)
+
     print(df)
     return df
+
+def convert_nan(row):
+    if pd.isnull(row):
+        row=''
+        print(row)
+    return row
+
+def remove_NANs(df):
+    print('row 1', df.iloc[0]['boll'])
+    df.applymap(convert_nan)
+    print('row 1', df.iloc[0]['boll'])
+
+    return df
+
+
+def get_candle_stats(df):
+    green = []
+    for i in range(len(df)):
+        if i == 0:
+            green.append(True)
+        if i != 0 :
+            if df.iloc[i]['Close'] > df.iloc[i-1]['Close']:
+                green.append(True)
+            else:
+                green.append(False)
+    df['green'] = green
+    return df
+
 
 def get_trend(df):
     close = []
