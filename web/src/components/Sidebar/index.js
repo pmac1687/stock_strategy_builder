@@ -17,7 +17,8 @@ import {
   incrementGraphCount, 
   removeGraph, 
   addFirstGraph,
-  decrementGraphCount 
+  decrementGraphCount,
+  addWindowCoords, 
 } from "../../js/actions/index";
 
 import Select from 'react-select';
@@ -30,6 +31,8 @@ const mapStateToProps = state => {
     tickerList: state.tickerList,
     graphCount: state.graphCount,
     graphs: state.graphs,
+    stratStockData: state.stratStockData,
+    win: state.refWindow
    };
 };
 
@@ -39,6 +42,24 @@ function ConnectedSidebar(props) {
   const [showGraph, setShowGraph] = useState(false);
   const [showIndicators, setShowIndicators] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
+  const [dates, setDates] = useState([]);
+  const arr = [1,2,3,4]
+  useEffect(() => {
+    const arrs = []
+    props.stratStockData.map((item) => {
+      arrs.push({
+        'label': item['date'],
+        'value': item['date']
+      });
+      console.log(item['date'], 'item/date')
+    });
+    setDates(prev => [...arrs])
+    console.log(dates)
+  },[props.stratStockData])
+
+  useEffect(() => {
+    console.log('window', props.win)
+  },[props.win])
 
   useEffect(() => {
     props.addFirstGraph(props.mainGraphType)
@@ -171,7 +192,7 @@ function ConnectedSidebar(props) {
 
               <li id='stockSearch' style={{ display: 'none'}} className="items-center">
                 <div class="shadow flex">
-                  <div style={{ width: '15vw'}}>
+                  <div style={{ width: '100%'}}>
                     <Select
                       onChange={opt => {props.setStrategyStock(opt.label.split(' ')[0]); props.getStockData();props.getCandlestickData()}}
                       options={props.tickerList}
@@ -255,17 +276,30 @@ function ConnectedSidebar(props) {
                 </a>
               </li>
 
-              <li className="items-center">
-                <a className={"text-xs uppercase py-3 font-bold block " }>
-                  <i className={"fas fa-map-marked mr-2 text-sm " }></i>
-                  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                    Show
-                  </button>
-                  <button style={{ marginLeft:'1vw'}} class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
-                    Save
-                  </button>
-                </a>
+              <li  className="items-center">
+                <div class="shadow flex">
+                  <div style={{ width: '100%'}}>
+                    <Select
+                      onChange={opt => {props.addWindowCoords([opt,'left'])}}
+                      options={dates}
+                      placeholder='Choose Date'
+                    />
+                  </div>
+                </div>
               </li>
+
+              <li  className="items-center">
+                <div class="shadow flex">
+                  <div style={{ width: '100%', marginTop:'2vh'}}>
+                    <Select
+                      onChange={opt => {props.addWindowCoords([opt,'right'])}}
+                      options={dates}
+                      placeholder='Choose Date'
+                    />
+                  </div>
+                </div>
+              </li>
+
             </ul>
 
             {/* Divider */}
@@ -349,7 +383,8 @@ const Sidebar = connect(
     incrementGraphCount, 
     removeGraph, 
     addFirstGraph,
-    decrementGraphCount
+    decrementGraphCount,
+    addWindowCoords
    }
   )(ConnectedSidebar);
 

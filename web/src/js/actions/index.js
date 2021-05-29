@@ -24,7 +24,10 @@ import { ADD_STOCK,
   ADD_CLOSE_GRAPH,
   DECREMENT_COUNT,
   FILTER_GRAPH_DATA,
-  GET_REF_COORDS
+  GET_REF_COORDS,
+  ADD_WINDOW_COORDS,
+  REMOVE_WINDOW_COORDS,
+  ADD_SERIES_ARRAY
 } from "../constants/action-types";
 import axios from 'axios';
 
@@ -161,6 +164,18 @@ export function addFirstGraph(payload) {
 
 export function filterGraphData() {
   return { type: FILTER_GRAPH_DATA}
+};
+
+export function addWindowCoords(payload) {
+  return { type: ADD_WINDOW_COORDS, payload}
+};
+
+export function removeWindowCoords() {
+  return { type: REMOVE_WINDOW_COORDS}
+};
+
+export function addSeriesArray() {
+  return { type: ADD_SERIES_ARRAY}
 };
 
 export function getStockData() {

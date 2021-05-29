@@ -25,7 +25,10 @@ import {
   ADD_CLOSE_GRAPH,
   DECREMENT_COUNT,
   FILTER_GRAPH_DATA,
-  GET_REF_COORDS  
+  GET_REF_COORDS,
+  ADD_WINDOW_COORDS,
+  ADD_SERIES_ARRAY, 
+  REMOVE_WINDOW_COORDS  
 } from "../constants/action-types";
 
 const initialState = {
@@ -51,6 +54,8 @@ const initialState = {
   graphs: ['candle'],
   graphCount: 1,
   refCoords: [],
+  refWindow: [],
+  seriesWindows: [],
 };
 
 
@@ -156,6 +161,46 @@ function rootReducer(state = initialState, action) {
   if ( action.type === GET_REF_COORDS) {
     console.log('action.REDUCER.FILTER', action.payload)
     return {...state, refCoords: [...action.payload]}
+  }
+
+  if ( action.type === ADD_SERIES_ARRAY) {
+    let coords = state.refWindow;
+    const arr = []
+    let within = false
+    if(coords[0] && coords[1]){
+      coords = coords.sort()
+      for(let i=0;i<state.stratStockData.length;i++){
+        const dat = state.stratStockData[i];
+        if(dat['date'] === coords[1]){
+          arr.push(dat);
+          within = false;
+          break
+        }
+        if(within === true){
+          arr.push(dat)
+        }
+        if(dat['date'] === coords[0]){
+          arr.push(dat);
+          within = true
+          console.log(dat['date'],coords[0], 'date reducer')
+        }
+      }
+      return {...state, seriesWindows: [...state.seriesWindows, arr]}
+    }
+  }
+
+  if ( action.type === REMOVE_WINDOW_COORDS) {
+    return {...state, refWindow: ['', '']}
+  }
+
+  if ( action.type === ADD_WINDOW_COORDS) {
+    console.log('action.window.coords', action.payload)
+    if(action.payload[1] === 'left'){
+      return {...state, refWindow: [action.payload[0]['label'], state.refWindow[1]]}
+    }
+    if(action.payload[1] === 'right'){
+      return {...state, refWindow: [state.refWindow[0], action.payload[0]['label']]}
+    }
   }
 
   if ( action.type === FILTER_GRAPH_DATA) {

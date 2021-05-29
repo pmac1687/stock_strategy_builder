@@ -8,103 +8,18 @@ const mapStateToProps = state => {
   return { 
     historyData: state.masterHistoryData,
     historyDataArray: state.pageHistoryDataArr,
+    seriesWindows: state.seriesWindows,
    };
 };
 
-const initialState = {
-  historyDataArray: [],
-  dataArray: [],
-};
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'addHistoryData': return {...state, historyData: action.arr};
-    case 'addNewTick': return {...state, dataArray: action.arr};
-    case 'removeDoubles': return {...state, dataArray: [...new Set(state.dataArray)]};
-    case 'clear': return {...state, dataArray: action.arr};
-    default: throw new Error('Unexpected action');
-  }
-};
+
 
 function ConnectedCardPageVisits(props) {
-  const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
-    //const p = state.historyDataArray;
-    //dispatch({ type: 'addHistoryData', arr: p.push(props.historyData)});
-    props.addPageHistory(props.historyData)
-    formatData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.historyData]);
-  useEffect(() => {
-    console.log('arrrrrrrrrrrrrray', state.dataArray);
-  }, [state])
-  function formatData(){
-    if(props.historyDataArray.length > 0){
-      state.dataArray = [];
-      const dat = props.historyDataArray;
-      //unusual, i cant pop the empty array that apperates out of nowhere??
-      if(dat[0].length === 0){
-        dat.pop(0);
-      };
-      for(let i=0;i<dat.length;i++){
-        getData(dat[i])
-      }
-    };
-}
-  function getHighLow(arr,time){
-    console.log('hello', arr.length)
-    if(arr.length > time-1){
-      const dats = arr.slice(arr.length-time, arr.length-1);
-      let high = 0;
-      let low = 100;
-      for(let i=0;i<dats.length;i++){
-        if(parseFloat(dats[i]) > high){
-          high = Math.round(parseFloat(dats[i])*1000) / 1000
-        }
-        if(dats[i] < low){
-          low = (Math.round((parseFloat(dats[i]) *1000)))/1000
-        }
-      }
-      return `${high}/${low}`
-    } else return '0'
-  }
-  function getData(arr){
-    const res = state.dataArray;
-    const price =[];
-    const ao = [];
-    const date = [];
-    const tick = [];
-    const percent = [];
-    for(let b=0;b<arr.length;b++){
-      price.push(arr[b]['price']);
-      ao.push(arr[b]['ao']);
-      date.push(arr[b]['date']);
-      tick.push(arr[b]['name']);
-      percent.push(arr[b]['percent']);
-    };
-    const pyear = getHighLow(price, 365);
-    const psixM = getHighLow(price, 180);
-    const pthreeM = getHighLow(price, 90)
-    const pmonth = getHighLow(price, 30)
-    const aoyear = getHighLow(ao,365);
-    const aosixM = getHighLow(ao,180);
-    const aothreeM = getHighLow(ao,90);
-    const aomonth = getHighLow(ao,30);
-    const c = arr.length - 1
-    console.log(pmonth,'yearrrsr')
-    const result = {'name': tick[c], 'price': price[c], 'ao': ao[c], 'percent': percent[c], 'date': date[c], 'pmonth': pmonth, 'pyear': pyear, 'psixM': psixM, 'pthreeM': pthreeM, 'aomonth': aomonth, 'aoyear': aoyear, 'aosixM': aosixM, 'aothreeM': aothreeM};
-    //res.push(result);
-    console.log('resssss', result);
-    const arg = [];
-    for(let d=0;d<res.length;d++){
-      arg.push(res[d]['name'])
-    };
-    console.log(result['name']);
-    console.log(arg)
-    if(!(result['name'] in arg)){
-      res.push((result))
-    };
-    dispatch({ type: 'addNewTick', arr: res});
-  };
+    console.log('page visits serieswindow', props.seriesWindows)
+  },[props.seriesWindows])
+
+
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
@@ -169,7 +84,7 @@ function ConnectedCardPageVisits(props) {
               </tr>
             </thead>
             <tbody>
-              {state.dataArray.map((item, index) => (
+              {props.seriesWindows.map((item, index) => (
                 <tr key={item['name']}>
                   <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
                     {item['name']}

@@ -2,19 +2,32 @@ import React, { useEffect, useState} from 'react';
 import {ComposedChart, ReferenceDot,ReferenceArea, Bar,Line, XAxis, YAxis, Tooltip, ErrorBar, ResponsiveContainer} from 'recharts'
 
 import { connect } from "react-redux";
-import { addBarData, filterGraphData, addRefCoords  } from "../../js/actions/index";
+import { 
+  addBarData, 
+  filterGraphData, 
+  addRefCoords, 
+  getStockData, 
+  getCandlestickData,
+  addSeriesArray,
+  removeWindowCoords  
+} from "../../js/actions/index";
 
 
 const mapStateToProps = state => {
   return { 
     candlestickData: state.candlestickData,
     graphCount: state.graphCount,
+    refWindow: state.refWindow,
    };
 };
 
 function ConnectedCardCandleChart(props){
   const [refAreaLeft, setRefAreaLeft] = useState()
   const [refAreaRight, setRefAreaRight] = useState()
+  const [leftDot, setLeftDot] = useState();
+  const [rightDot, setRightDot] = useState();
+  const [refsOff, setRefsOff] = useState(true);
+  const [rWindow, setRWindow] = useState([]);
   const refArr = []
   const heights = [
     '90%',
@@ -25,6 +38,10 @@ function ConnectedCardCandleChart(props){
     '25%',
     '25%'
   ]
+  useEffect(() => {
+    setRWindow(prev => props.refWindow);
+    console.log(rWindow);
+  },[props.refWindow])
 
   useEffect(() => {
     console.log(refAreaLeft);
@@ -32,9 +49,18 @@ function ConnectedCardCandleChart(props){
   },[refAreaLeft, refAreaRight])
 
   function addRefs(){
-    const refs = document.getElementsByClassName('dot');
-    console.log(refs)
-    refs.style.display = 'block'
+    const ref1 = document.getElementById('dot1');
+    const ref2 = document.getElementById('dot2');
+    const refs = [ref1,ref2]
+    setRefsOff(prev => false)
+
+    console.log(refs.length, 'length')
+    for(let i=0;i<refs.length;i++){
+      if(refs[i]){
+        refs[i].style.display = 'block';
+        console.log(refs[i], 'refs')
+      }
+    }
   }
 
   function zoom(){
@@ -42,7 +68,9 @@ function ConnectedCardCandleChart(props){
     setRefAreaLeft(prev => '');
     setRefAreaRight(prev => '');
     if(refAreaRight && refAreaLeft){
-      props.addRefCoords(arr)
+      if (refAreaRight !== refAreaLeft){
+        props.addRefCoords(arr)
+      }
     }
     props.filterGraphData()
   }
@@ -51,10 +79,10 @@ function ConnectedCardCandleChart(props){
   	return (
       <>
         <div style={{ width:"100%", height:'7vh', display:'flex', alignItems:'center', }}>
-          <button style={{ marginLeft: '2vw'}}  type="button" class="btn btn-secondary">Zoom Out</button>
+          <button style={{ marginLeft: '2vw'}} onClick={() => {props.getStockData(); props.getCandlestickData()}}  type="button" class="btn btn-secondary">Zoom Out</button>
           <button style={{ marginLeft: '2vw'}} onClick={addRefs} type="button" class="btn btn-primary">Add Ref</button>
-          <button style={{ marginLeft: '2vw'}} type="button" class="btn btn-success btn-sm">Save</button>
-          <button style={{ marginLeft: '2vw'}} type="button" class="btn btn-danger btn-sm">Delete</button>
+          <button style={{ marginLeft: '2vw'}} onClick={props.addSeriesArray} type="button" class="btn btn-success btn-sm">Save</button>
+          <button style={{ marginLeft: '2vw'}} onClick={props.removeWindowCoords} type="button" class="btn btn-danger btn-sm">Delete</button>
         </div>
         <ResponsiveContainer width="100%" height={`${heights[props.graphCount -1 ]}`}>
           <ComposedChart
@@ -65,7 +93,7 @@ function ConnectedCardCandleChart(props){
           width={150} 
           height={100} 
           data={props.candlestickData}
-          onMouseDown={(e) => setRefAreaLeft(prev => e.activeLabel)}
+          onMouseDown={(e) => refsOff && setRefAreaLeft(prev => e.activeLabel)}
           onMouseMove={(e) => refAreaLeft && setRefAreaRight(prev => e.activeLabel)}
           // eslint-disable-next-line react/jsx-no-bind
           onMouseUp={zoom}
@@ -80,8 +108,8 @@ function ConnectedCardCandleChart(props){
               {/*<ErrorBar dataKey="line_red" stroke='white'/>*/}
             </Bar>
             <Line type="linear" dataKey="close" stroke="#8884d8" strokeWidth={.5} dot={false}/>
-            <ReferenceDot  className='dot' style={{ display:'none'}} x='2019-08-06' y='0' r={20} fill="red" stroke="none" />
-            <ReferenceDot className='dot' style={{ display:'none'}} x='2019-08-06' y='0' r={20} fill="red" stroke="none" />
+            <ReferenceDot  id='dot1' x={rWindow[0]} y='0' r={20} fill="red" stroke="none" />
+            <ReferenceDot id='dot2' x={rWindow[1]} y='0' r={20} fill="red" stroke="none" />
             {refAreaLeft && refAreaRight ? (
               <ReferenceArea x1={refAreaLeft} x2={refAreaRight} strokeOpacity={0.3} />
             ) : null}
@@ -93,7 +121,14 @@ function ConnectedCardCandleChart(props){
 
 const CardCandleChart = connect(
   mapStateToProps,
-  { filterGraphData, addRefCoords },
+  { 
+    filterGraphData, 
+    addRefCoords, 
+    getStockData, 
+    getCandlestickData,
+    addSeriesArray,
+    removeWindowCoords 
+  },
   )(ConnectedCardCandleChart);
 
 export default CardCandleChart;
