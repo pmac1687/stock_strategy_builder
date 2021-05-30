@@ -1,11 +1,70 @@
+from numpy.core.numeric import NaN
 import psycopg2
 import pandas as pd
 import stockstats
 import keys
 from tapy import Indicators
 import numpy as np
+import math
 
+def add_extra_table_columns(data):
+    ao_percent = []
+    ma_div_perc = []
+    f_highs = 0
+    f_lows = 0
+    trend_close = 0
+    trend_ma = 0
+    boll_ub_div_arr = []
+    boll_ub_div_perc_arr = []
+    print(data.iloc[1])
+    for i in range(len(data)):
+        close = data['Close'][i]
+        ao = data['ao'][i]
+        ma_div = data['ma_div'][i]
+        boll = data['boll'][i]
+        boll_ub = data['boll_ub'][i]
+        boll_lb = data['boll_lb'][i]
+        if data['fractal_highs'][i] == True:
+            f_highs += 1
+        if data['fractal_lows'][i] == True:
+            f_lows += 1
+        if data['trend_close'][i] == 'up':
+            trend_close += 1
+        if data['trend_close'][i] == 'down':
+            trend_close -= 1
+        if data['trend_ma'][i] == 'up':
+            trend_ma += 1
+        if data['trend_ma'][i] == 'down':
+            trend_ma -= 1
+        try:
+            perc_ao = int(ao) / int(close)
+            ao_percent.append(perc_ao * 100)
+            perc_ma_div = int(ma_div) / int(close)
+            ma_div_perc.append(perc_ma_div * 100)
+            boll_ub_div = int(boll) - int(boll_ub)
+            boll_ub_div_perc = boll_ub_div / int(boll)
+            boll_ub_div_arr.append(boll_ub_div)
+            boll_ub_div_perc_arr.append(boll_ub_div_perc * 100)
 
+        except:
+            print('error', data[i])
+
+    print(boll_ub_div_perc_arr)
+
+def get_table_series_data(df, dates):
+    date1 = dates.split(',')[0].split('"')[1]
+    date2 = dates.split(',')[1].split('"')[1]
+    dats = []
+    for i in range(len(df)):
+        date = df.iloc[i].name.split(' ')[0]
+        #print(dates[0], date)
+        if date >= date1 and  date <= date2:
+            dats.append(i)
+    data = df[dats[0]:dats[-1]]
+    data = add_extra_table_columns(data)
+
+    return data
+    
 
 def get_stock_data(tick):
     conn = psycopg2.connect(database="postgres", user=keys.user, password=keys.password, host=keys.host, port="5432")
@@ -13,7 +72,6 @@ def get_stock_data(tick):
     #cur.execute(f"select * from master_ticker_list limit 5;")
     cur.execute(f"select * from historical_stock_data where ticker_id in (select id from master_ticker_list where ticker='AAPL');")
     data = cur.fetchall()
-    print(data)
     conn.commit()
     conn.close()
     return data
@@ -65,19 +123,37 @@ def convert_to_pandas(data):
 
     df = remove_NANs(df)
 
-    print(df)
+    df.fillna(0)
+
+    df.replace(np.nan, '')
+
     return df
 
 def convert_nan(row):
     if pd.isnull(row):
         row=''
-        print(row)
+    try:
+        if math.isnan(row):
+            row = 0.0
+    except:
+        pass
+        #print('error', row)
+
     return row
 
 def remove_NANs(df):
-    print('row 1', df.iloc[0]['boll'])
-    df.applymap(convert_nan)
-    print('row 1', df.iloc[0]['boll'])
+    columns = ['open', 'Close', 'High', 'Low', 'volume', 'close_-1_s', 'close_-1_d',
+       'closepm', 'closenm', 'closepm_12_smma', 'closenm_12_smma', 'rs_12',
+       'rsi_12', 'ao', 'boll', 'boll_ub', 'boll_lb', 'macd_value',
+       'macd_signal', 'fractal_highs', 'fractal_lows', 'f_high', 'f_low',
+       'macd_h', 'ma', 'ma_div', 'trend_ma', 'trend_close', 'green']
+    for i in range(len(df)):
+        for col in columns:
+            try:
+                if math.isnan(df[col][i]):
+                    df[col][i] = 0.0
+            except:
+                pass
 
     return df
 
@@ -187,7 +263,6 @@ def add_tapy_indicators(df):
     df['f_high'] = high
     df['f_low'] = low
     df['macd_h'] = macd_h
-    print(df['f_low'])
 
     return df
 

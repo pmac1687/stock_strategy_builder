@@ -9,6 +9,8 @@ import main
 app = Flask(__name__)
 CORS(app)
 
+
+
 @app.route("/tickerList")
 def get_tickers():
     data = main.get_ticker_list()
@@ -95,6 +97,13 @@ def get_historical(ticker):
         }
         arr.append(dic)
     return json.dumps(arr)
+
+@app.route("/table/<dates>")
+def get_table(dates):
+    print(dates)
+    data = main.main(dates[2])
+    data = main.get_table_series_data(data, dates)
+    return json.dumps(data)
 
 #run the app
 if __name__ == "__main__":
