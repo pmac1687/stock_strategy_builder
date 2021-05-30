@@ -182,7 +182,6 @@ function rootReducer(state = initialState, action) {
         if(dat['date'] === coords[0]){
           arr.push(dat);
           within = true
-          console.log(dat['date'],coords[0], 'date reducer')
         }
       }
       return {...state, seriesWindows: [...state.seriesWindows, arr]}

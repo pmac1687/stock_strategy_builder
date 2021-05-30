@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { LineChart, Line,Bar, ResponsiveContainer, XAxis, YAxis, Legend, Tooltip } from 'recharts';
+import { LineChart, Line,Bar, ResponsiveContainer, XAxis, YAxis, Legend, Tooltip, ComposedChart } from 'recharts';
 import { connect } from "react-redux";
 
 
@@ -29,7 +29,7 @@ function ConnectedMACDChart(props) {
   
   return (
     <ResponsiveContainer width="100%" height={heights[props.graphCount]}>
-      <LineChart width={300} height={100} data={props.stratStockData}>
+      <ComposedChart width={300} height={100} data={props.stratStockData}>
         <XAxis dataKey='date' />
         <YAxis />
         <Legend />
@@ -37,7 +37,7 @@ function ConnectedMACDChart(props) {
         <Line type="monotone" dataKey="macd_value" stroke="#8884d8" strokeWidth={2} dot={false} />
         <Line type="monotone" dataKey="macd_signal" stroke="white" strokeWidth={2} dot={false} />
         <Bar dataKey="macd_h" fill="#8884d8" />
-      </LineChart>
+      </ComposedChart>
     </ResponsiveContainer>
   );
 }

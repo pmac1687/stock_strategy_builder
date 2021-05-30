@@ -51,7 +51,6 @@ function ConnectedSidebar(props) {
         'label': item['date'],
         'value': item['date']
       });
-      console.log(item['date'], 'item/date')
     });
     setDates(prev => [...arrs])
     console.log(dates)
