@@ -27,7 +27,8 @@ import { ADD_STOCK,
   GET_REF_COORDS,
   ADD_WINDOW_COORDS,
   REMOVE_WINDOW_COORDS,
-  ADD_SERIES_ARRAY
+  ADD_SERIES_ARRAY,
+  ADD_WINDOWS_SERIES_DATA
 } from "../constants/action-types";
 import axios from 'axios';
 
@@ -177,6 +178,28 @@ export function removeWindowCoords() {
 export function addSeriesArray() {
   return { type: ADD_SERIES_ARRAY}
 };
+
+export function getWindowsSeriesData() {
+  return function(dispatch, getState) {
+    const { strategyStock, seriesWindows } = getState()
+    const ind = seriesWindows.length - 1
+    const end = seriesWindows[ind].length -1
+    console.log('strratta', seriesWindows)
+    return   axios.get(`http://localhost:5000/table/${seriesWindows[ind][0]},${seriesWindows[ind][end]},${strategyStock}`, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          }
+        })  
+        .then(res => res.data)
+        .then(data => {
+          console.log('resdata for the table', data)  
+          dispatch({ type: ADD_WINDOWS_SERIES_DATA, payload: data})
+        })
+        .catch(err => {  
+          console.log(err)  
+        });  
+  };
+}
 
 export function getStockData() {
   return function(dispatch, getState) {

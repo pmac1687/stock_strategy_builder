@@ -28,7 +28,8 @@ import {
   GET_REF_COORDS,
   ADD_WINDOW_COORDS,
   ADD_SERIES_ARRAY, 
-  REMOVE_WINDOW_COORDS  
+  REMOVE_WINDOW_COORDS,
+  ADD_WINDOWS_SERIES_DATA  
 } from "../constants/action-types";
 
 const initialState = {
@@ -55,7 +56,9 @@ const initialState = {
   graphCount: 1,
   refCoords: [],
   refWindow: [],
+  windowsStocks: [],
   seriesWindows: [],
+  windowsSeriesData: [],
 };
 
 
@@ -163,6 +166,11 @@ function rootReducer(state = initialState, action) {
     return {...state, refCoords: [...action.payload]}
   }
 
+  if ( action.type === ADD_WINDOWS_SERIES_DATA) {
+    console.log('action.REDUCER.FILTER', action.payload)
+    return {...state, windowsSeriesData: [...state.windowsSeriesData,  action.payload]}
+  }
+
   if ( action.type === ADD_SERIES_ARRAY) {
     let coords = state.refWindow;
     const arr = []
@@ -172,19 +180,19 @@ function rootReducer(state = initialState, action) {
       for(let i=0;i<state.stratStockData.length;i++){
         const dat = state.stratStockData[i];
         if(dat['date'] === coords[1]){
-          arr.push(dat);
+          arr.push(dat['date']);
           within = false;
           break
         }
         if(within === true){
-          arr.push(dat)
+          arr.push(dat['date'])
         }
         if(dat['date'] === coords[0]){
-          arr.push(dat);
+          arr.push(dat['date']);
           within = true
         }
       }
-      return {...state, seriesWindows: [...state.seriesWindows, arr]}
+      return {...state, seriesWindows: [...state.seriesWindows, arr], windowsStocks: [...state.windowsStocks, state.strategyStock]}
     }
   }
 

@@ -1,6 +1,7 @@
 import React, {useEffect, useReducer} from "react";
 import { connect } from "react-redux";
 import { addPageHistory } from "../js/actions/index";
+import  "./styles.css";
 
 
 
@@ -9,6 +10,8 @@ const mapStateToProps = state => {
     historyData: state.masterHistoryData,
     historyDataArray: state.pageHistoryDataArr,
     seriesWindows: state.seriesWindows,
+    windowsSeriesData: state.windowsSeriesData,
+    windowsStocks: state.windowsStocks
    };
 };
 
@@ -16,8 +19,10 @@ const mapStateToProps = state => {
 
 function ConnectedCardPageVisits(props) {
   useEffect(() => {
-    console.log('page visits serieswindow', props.seriesWindows)
-  },[props.seriesWindows])
+    props.windowsSeriesData.map((item, index) => {
+      console.log(item)
+    })
+  },[props.windowsSeriesData])
 
 
   return (
@@ -49,10 +54,11 @@ function ConnectedCardPageVisits(props) {
                   Ticker
                 </th>
                 <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
-                  Percent AO/Price
+                  <div>High/Low</div>
+                  <div>(Spread)</div>
                 </th>
                 <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
-                  AO
+                  macd
                 </th>
                 <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
                   Price
@@ -84,16 +90,17 @@ function ConnectedCardPageVisits(props) {
               </tr>
             </thead>
             <tbody>
-              {props.seriesWindows.map((item, index) => (
+              {props.windowsSeriesData.map((item, index) => (
                 <tr key={item['name']}>
                   <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
-                    {item['name']}
+                    {props.windowsStocks[index]}
                   </th>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {item['percent']}
+                  <td  className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                    <div id='flex'><div id='green' >{`${item[0]['high']}`}</div>/<div id='red'>{item[0]['low']}</div></div>
+                    <div>${item[0]['h_l_spread']}/ {item[0]['h_l_spread_perc']}%</div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {item['ao']}
+                    <div id='flex'><div id='green' >{`${item[0]['macd_h_high']}`}</div>/<div id='red'>{item[0]['macd_h_low']}</div></div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
                     {item['price']}

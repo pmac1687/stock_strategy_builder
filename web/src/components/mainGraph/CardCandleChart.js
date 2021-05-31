@@ -9,7 +9,8 @@ import {
   getStockData, 
   getCandlestickData,
   addSeriesArray,
-  removeWindowCoords  
+  removeWindowCoords,
+  getWindowsSeriesData  
 } from "../../js/actions/index";
 
 
@@ -81,7 +82,7 @@ function ConnectedCardCandleChart(props){
         <div style={{ width:"100%", height:'7vh', display:'flex', alignItems:'center', }}>
           <button style={{ marginLeft: '2vw'}} onClick={() => {props.getStockData(); props.getCandlestickData()}}  type="button" class="btn btn-secondary">Zoom Out</button>
           <button style={{ marginLeft: '2vw'}} onClick={addRefs} type="button" class="btn btn-primary">Add Ref</button>
-          <button style={{ marginLeft: '2vw'}} onClick={props.addSeriesArray} type="button" class="btn btn-success btn-sm">Save</button>
+          <button style={{ marginLeft: '2vw'}} onClick={() => {props.addSeriesArray(); props.getWindowsSeriesData()}} type="button" class="btn btn-success btn-sm">Save</button>
           <button style={{ marginLeft: '2vw'}} onClick={props.removeWindowCoords} type="button" class="btn btn-danger btn-sm">Delete</button>
         </div>
         <ResponsiveContainer width="100%" height={`${heights[props.graphCount -1 ]}`}>
@@ -127,7 +128,8 @@ const CardCandleChart = connect(
     getStockData, 
     getCandlestickData,
     addSeriesArray,
-    removeWindowCoords 
+    removeWindowCoords,
+    getWindowsSeriesData 
   },
   )(ConnectedCardCandleChart);
 
