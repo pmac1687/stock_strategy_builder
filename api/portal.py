@@ -100,8 +100,9 @@ def get_historical(ticker):
 
 @app.route("/table/<dates>")
 def get_table(dates):
-    print(dates)
-    data = main.main(dates[2])
+    print('tick', dates)
+    tick = dates.split(',')[2]
+    data = main.main(tick)
     data = main.get_table_series_data(data, dates)
     return json.dumps(data)
 

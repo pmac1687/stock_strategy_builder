@@ -2,5 +2,127 @@ Index(['open', 'Close', 'High', 'Low', 'volume', 'close_-1_s', 'close_-1_d',
        'closepm', 'closenm', 'closepm_12_smma', 'closenm_12_smma', 'rs_12',
        'rsi_12', 'ao', 'boll', 'boll_ub', 'boll_lb', 'macd_value',
        'macd_signal', 'fractal_highs', 'fractal_lows', 'f_high', 'f_low',
-       'macd_h', 'ma', 'ma_div', 'trend_ma', 'trend_close', 'green'],
-      dtype='object')
+       'macd_h', 'ma', 'ma_div', 'trend_ma', 'trend_close', 'green',
+       'ao_percent', 'ma_div_perc', 'boll_ub_div_arr', 'boll_ub_div_perc_arr',
+       'boll_lb_div_arr', 'boll_lb_div_perc_arr', 'f_up', 'f_down', 'ma_trend',
+       'close_trend'],
+
+
+        /table/[%222019-01-02%22,%222019-01-03%22,%22A%22]
+
+        /table/[%222019-01-02%22,%222019-01-03%22,%22A%22]
+
+        /table/[%20%222019-08-20%22,%20%222020-04-07%22,%22aapl%22]
+
+        2019-01-02,2019-01-03,A
+
+
+        ao: "0.0"
+​​
+ao_high: "0.0"
+​​
+ao_low: "0.0"
+​​
+ao_p_high: "0.0"
+​​
+ao_p_low: "0.0"
+​​
+ao_percent: "0.0"
+​​
+boll: "0.0"
+​​
+boll_div_h: "0"
+​​
+boll_div_l: "0"
+​​
+boll_div_p_h: "0"
+​​
+boll_div_p_l: "0"
+​​
+boll_lb: "0.0"
+​​
+boll_lb_div_arr: "0"
+​​
+boll_lb_div_perc_arr: "0"
+​​
+boll_ub: "0.0"
+​​
+boll_ub_div_arr: "0"
+​​
+boll_ub_div_perc_arr: "0"
+​​
+close: "26.239999771118164"
+​​
+close_h: "26.239999771118164"
+​​
+close_l: "26.239999771118164"
+​​
+close_trend: "0"
+​​
+f_down: "0"
+​​
+f_high: ""
+​​
+f_low: ""
+​​
+f_up: "0"
+​​
+fractal_highs: "False"
+​​
+fractal_lows: "False"
+​​
+high: "26.847000122070312"
+​​
+low: "25.479999542236328"
+​​
+ma: "26.239999771118164"
+​​
+ma_div: "0.0"
+​​
+ma_div_h: "0.0"
+​​
+ma_div_l: "0.0"
+​​
+ma_div_p_h: "0.0"
+​​
+ma_div_p_l: "0.0"
+​​
+ma_div_perc: "0.0"
+​​
+ma_high: "26.239999771118164"
+​​
+ma_low: "26.239999771118164"
+​​
+ma_trend: "-1"
+​​
+macd_h: "0.0"
+​​
+macd_h_high: "0.0"
+​​
+macd_h_low: "0.0"
+​​
+macd_signal: "0.0"
+​​
+macd_value: "0.0"
+​​
+open: "25.954999923706055"
+​​
+open_h: "25.954999923706055"
+​​
+open_l: "25.954999923706055"
+​​
+rsi: "0.0"
+​​
+rsi_h: "0.0"
+​​
+rsi_l: "0.0"
+​​
+trend_close: ""
+​​
+trend_ma: "down"
+​​
+vol_h: "3067000.0"
+​​
+vol_l: "3067000.0"
+​​
+volume: "3067000.0"

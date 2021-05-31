@@ -10,13 +10,23 @@ import math
 def add_extra_table_columns(data):
     ao_percent = []
     ma_div_perc = []
-    f_highs = 0
-    f_lows = 0
-    trend_close = 0
-    trend_ma = 0
+    f_high = 0
+    f_low = 0
+    trend_c = 0
+    trend_m = 0
+    f_up = []
+    f_down = []
+    ma_trend = []
+    close_trend = []
+    arr = [f_up,f_down,ma_trend, close_trend]
     boll_ub_div_arr = []
     boll_ub_div_perc_arr = []
-    print(data.iloc[1])
+    boll_lb_div_arr = []
+    boll_lb_div_perc_arr = []
+    data['ma_div'].replace(to_replace='',
+                 value =0.0,
+                 inplace=True)
+    #data['ao_percent'] = 0.0
     for i in range(len(data)):
         close = data['Close'][i]
         ao = data['ao'][i]
@@ -24,53 +34,174 @@ def add_extra_table_columns(data):
         boll = data['boll'][i]
         boll_ub = data['boll_ub'][i]
         boll_lb = data['boll_lb'][i]
+        for b in arr:
+            b.append(0)
         if data['fractal_highs'][i] == True:
-            f_highs += 1
+            f_high += 1
         if data['fractal_lows'][i] == True:
-            f_lows += 1
+            f_low += 1
         if data['trend_close'][i] == 'up':
-            trend_close += 1
+            trend_c += 1
         if data['trend_close'][i] == 'down':
-            trend_close -= 1
+            trend_c -= 1
         if data['trend_ma'][i] == 'up':
-            trend_ma += 1
+            trend_m += 1
         if data['trend_ma'][i] == 'down':
-            trend_ma -= 1
+            trend_m -= 1
         try:
             perc_ao = int(ao) / int(close)
             ao_percent.append(perc_ao * 100)
+            #data.loc[i, 'ao_percent'] = perc_ao * 100
             perc_ma_div = int(ma_div) / int(close)
             ma_div_perc.append(perc_ma_div * 100)
             boll_ub_div = int(boll) - int(boll_ub)
-            boll_ub_div_perc = boll_ub_div / int(boll)
+            boll_ub_div_perc = boll_ub_div / int(boll) if int(boll) != 0 else 0
             boll_ub_div_arr.append(boll_ub_div)
             boll_ub_div_perc_arr.append(boll_ub_div_perc * 100)
+
+            boll_lb_div = int(boll) - int(boll_lb)
+            boll_lb_div_perc = boll_lb_div / int(boll) if int(boll) != 0 else 0
+            boll_lb_div_arr.append(boll_lb_div)
+            boll_lb_div_perc_arr.append(boll_lb_div_perc * 100)
 
         except:
             print('error', data[i])
 
-    print(boll_ub_div_perc_arr)
+    data['ao_percent'] = ao_percent
+    data['ma_div_perc'] = ma_div_perc
+    data['boll_ub_div_arr'] = boll_ub_div_arr
+    data['boll_ub_div_perc_arr'] = boll_ub_div_perc_arr
+    data['boll_lb_div_arr'] = boll_lb_div_arr
+    data['boll_lb_div_perc_arr'] = boll_lb_div_perc_arr
+    data['f_up'] = f_up
+    data['f_down'] = f_down
+    data['ma_trend'] = ma_trend
+    data['close_trend'] = close_trend
+    data['f_up'].replace(to_replace=0,
+                 value =f_high,
+                 inplace=True)
+    data['f_down'].replace(to_replace=0,
+                 value =f_low,
+                 inplace=True)
+    data['ma_trend'].replace(to_replace=0,
+                 value =trend_m,
+                 inplace=True)
+    data['close_trend'].replace(to_replace=0,
+                 value =trend_c,
+                 inplace=True)
+    return data
 
 def get_table_series_data(df, dates):
-    date1 = dates.split(',')[0].split('"')[1]
-    date2 = dates.split(',')[1].split('"')[1]
+    print(df)
+    date1 = dates.split(',')[0]
+    date2 = dates.split(',')[1]
+    dates = [date1,date2]
+    dates.sort()
+    print(dates)
     dats = []
     for i in range(len(df)):
         date = df.iloc[i].name.split(' ')[0]
-        #print(dates[0], date)
-        if date >= date1 and  date <= date2:
+        #print(date2)
+        if date >= dates[0] and  date <= dates[1]:
+            print('dat', date)
             dats.append(i)
     data = df[dats[0]:dats[-1]]
     data = add_extra_table_columns(data)
+    data = make_dict_objects(data)
+
 
     return data
-    
+
+def make_dict_objects(data):  
+    arr = []
+    for i in range(len(data)):
+        spread = max(data['High']) - min(data['Low'])
+        spread_perc = (spread / max(data['High'])) * 100
+        dic = {
+            'open': data['open'][i],
+            'close': data['Close'][i],
+            'highs': data['High'][i],
+            'lows': data['Low'][i],
+            'volume': data['volume'][i],
+            'rsi': data['rsi_12'][i],
+            'ao': data['ao'][i],
+            'boll': data['boll'][i],
+            'boll_ub': data['boll_ub'][i],
+            'boll_lb': data['boll_lb'][i],
+            'macd_value': data['macd_value'][i],
+            'macd_signal': data['macd_signal'][i],
+            'fractal_highs': data['fractal_highs'][i],
+            'fractal_lows': data['fractal_lows'][i],
+            'f_high': data['f_high'][i],
+            'f_low': data['f_low'][i],
+            'macd_h': data['macd_h'][i],
+            'ma': data['ma'][i],
+            'ma_div': data['ma_div'][i],
+            'trend_ma': data['trend_ma'][i],
+            'trend_close': data['trend_close'][i],
+            'ao_percent': data['ao_percent'][i],
+            'ma_div_perc': data['ma_div_perc'][i],
+            'boll_ub_div_arr': data['boll_ub_div_arr'][i],
+            'boll_ub_div_perc_arr': data['boll_ub_div_perc_arr'][i],
+            'boll_lb_div_arr': data['boll_lb_div_arr'][i],
+            'boll_lb_div_perc_arr': data['boll_lb_div_perc_arr'][i],
+            'f_up': data['f_up'][i],
+            'f_down': data['f_down'][i],
+            'ma_trend': data['ma_trend'][i],
+            'close_trend': data['close_trend'][i],
+            'ao_high' : max(data['ao']),
+            'ao_low' : min(data['ao']),
+            'ao_p_high' : max(data['ao_percent']),
+            'ao_p_low' : min(data['ao_percent']),
+            'high' : max(data['High']),
+            'low' : min(data['Low']),
+            'ma_high' : max(data['ma']),
+            'ma_low' : min(data['ma']),
+            'ma_div_h' : max(data['ma_div']),
+            'ma_div_l' : min(data['ma_div']),
+            'ma_div_p_h' : max(data['ma_div_perc']),
+            'ma_div_p_l' : min(data['ma_div_perc']),
+            'macd_h_high' : max(data['macd_h']),
+            'macd_h_low' : min(data['macd_h']),
+            'open_h' : max(data['open']),
+            'open_l' : min(data['open']),
+            'close_h' : max(data['Close']),
+            'close_l' : min(data['Close']),
+            'rsi_h' : max(data['rsi_12']),
+            'rsi_l' : min(data['rsi_12']),
+            'vol_h' : max(data['volume']),
+            'vol_l' : min(data['volume']),
+            'boll_div_h' : max(data['boll_ub_div_arr']),
+            'boll_div_p_h' : max(data['boll_ub_div_perc_arr']),
+            'boll_div_l' : min(data['boll_lb_div_arr']),
+            'boll_div_p_l' : max(data['boll_lb_div_perc_arr']),
+            'h_l_spread': spread,
+            'h_l_spread_perc': spread_perc
+
+        }
+        arr.append(dic)
+    res = []
+    print(len(arr), 'arrrrrllllll')
+    for x in arr:
+        dict = {k: stringy(v) for k, v in x.items()}
+        res.append(dict)
+    print(len(res), 'lengtthhhhhh')
+    return res
+
+def stringy(v):
+    v = str(v)
+    if v != False and v != True:
+        if '.' in v:
+            first = v.split('.')[0]
+            second = v.split('.')[1]
+            v = f'{first}.{second[0:2]}'
+    return v
 
 def get_stock_data(tick):
     conn = psycopg2.connect(database="postgres", user=keys.user, password=keys.password, host=keys.host, port="5432")
     cur = conn.cursor()
     #cur.execute(f"select * from master_ticker_list limit 5;")
-    cur.execute(f"select * from historical_stock_data where ticker_id in (select id from master_ticker_list where ticker='AAPL');")
+    cur.execute(f"select * from historical_stock_data where ticker_id in (select id from master_ticker_list where ticker='{tick}');")
     data = cur.fetchall()
     conn.commit()
     conn.close()
