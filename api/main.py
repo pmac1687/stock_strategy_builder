@@ -114,9 +114,12 @@ def get_table_series_data(df, dates):
 
 def make_dict_objects(data):  
     arr = []
+    print(data.columns)
+    dates = data.index
     for i in range(len(data)):
         spread = max(data['High']) - min(data['Low'])
         spread_perc = (spread / max(data['High'])) * 100
+        print(dates[i])
         dic = {
             'open': data['open'][i],
             'close': data['Close'][i],
@@ -130,6 +133,10 @@ def make_dict_objects(data):
             'boll_lb': data['boll_lb'][i],
             'macd_value': data['macd_value'][i],
             'macd_signal': data['macd_signal'][i],
+            'macd_v_high': max(data['macd_signal']),
+            'macd_v_low': min(data['macd_value']),
+            'macd_s_high': max(data['macd_signal']),
+            'macd_s_low': min(data['macd_signal']),
             'fractal_highs': data['fractal_highs'][i],
             'fractal_lows': data['fractal_lows'][i],
             'f_high': data['f_high'][i],
@@ -171,6 +178,7 @@ def make_dict_objects(data):
             'rsi_l' : min(data['rsi_12']),
             'vol_h' : max(data['volume']),
             'vol_l' : min(data['volume']),
+            'date': dates[i].split(' ')[0],
             'boll_div_h' : max(data['boll_ub_div_arr']),
             'boll_div_p_h' : max(data['boll_ub_div_perc_arr']),
             'boll_div_l' : min(data['boll_lb_div_arr']),
