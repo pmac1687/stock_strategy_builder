@@ -1,6 +1,8 @@
 import React, {useEffect, useReducer} from "react";
 import { connect } from "react-redux";
 import { addPageHistory } from "../js/actions/index";
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import  "./styles.css";
 
 
@@ -54,47 +56,66 @@ function ConnectedCardPageVisits(props) {
                   Ticker
                 </th>
                 <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                  <div>ma trend</div>
+                  <div>close trend</div>
+                </th>
+                <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
                   <div>High/Low</div>
-                  <div>(Spread)</div>
+                  <div>Spread</div>
                 </th>
                 <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
-                  macd
+                  <div>MACD</div>
+                  <div>DIVERGENCE</div>
                 </th>
                 <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
-                  Price
+                  <div>MACD</div>
+                  <div>signal /</div>
+                  <div>value</div>
                 </th>
                 <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
-                  6 Month AO
+                  <div>Boll upper</div>
+                  <div>Diverge /</div>
+                  <div>div percent</div>
                 </th>
                 <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
-                  6 Month Price
+                  <div>MA</div>
+                  <div>high / low</div>
+                  <div>diverge</div>
+                  <div>div percent</div>
                 </th>
                 <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
-                  1 Months AO
+                  <div>ao</div>
+                  <div>Value /</div>
+                  <div>Val percent</div>
                 </th>
                 <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
-                  1 Month Price
+                  <div>rsi</div>
                 </th>
                 <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
-                  3 Month AO
+                  <div>fractals</div>
+                  <div>up / down</div>
                 </th>
                 <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
-                  3 Month Price
-                </th>
-                <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
-                  1 Year AO
-                </th>
-                <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
-                  1 Year Price
+                  <div>volume</div>
+                  <div>high / low</div>
                 </th>
               </tr>
             </thead>
             <tbody>
-              {props.windowsSeriesData.map((item, index) => (
+              {props.windowsSeriesData && props.windowsSeriesData.map((item, index) => (
+                <>
                 <tr key={item['name']}>
-                  <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
-                    {props.windowsStocks[index]}
+                  <th style={{display: 'flex', alignItems: 'center', justifyContent:'center', marginTop:'8vh'}} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
+                    {props.windowsStocks[index]}<div style={{ marginLeft: '15%'}}></div><FontAwesomeIcon id='stock' icon={faChevronUp} size='lg'/>
                   </th>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                    <div id='flex'>
+                      <div id={item[0]['ma_trend'] > 0 ? 'green': 'red'}>{item[0]['ma_trend']} /</div>
+                    </div>
+                    <div id='flex'>
+                      <div id={item[0]['ma_close'] > 0 ? 'green': 'red'}>{item[0]['close_trend']}</div>
+                    </div>
+                  </td>
                   <td  className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
                     <div id='flex'><div id='green' >{`${item[0]['high']}`}</div>/<div id='red'>{item[0]['low']}</div></div>
                     <div>${item[0]['h_l_spread']}/ {item[0]['h_l_spread_perc']}%</div>
@@ -103,33 +124,107 @@ function ConnectedCardPageVisits(props) {
                     <div id='flex'><div id='green' >{`${item[0]['macd_h_high']}`}</div>/<div id='red'>{item[0]['macd_h_low']}</div></div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {item['price']}
+                    <div id='flex'>
+                      <div id='green'>{`${item[0]['macd_s_high']}`} /</div>
+                      <div id='red'>{item[0]['macd_s_low']}</div>
+                    </div>
+                    <div id='flex'>
+                      <div id='green'>{`${item[0]['macd_v_high']}`} /</div>
+                      <div id='red'>{item[0]['macd_v_low']}</div>
+                    </div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {item['aosixM']}
+                    <div id='flex'>
+                      <div id='green'>{item[0]['boll_div_h']} /</div>
+                      <div id='red'>{item[0]['boll_div_l']}</div>
+                    </div>
+                    <div id='flex'>
+                      <div id='green'>{item[0]['boll_div_p_h']}% /</div>
+                      <div id='red'>{item[0]['boll_div_p_l']}%</div>
+                    </div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {item['psixM']}
+                    <div id='flex'>
+                      <div id='green'>{item[0]['ma_high']} /</div>
+                      <div id='red'>{item[0]['ma_low']}</div>
+                    </div>
+                    <div id='flex'>
+                      <div id='green'>{item[0]['ma_div_p_h']} /</div>
+                      <div id='red'>{item[0]['ma_div_p_l']}</div>
+                    </div>
+                    <div id='flex'>
+                      <div id='green'>{item[0]['ma_div_h']} /</div>
+                      <div id='red'>{item[0]['ma_div_l']}</div>
+                    </div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {item['aomonth']}
+                    <div id='flex'>
+                      <div id='green'>{item[0]['ao_high']} /</div>
+                      <div id='red'>{item[0]['ao_low']}</div>
+                    </div>
+                    <div id='flex'>
+                      <div id='green'>{item[0]['ao_p_high']}% /</div>
+                      <div id='red'>{item[0]['ao_p_low']}%</div>
+                    </div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {item['pmonth']}
+                    <div id='flex'>
+                      <div id='green'>{item[0]['rsi_h']}% /</div>
+                      <div id='red'>{item[0]['rsi_l']}%</div>
+                    </div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {item['aothreeM']}
+                    <div id='flex'>
+                      <div id='green'>{item[0]['f_up']} /</div>
+                      <div id='red'>{item[0]['f_down']}</div>
+                    </div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {item['pthreeM']}
-                  </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {item['aoyear']}
-                  </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                    {item['pyear']}
+                    <div id='flex'>
+                      <div id='green'>{item[0]['vol_h']} /</div>
+                      <div id='red'>{item[0]['vol_l']}</div>
+                    </div>
                   </td>
                 </tr>
+                <table className="items-center w-full bg-transparent border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                        Ticker
+                      </th>
+                      <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                        <div>bollinger</div>
+                        <div>upper / lower</div>
+                        <div>diverge</div>
+                        <div>percent</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {item.map((dats) => (
+                      <tr>
+                        <th style={{display: 'flex', alignItems: 'center', justifyContent:'center'}} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
+                          {props.windowsStocks[index]}-{dats['date']}<div style={{ marginLeft: '15%'}}></div><FontAwesomeIcon id='stock' icon={faChevronUp} size='lg'/>
+                        </th>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                          <div id='flex'>
+                            <div id='green'>{`${dats['boll_ub']}`} /</div>
+                            <div id='red'>{dats['boll_lb']}</div>
+                          </div>
+                          <div id='flex'>
+                            <div id='green'>{`${dats['boll_ub_div_arr']}`} /</div>
+                            <div id='red'>{dats['boll_lb_div_arr']}</div>
+                          </div>
+                          <div id='flex'>
+                            <div id='green'>{`${dats['boll_ub_div_perc_arr']}`} /</div>
+                            <div id='red'>{dats['boll_lb_div_perc_arr']}</div>
+                          </div>
+                        </td>
+                      </tr>
+                ))}
+                  </tbody>
+                </table>
+              </>
               ))}
 
             </tbody>
