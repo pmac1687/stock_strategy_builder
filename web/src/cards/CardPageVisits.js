@@ -26,6 +26,31 @@ function ConnectedCardPageVisits(props) {
     })
   },[props.windowsSeriesData])
 
+  function collapse(item, show, func, collapseItem){
+    if(show===false){
+      const ele = document.getElementById(item)
+      ele.style.transform  = 'rotate(180deg)';
+      func(prev => true);
+      if(collapseItem !== 'notesDetails'){
+        const ele2 = document.getElementById(collapseItem)
+        ele2.style.display = 'block'
+      }else{
+        props.setShowNotes(true)
+      }
+    };
+    if(show===true){
+      const ele = document.getElementById(item)
+      ele.style.transform  = 'rotate(360deg)';
+      func(prev => false);
+      if(collapseItem !== 'notesDetails'){
+        const ele2 = document.getElementById(collapseItem)
+        ele2.style.display = 'none'
+      }else {
+        props.setShowNotes(false)
+      }
+    };
+  }
+
 
   return (
     <>
@@ -106,7 +131,7 @@ function ConnectedCardPageVisits(props) {
                 <>
                 <tr key={item['name']}>
                   <th style={{display: 'flex', alignItems: 'center', justifyContent:'center', marginTop:'8vh'}} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
-                    {props.windowsStocks[index]}<div style={{ marginLeft: '15%'}}></div><FontAwesomeIcon id='stock' icon={faChevronUp} size='lg'/>
+                    {props.windowsStocks[index]} - {item[0]['dates'].split(',')[0]}/{item[0]['dates'].split(',')[1]}<div style={{ marginLeft: '15%'}}></div><FontAwesomeIcon id='stock' icon={faChevronUp} size='lg'/>
                   </th>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
                     <div id='flex'>
@@ -186,7 +211,7 @@ function ConnectedCardPageVisits(props) {
                     </div>
                   </td>
                 </tr>
-                <table className="items-center w-full bg-transparent border-collapse">
+                <table id={item[0]['dates']} style={{ display: 'none'}}  className="items-center w-full bg-transparent border-collapse">
                   <thead>
                     <tr>
                       <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
@@ -197,6 +222,42 @@ function ConnectedCardPageVisits(props) {
                         <div>upper / lower</div>
                         <div>diverge</div>
                         <div>percent</div>
+                      </th>
+                      <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                        <div>macd</div>
+                        <div>value / signal</div>
+                        <div>macd div / div perc </div>
+                      </th>
+                      <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                        <div>ma</div>
+                        <div>value</div>
+                        <div>ma div / div perc </div>
+                        <div>trending</div>
+                      </th>
+                      <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                        <div>ao</div>
+                        <div>value / perc</div>
+                      </th>
+                      <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                        <div>rsi</div>
+                      </th>
+                      <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                        <div>open / close</div>
+                        <div>div / perc</div>
+                        <div>trend</div>
+                        <div>today / total</div>
+                      </th>
+                      <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                        <div>high / low</div>
+                        <div>div / perc</div>
+                      </th>
+                      <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                        <div>fractal high /</div>
+                        <div>fractal low</div>
+                      </th>
+                      <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                        <div>volume</div>
+                        <div>div / perc</div>
                       </th>
                     </tr>
                   </thead>
@@ -218,6 +279,78 @@ function ConnectedCardPageVisits(props) {
                           <div id='flex'>
                             <div id='green'>{`${dats['boll_ub_div_perc_arr']}`} /</div>
                             <div id='red'>{dats['boll_lb_div_perc_arr']}</div>
+                          </div>
+                        </td>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                          <div id='flex'>
+                            <div >{`${dats['macd_value']}`} /</div>
+                            <div >{dats['macd_signal']}</div>
+                          </div>
+                          <div id='flex'>
+                            <div id={dats['macd_h'] > 0 ? 'green' : 'red'}>{`${dats['macd_h']}`} /</div>
+                            <div id={dats['macd_h_perc'] > 0 ? 'green' : 'red'}>{dats['macd_h_perc']} %</div>
+                          </div>
+                        </td>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                          <div id='flex'>
+                            <div id={dats['trend_ma'] === 'up' ? 'green' : 'red'} >{`${dats['ma']}`} </div>
+                          </div>
+                          <div id='flex'>
+                            <div id={dats['ma_div'] > 0 ? 'green' : 'red'}>{`${dats['ma_div']}`} /</div>
+                            <div id={dats['ma_div_perc'] > 0 ? 'green' : 'red'}>{dats['ma_div_perc']} %</div>
+                          </div>
+                          <div id='flex'>
+                            <div id={dats['trend_ma'] === 'up' ? 'green' : 'red'}>{`${dats['trend_ma']}`} </div>
+                          </div>
+                        </td>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                          <div id='flex'>
+                            <div id={dats['ao'] > 0 ? 'green' : 'red'} >{`${dats['ao']}`} /</div>
+                            <div id={dats['ao'] > 0 ? 'green' : 'red'} >{`${dats['ao_percent']}`}% </div>
+                          </div>
+                        </td>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                          <div id='flex'>
+                            <div id={dats['rsi'] > 60 ? 'red' : dats['rsi'] < 40 ? 'green' : ''} >{`${dats['rsi']}`} </div>
+                          </div>
+                        </td>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                          <div id='flex'>
+                            <div id={dats['open'] > dats['close'] ? 'green' : 'red'} >{`${dats['open']}`} /</div>
+                            <div id={dats['close'] > dats['open'] ? 'green' : 'red'}>{dats['close']}</div>
+                          </div>
+                          <div id='flex'>
+                            <div  id={dats['close'] > dats['open'] ? 'green' : 'red'}>{`${dats['open_close_div']}`} /</div>
+                            <div  id={dats['close'] > dats['open'] ? 'green' : 'red'}>{dats['open_close_div_perc']} %</div>
+                          </div>
+                          <div id='flex'>
+                            <div  id={dats['close'] > dats['open'] ? 'green' : 'red'}>{`${dats['trend_close']}`} /</div>
+                            <div  id={dats['close_trend_count'] >= 0  ? 'green' : 'red'}>{`${dats['close_trend_count']}`}</div>
+                          </div>
+                        </td>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                          <div id='flex'>
+                            <div id='green' >{`${dats['high']}`} /</div>
+                            <div id='red' >{`${dats['low']}`} </div>
+                          </div>
+                          <div id='flex'>
+                            <div  >{`${dats['open_close_div']}`} /</div>
+                            <div  >{`${dats['open_close_div_perc']}`}% </div>
+                          </div>
+                        </td>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                          <div id='flex'>
+                            <div id={dats['fractal_highs'] === 'True' ? 'green' : 'red'} >{`${dats['fractal_highs']}`} /</div>
+                            <div id={dats['fractal_lows'] === 'True' ? 'green' : 'red'} >{`${dats['fractal_lows']}`} </div>
+                          </div>
+                        </td>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                          <div id='flex'>
+                            <div  >{`${dats['volume']}`} /</div>
+                          </div>
+                          <div id='flex'>
+                            <div  >{`${dats['vol_div']}`} /</div>
+                            <div>{dats['vol_div_perc']} %</div>
                           </div>
                         </td>
                       </tr>
