@@ -76,6 +76,10 @@ high: "26.847000122070312"
 low: "25.479999542236328"
 ​​
 ma: "26.239999771118164"
+
+'open_close_div': data['Close'][i] - data['open'][i],
+
+'open_close_div_perc': ((data['Close'][i] - data['open'][i]) / data['Close'][i]) * 100,
 ​​
 ma_div: "0.0"
 ​​
@@ -104,6 +108,8 @@ macd_h_low: "0.0"
 macd_signal: "0.0"
 ​​
 macd_value: "0.0"
+
+macd_h_perc:
 ​​
 open: "25.954999923706055"
 ​​
@@ -116,10 +122,20 @@ rsi: "0.0"
 rsi_h: "0.0"
 ​​
 rsi_l: "0.0"
+
+'close_trend_count': close_trend_count,
+
+'open_close_div': data['Close'][i] - data['open'][i],
+
+'open_close_div_perc': ((data['Close'][i] - data['open'][i]) / data['Close'][i]) * 100,
 ​​
 trend_close: ""
 ​​
 trend_ma: "down"
+
+'vol_div':  data['volume'][i] - max(data['volume']),
+
+ 'vol_div_perc': ((data['vo
 ​​
 vol_h: "3067000.0"
 ​​

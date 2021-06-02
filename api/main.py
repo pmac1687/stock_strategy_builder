@@ -116,9 +116,14 @@ def make_dict_objects(data):
     arr = []
     print(data.columns)
     dates = data.index
+    close_trend_count = 0
     for i in range(len(data)):
         spread = max(data['High']) - min(data['Low'])
         spread_perc = (spread / max(data['High'])) * 100
+        if data['trend_close'][i] == 'up':
+            close_trend_count += 1
+        else:
+            close_trend_count -= 1
         print(dates[i])
         dic = {
             'open': data['open'][i],
@@ -152,6 +157,10 @@ def make_dict_objects(data):
             'boll_ub_div_perc_arr': data['boll_ub_div_perc_arr'][i],
             'boll_lb_div_arr': data['boll_lb_div_arr'][i],
             'boll_lb_div_perc_arr': data['boll_lb_div_perc_arr'][i],
+            #running count for ref series
+            'close_trend_count': close_trend_count,
+            'high_low_div': data['High'][i] - data['Low'][i],
+            'high_low_div_perc': ((data['High'] - data['Low']) / data['Close'][i]) * 100,
             'f_up': data['f_up'][i],
             'f_down': data['f_down'][i],
             'ma_trend': data['ma_trend'][i],
@@ -162,6 +171,8 @@ def make_dict_objects(data):
             'ao_p_low' : min(data['ao_percent']),
             'high' : max(data['High']),
             'low' : min(data['Low']),
+            'open_close_div': data['Close'][i] - data['open'][i],
+            'open_close_div_perc': ((data['Close'][i] - data['open'][i]) / data['Close'][i]) * 100,
             'ma_high' : max(data['ma']),
             'ma_low' : min(data['ma']),
             'ma_div_h' : max(data['ma_div']),
@@ -170,6 +181,7 @@ def make_dict_objects(data):
             'ma_div_p_l' : min(data['ma_div_perc']),
             'macd_h_high' : max(data['macd_h']),
             'macd_h_low' : min(data['macd_h']),
+            'macd_h_perc': (data['macd_h'][i] / data['macd_value'][i]) * 100,
             'open_h' : max(data['open']),
             'open_l' : min(data['open']),
             'close_h' : max(data['Close']),
@@ -178,7 +190,10 @@ def make_dict_objects(data):
             'rsi_l' : min(data['rsi_12']),
             'vol_h' : max(data['volume']),
             'vol_l' : min(data['volume']),
+            'vol_div':  data['volume'][i] - max(data['volume']),
+            'vol_div_perc': ((data['volume'][i] - max(data['volume'])) / max(data['volume'])) * 100,
             'date': dates[i].split(' ')[0],
+            'dates': f'{dates[0].split(" ")[0]},{dates[-1].split(" ")[0]}',
             'boll_div_h' : max(data['boll_ub_div_arr']),
             'boll_div_p_h' : max(data['boll_ub_div_perc_arr']),
             'boll_div_l' : min(data['boll_lb_div_arr']),
