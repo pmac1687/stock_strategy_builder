@@ -49,19 +49,11 @@ function ConnectedCardCandleChart(props){
     console.log(refAreaRight)
   },[refAreaLeft, refAreaRight])
 
-  function addRefs(){
+  function removeRefs(){
     const ref1 = document.getElementById('dot1');
     const ref2 = document.getElementById('dot2');
-    const refs = [ref1,ref2]
-    setRefsOff(prev => false)
-
-    console.log(refs.length, 'length')
-    for(let i=0;i<refs.length;i++){
-      if(refs[i]){
-        refs[i].style.display = 'block';
-        console.log(refs[i], 'refs')
-      }
-    }
+    ref1.style.display = 'none'
+    ref2.style.display = 'none'
   }
 
   function zoom(){
@@ -81,8 +73,8 @@ function ConnectedCardCandleChart(props){
       <>
         <div style={{ width:"100%", height:'7vh', display:'flex', alignItems:'center', }}>
           <button style={{ marginLeft: '2vw'}} onClick={() => {props.getStockData(); props.getCandlestickData()}}  type="button" class="btn btn-secondary">Zoom Out</button>
-          <button style={{ marginLeft: '2vw'}} onClick={addRefs} type="button" class="btn btn-primary">Add Ref</button>
-          <button style={{ marginLeft: '2vw'}} onClick={() => {props.addSeriesArray(); props.getWindowsSeriesData()}} type="button" class="btn btn-success btn-sm">Save</button>
+          <button style={{ marginLeft: '2vw'}}  type="button" class="btn btn-primary">Add Ref</button>
+          <button style={{ marginLeft: '2vw'}} onClick={() => {props.addSeriesArray(); props.getWindowsSeriesData();removeRefs()}} type="button" class="btn btn-success btn-sm">Save</button>
           <button style={{ marginLeft: '2vw'}} onClick={props.removeWindowCoords} type="button" class="btn btn-danger btn-sm">Delete</button>
         </div>
         <ResponsiveContainer width="100%" height={`${heights[props.graphCount -1 ]}`}>

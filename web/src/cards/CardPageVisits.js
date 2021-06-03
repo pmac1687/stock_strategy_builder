@@ -26,29 +26,17 @@ function ConnectedCardPageVisits(props) {
     })
   },[props.windowsSeriesData])
 
-  function collapse(item, show, func, collapseItem){
-    if(show===false){
-      const ele = document.getElementById(item)
-      ele.style.transform  = 'rotate(180deg)';
-      func(prev => true);
-      if(collapseItem !== 'notesDetails'){
-        const ele2 = document.getElementById(collapseItem)
-        ele2.style.display = 'block'
-      }else{
-        props.setShowNotes(true)
-      }
-    };
-    if(show===true){
-      const ele = document.getElementById(item)
-      ele.style.transform  = 'rotate(360deg)';
-      func(prev => false);
-      if(collapseItem !== 'notesDetails'){
-        const ele2 = document.getElementById(collapseItem)
-        ele2.style.display = 'none'
-      }else {
-        props.setShowNotes(false)
-      }
-    };
+  function collapse(item){
+    const svg = document.getElementById(`${item}1`)
+    const table = document.getElementById(item)
+    if(svg.style.transform === '' || svg.style.transform === 'rotate(360deg)'){
+      svg.style.transform = 'rotate(180deg)'
+      table.style.display = 'block'
+    }
+    else if(svg.style.transform === 'rotate(180deg)'){
+      svg.style.transform = 'rotate(360deg)'
+      table.style.display = 'none'
+    }
   }
 
 
@@ -130,8 +118,8 @@ function ConnectedCardPageVisits(props) {
               {props.windowsSeriesData && props.windowsSeriesData.map((item, index) => (
                 <>
                 <tr key={item['name']}>
-                  <th style={{display: 'flex', alignItems: 'center', justifyContent:'center', marginTop:'8vh'}} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
-                    {props.windowsStocks[index]} - {item[0]['dates'].split(',')[0]}/{item[0]['dates'].split(',')[1]}<div style={{ marginLeft: '15%'}}></div><FontAwesomeIcon id='stock' icon={faChevronUp} size='lg'/>
+                  <th onClick={() => collapse(item[0]['dates'])} style={{display: 'flex', alignItems: 'center', justifyContent:'center', marginTop:'8vh'}} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
+                    {props.windowsStocks[index]} - {item[0]['dates'].split(',')[0]}/{item[0]['dates'].split(',')[1]}<div style={{ marginLeft: '15%'}}></div><FontAwesomeIcon id={`${item[0]['dates']}1`} icon={faChevronUp} size='lg'/>
                   </th>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
                     <div id='flex'>

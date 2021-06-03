@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { faChevronUp, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CardAOChart from '../mainGraph/CardAOChart';
+import StockFilter from './StockFilter'
 
 import { connect } from "react-redux";
 import { 
@@ -42,6 +43,7 @@ function ConnectedSidebar(props) {
   const [showGraph, setShowGraph] = useState(false);
   const [showIndicators, setShowIndicators] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
+  const [showStrategyFilter, setShowStrategyFilter] = useState(false);
   const [dates, setDates] = useState([]);
   const arr = [1,2,3,4]
   useEffect(() => {
@@ -183,7 +185,7 @@ function ConnectedSidebar(props) {
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li onClick={() => collapse('stock', showStock, setShowStock, 'stockSearch')} className="items-center">
-                <a style={{ display:'flex'}} className={"text-xs uppercase py-3 font-bold block " }>
+                <a style={{ display:'flex'}} className={"text-xs  uppercase py-3 font-bold block " }>
                   <i className={"fas fa-tv mr-2 text-sm "}></i>
                   Stock <div  style={{ marginLeft: '41%'}}><FontAwesomeIcon id='stock' icon={faChevronUp} size='lg'/></div>
                 </a>
@@ -305,31 +307,29 @@ function ConnectedSidebar(props) {
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
             <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Auth Layout Pages
+              Stock Filter
             </h6>
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-              <li className="items-center">
+              <li onClick={() => collapse('strategy', showStrategyFilter, setShowStrategyFilter, 'strategyFilter')} className="items-center">
                 <a
                   className="text-gray-800 hover:text-gray-600 text-xs uppercase py-3 font-bold block"
                   to="/auth/login"
                 >
                   <i className="fas fa-fingerprint text-gray-500 mr-2 text-sm"></i>{" "}
-                  Login
-                </a>
-              </li>
-
-              <li className="items-center">
-                <a
-                  className="text-gray-800 hover:text-gray-600 text-xs uppercase py-3 font-bold block"
-                  to="/auth/register"
-                >
-                  <i className="fas fa-clipboard-list text-gray-400 mr-2 text-sm"></i>{" "}
-                  Register
+                  Strategy <FontAwesomeIcon style={{ marginLeft: '3vw'}} id='strategy' icon={faChevronUp} size='lg'/>
                 </a>
               </li>
             </ul>
+
+            <li id='strategyFilter' style={{ display: 'none'}} className="items-center">
+              <div class="shadow flex">
+                <StockFilter />
+              </div>
+            </li>
+
+
 
             {/* Divider */}
             <hr className="my-4 md:min-w-full" />
