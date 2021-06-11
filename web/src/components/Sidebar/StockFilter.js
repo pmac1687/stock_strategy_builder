@@ -1,7 +1,18 @@
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import React, { useEffect } from "react";
+import ReactDOM from 'react-dom';
 import { connect } from "react-redux";
 import { addBarData, } from "../../js/actions/index";
+import RangeSlider from "bootstrap";
+import Nouislider from 'react-nouislider';
+//import Slider from 'bootstrap-slider';
+import Slider from 'bootstrap-slider'
+import Multislider from './Multislider';
+import StockByLetterSlider from './StockByLetterSlider'
+
+//const Slider = require("bootstrap-slider");
+
+//var slider = new Slider('#ex2', {});
 
 
 const mapStateToProps = state => {
@@ -12,11 +23,12 @@ const mapStateToProps = state => {
 };
 
 function ConnectedStockFilter(props) {
-    
+
+
   
   return (
     <div>
-        hello
+        <StockByLetterSlider />
     </div>
   );
 }

@@ -318,7 +318,7 @@ function ConnectedSidebar(props) {
                   to="/auth/login"
                 >
                   <i className="fas fa-fingerprint text-gray-500 mr-2 text-sm"></i>{" "}
-                  Strategy <FontAwesomeIcon style={{ marginLeft: '3vw'}} id='strategy' icon={faChevronUp} size='lg'/>
+                  Filter <FontAwesomeIcon style={{ marginLeft: '3vw'}} id='strategy' icon={faChevronUp} size='lg'/>
                 </a>
               </li>
             </ul>
