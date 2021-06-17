@@ -1,11 +1,9 @@
 import React, { useEffect, useState} from "react";
 import axios from 'axios';
-import CardBarChart from "../cards/CardBarChart.js";
 import MainGraph from "../components/mainGraph"
 import CardPageVisits from "../cards/CardPageVisits.js";
-import CardSocialTraffic from "../cards/CardSocialTraffic.js";
 import { connect } from "react-redux";
-import { getData, getCandlestickData } from "../js/actions/index";
+import {  getCandlestickData } from "../js/actions/index";
 
 function mapStateToProps(state) {
   return {
@@ -21,7 +19,7 @@ function Dashboard(props) {
   const [setStock] = useState('');
   const [historyData] = useState([]);
   useEffect(() => {
-    props.getData();
+    //props.getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   useEffect(() => {
@@ -38,7 +36,6 @@ function Dashboard(props) {
             <MainGraph />
           </div>
           <div className="w-full xl:w-4/12 px-4">
-            <CardBarChart historyData={historyData} />
           </div>
         </div>
         <div className="flex flex-wrap mt-4">
@@ -46,7 +43,6 @@ function Dashboard(props) {
             <CardPageVisits  />
           </div>
           <div className="w-full xl:w-4/12 px-4">
-            <CardSocialTraffic  setStock={setStock} stockData={stockData} />
           </div>
         </div>
     </>
@@ -56,5 +52,5 @@ function Dashboard(props) {
 
 export default connect(
   mapStateToProps,
-  { getData, getCandlestickData }
+  { getCandlestickData }
 )(Dashboard);

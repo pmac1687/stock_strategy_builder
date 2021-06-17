@@ -1,17 +1,4 @@
-import { ADD_STOCK, 
-  DATA_LOADED, 
-  SET_LINE_DATA, 
-  SET_MASTER_LINE_DATA, 
-  SET_HISTORY_DATA,  
-  SET_HISTORY_GRAPH_DATA, 
-  SET_MASTER_HISTORY_DATA,
-  SET_BAR_DATA,
-  SET_MASTER_BAR_DATA,
-  MOVE_BAR_LEFT,
-  MOVE_BAR_RIGHT,
-  SET_SOCIAL_DATA,
-  SET_PAGE_HISTORY_DATA_ARR,
-  /////////////
+import { 
   SET_MAIN_GRAPH_TYPE,
   SET_STRATEGY_STOCK, 
   LOAD_STRATEGY_DATA,
@@ -28,93 +15,11 @@ import { ADD_STOCK,
   ADD_WINDOW_COORDS,
   REMOVE_WINDOW_COORDS,
   ADD_SERIES_ARRAY,
-  ADD_WINDOWS_SERIES_DATA
+  ADD_WINDOWS_SERIES_DATA,
+  SET_SHOW_SELECT_STOCK,
+  SET_SHOW_GRAPH_TYPE_SELECT 
 } from "../constants/action-types";
 import axios from 'axios';
-
-export function addStock(payload) {
-    return { type: ADD_STOCK, payload }
-  };
-
-export function addLineData(payload) {
-  return { type: SET_LINE_DATA, payload }
-};
-
-export function addPageHistory(payload) {
-  return { type: SET_PAGE_HISTORY_DATA_ARR, payload }
-};
-
-export function addSocialData(payload) {
-  return { type: SET_SOCIAL_DATA, payload }
-};
-
-export function addMasterLineData(payload) {
-  return { type: SET_MASTER_LINE_DATA, payload }
-};
-
-export function addHistoryGraphData(payload) {
-  return { type: SET_HISTORY_GRAPH_DATA, payload }
-};
-
-export function addMasterHistoryData(payload) {
-  return { type: SET_MASTER_HISTORY_DATA, payload }
-};
-
-export function addBarData(payload) {
-  return { type: SET_BAR_DATA, payload }
-};
-
-export function incrementBarIndex(payload) {
-  return { type: MOVE_BAR_LEFT, payload }
-};
-
-export function decrementBarIndex(payload) {
-  return { type: MOVE_BAR_RIGHT, payload }
-};
-
-export function addMasterBarData(payload) {
-  return { type: SET_MASTER_BAR_DATA, payload }
-};
-
-export function getHistoryData() {
-  return function(dispatch, getState) {
-    const { stock } = getState()
-    console.log('reducer', stock)
-    if(stock){
-      return   axios.get(`http://localhost:5000/${stock[stock.length - 1]}`, {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-            }
-          })  
-          .then(res => res.data)
-          .then(data => {
-            console.log('resdata', data)  
-            dispatch({ type: SET_HISTORY_DATA, payload: data})
-          })
-          .catch(err => {  
-            console.log(err)  
-          });  
-        }
-  };
-}
-
-export function getData() {
-  return function(dispatch) {
-    return   axios.get(`http://localhost:5000/`, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-          }
-        })  
-        .then(res => res.data)
-        .then(data => {
-          console.log('resdata', data)  
-          dispatch({ type: DATA_LOADED, payload: data})
-        })
-        .catch(err => {  
-          console.log(err)  
-        });  
-  };
-}
 
 /////////// NEW STUFF /////////
 
@@ -177,6 +82,49 @@ export function removeWindowCoords() {
 
 export function addSeriesArray() {
   return { type: ADD_SERIES_ARRAY}
+};
+
+export function setShowSelectStock() {
+  return { type: SET_SHOW_SELECT_STOCK}
+};
+
+export function setShowGraphTypeSelect() {
+  return { type: SET_SHOW_GRAPH_TYPE_SELECT}
+};
+
+export function collapse(payload) {
+  console.log('selects tock', payload.func);
+  return function(dispatch, getState){
+    const show = payload.bool;
+    console.log('show', show)
+    if(show===false){
+      const ele = document.getElementById(payload.id)
+      ele.style.transform  = 'rotate(180deg)';
+      //func(prev => true);
+      dispatch({ type: payload.func, payload: true})
+      console.log('booo', payload.bool)
+      if(payload.action !== 'notesDetails'){
+        const ele2 = document.getElementById(payload.action)
+        ele2.style.display = 'block'
+      }else{
+        dispatch({ type: SHOW_NOTES, payload: true})
+        //props.setShowNotes(true)
+      }
+    };
+    if(show===true){
+      const ele = document.getElementById(payload.id)
+      ele.style.transform  = 'rotate(360deg)';
+      dispatch({ type: payload.func, payload: false})
+      if(payload.action !== 'notesDetails'){
+        const ele2 = document.getElementById(payload.action)
+        ele2.style.display = 'none'
+      }else {
+        dispatch({ type: SHOW_NOTES, payload: false})
+      }
+    };
+    //return { type: ADD_SERIES_ARRAY}
+  return { type: null}
+  };
 };
 
 export function getWindowsSeriesData() {

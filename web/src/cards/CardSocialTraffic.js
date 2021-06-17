@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import '../App.css';
 import { connect } from "react-redux";
-import { addStock, getData, addSocialData } from "../js/actions/index";
 
 // components
 

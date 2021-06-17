@@ -1,6 +1,5 @@
 import React, {useEffect, useReducer} from "react";
 import { connect } from "react-redux";
-import { addPageHistory } from "../js/actions/index";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import  "./styles.css";
@@ -358,7 +357,6 @@ function ConnectedCardPageVisits(props) {
 
 const CardPageVisits = connect(
   mapStateToProps,
-  { addPageHistory }
   )(ConnectedCardPageVisits);
 
 export default CardPageVisits;

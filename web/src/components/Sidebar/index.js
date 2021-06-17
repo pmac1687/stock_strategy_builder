@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import { faChevronUp, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CardAOChart from '../mainGraph/CardAOChart';
-import StockFilter from './StockFilter'
+import StockFilter from './StockFilter';
+import StockSelect from './DevelopStrategy/StockSelect';
+import GraphTypeSelect from "./DevelopStrategy/GraphTypeSelect";
 
 import { connect } from "react-redux";
 import { 
@@ -182,47 +184,9 @@ function ConnectedSidebar(props) {
               Develop Strategy
             </h6>
             {/* Navigation */}
-
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              <li onClick={() => collapse('stock', showStock, setShowStock, 'stockSearch')} className="items-center">
-                <a style={{ display:'flex'}} className={"text-xs  uppercase py-3 font-bold block " }>
-                  <i className={"fas fa-tv mr-2 text-sm "}></i>
-                  Stock <div  style={{ marginLeft: '41%'}}><FontAwesomeIcon id='stock' icon={faChevronUp} size='lg'/></div>
-                </a>
-              </li>
-
-              <li id='stockSearch' style={{ display: 'none'}} className="items-center">
-                <div class="shadow flex">
-                  <div style={{ width: '100%'}}>
-                    <Select
-                      onChange={opt => {props.setStrategyStock(opt.label.split(' ')[0]); props.getStockData();props.getCandlestickData()}}
-                      options={props.tickerList}
-                    />
-                  </div>
-                </div>
-              </li>
-                
-              <li onClick={() => collapse('graph', showGraph, setShowGraph, 'graphDetails')} className="items-center">
-                <a className={"text-xs uppercase py-3 font-bold block " }>
-                  <i className={"fas fa-tv mr-2 text-sm "}></i>
-                  Graph Type <FontAwesomeIcon style={{ marginLeft:'18%'}} id='graph' icon={faChevronUp} size='lg'/>
-                </a>
-              </li>
-
-              <li id='graphDetails' style={{ display: 'none'}} className="items-center">
-                  <div class="bg-gray-50">
-                      <div class="flex flex-col items-start justify-center ">
-                          <div class="flex flex-col">
-                              <label class="inline-flex items-center mt-3">
-                                  <input checked={props.mainGraphType === 'candle'} type="radio" id='candle' onChange={() => props.setMainGraphType('candle')} class="form-radio h-5 w-5 text-gray-600" /><span class="ml-2 text-gray-700">Candlestick</span>
-                              </label>
-                              <label class="inline-flex items-center mt-3">
-                                  <input type="radio" id='line' checked={props.mainGraphType === 'line'} onChange={() => props.setMainGraphType('line')} class="form-radio h-5 w-5 text-red-600" /><span class="ml-2 text-gray-700">Line Graph</span>
-                              </label>
-                          </div>
-                      </div>
-                  </div>
-              </li>
+              <StockSelect />
+              <GraphTypeSelect />
 
 
               <li onClick={() => collapse('indicators', showIndicators, setShowIndicators, 'indicatorDetails')} className="items-center">

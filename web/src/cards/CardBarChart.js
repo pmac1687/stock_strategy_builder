@@ -1,45 +1,17 @@
 import React, { useEffect } from "react";
 import { BarChart, Bar,XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { connect } from "react-redux";
-import { addBarData, addMasterBarData, incrementBarIndex, decrementBarIndex } from "../js/actions/index";
 
 
 const mapStateToProps = state => {
   return { 
-    masterData: state.masterHistoryData,
-    data: state.cardBarData,
-    masterBarData: state.masterCardBarData,
-    index: state.cardBarIndex,
+
    };
 };
 
 function ConnectedCardBarChart(props) {
-  useEffect(() => {
-    if(props.masterData.length > 1){
-      formatData()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.masterData]);
 
-  function formatData(){
-    const sl_range = [props.masterData.length-props.index[0], props.masterData.length-props.index[1]];
-    props.addBarData(props.masterData.slice(sl_range[0], sl_range[1]));
-    props.addMasterBarData(props.masterData.slice(sl_range[0], sl_range[1]));
-  };
 
-  function panRight(){
-    if(props.index[0] > 8){
-      props.decrementBarIndex([props.index[0]-1, props.index[1] - 1])
-      formatData();
-    };
-  };
-
-  function panLeft(){
-    if(props.index[0] < props.masterData.length){
-      props.incrementBarIndex([props.index[0]+1, props.index[1] + 1])
-      formatData();
-    };
-  };
   
   return (
     <>
@@ -74,7 +46,6 @@ function ConnectedCardBarChart(props) {
 
 const CardBarChart = connect(
   mapStateToProps,
-  { addBarData, addMasterBarData, incrementBarIndex, decrementBarIndex }
   )(ConnectedCardBarChart);
 
 export default CardBarChart;

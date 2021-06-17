@@ -28,5 +28,5 @@ const MultiRangeSlider = () => {
       );
     };
     
-    export default MultiRangeSlider;
+export default MultiRangeSlider;
     
