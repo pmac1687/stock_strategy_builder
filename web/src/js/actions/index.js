@@ -17,7 +17,8 @@ import {
   ADD_SERIES_ARRAY,
   ADD_WINDOWS_SERIES_DATA,
   SET_SHOW_SELECT_STOCK,
-  SET_SHOW_GRAPH_TYPE_SELECT 
+  SET_SHOW_GRAPH_TYPE_SELECT,
+  SET_SHOW_INDICATOR_SELECT, 
 } from "../constants/action-types";
 import axios from 'axios';
 
@@ -90,6 +91,10 @@ export function setShowSelectStock() {
 
 export function setShowGraphTypeSelect() {
   return { type: SET_SHOW_GRAPH_TYPE_SELECT}
+};
+
+export function setShowIndicatorSelect() {
+  return { type: SET_SHOW_INDICATOR_SELECT}
 };
 
 export function collapse(payload) {

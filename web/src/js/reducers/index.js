@@ -17,7 +17,8 @@ import {
   REMOVE_WINDOW_COORDS,
   ADD_WINDOWS_SERIES_DATA,
   SET_SHOW_SELECT_STOCK,
-  SET_SHOW_GRAPH_TYPE_SELECT  
+  SET_SHOW_GRAPH_TYPE_SELECT,
+  SET_SHOW_INDICATOR_SELECT  
 } from "../constants/action-types";
 
 const initialState = {
@@ -36,6 +37,7 @@ const initialState = {
   windowsSeriesData: [],
   showSelectStock: false,
   showGraphTypeSelect: false,
+  showIndicatorSelect: false,
 };
 
 
@@ -74,6 +76,9 @@ function rootReducer(state = initialState, action) {
   }
   if (action.type === SET_SHOW_GRAPH_TYPE_SELECT) {
     return {...state, showGraphTypeSelect: action.payload}
+  }
+  if (action.type === SET_SHOW_INDICATOR_SELECT) {
+    return {...state, showIndicatorSelect: action.payload}
   }
   if (action.type === DECREMENT_COUNT) {
     console.log('notes', action.payload)

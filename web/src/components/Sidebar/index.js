@@ -7,6 +7,7 @@ import CardAOChart from '../mainGraph/CardAOChart';
 import StockFilter from './StockFilter';
 import StockSelect from './DevelopStrategy/StockSelect';
 import GraphTypeSelect from "./DevelopStrategy/GraphTypeSelect";
+import IndicatorSelect from "./DevelopStrategy/IndicatorsSelect";
 
 import { connect } from "react-redux";
 import { 
@@ -187,52 +188,9 @@ function ConnectedSidebar(props) {
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <StockSelect />
               <GraphTypeSelect />
+              <IndicatorSelect />
 
 
-              <li onClick={() => collapse('indicators', showIndicators, setShowIndicators, 'indicatorDetails')} className="items-center">
-                <a className={"text-xs uppercase py-3 font-bold block "}>
-                  <i className={"fas fa-table mr-2 text-sm "}></i>
-                  Indicators <FontAwesomeIcon style={{ marginLeft:'20%'}} id='indicators' icon={faChevronUp} size='lg'/>
-                </a>
-              </li>
-
-              <li id='indicatorDetails' style={{ display: 'none'}}>
-                <div class="block">
-                  <span class="text-gray-700"></span>
-                  <div class="mt-2">
-                    <div>
-                      <label class="inline-flex items-center">
-                        <input type="checkbox" onChange={e => addIndicators(e, 'ao')} class="form-checkbox" />
-                        <span class="ml-2">Awesome Oscillator</span>
-                      </label>
-                    </div>
-                    <div>
-                      <label class="inline-flex items-center">
-                        <input onChange={e => addIndicators(e, 'bollinger')} type="checkbox" class="form-checkbox"/>
-                        <span class="ml-2">Bollinger Bands</span>
-                      </label>
-                    </div>
-                    <div>
-                      <label class="inline-flex items-center">
-                        <input onChange={e => addIndicators(e, 'ma')} type="checkbox" class="form-checkbox"/>
-                        <span class="ml-2">Moving Average(Trend)</span>
-                      </label>
-                    </div>
-                    <div>
-                      <label class="inline-flex items-center">
-                        <input onChange={e => addIndicators(e, 'rsi')} type="checkbox" class="form-checkbox"/>
-                        <span class="ml-2">RSI</span>
-                      </label>
-                    </div>
-                    <div>
-                      <label class="inline-flex items-center">
-                        <input onChange={e => addIndicators(e, 'macd')} type="checkbox" class="form-checkbox"/>
-                        <span class="ml-2">MACD</span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </li>
 
               <li onClick={() => collapse('notes', showNotes, setShowNotes, 'notesDetails')} className="items-center">
                 <a className={"text-xs uppercase py-3 font-bold block "}>
