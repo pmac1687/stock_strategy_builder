@@ -8,6 +8,8 @@ import StockFilter from './StockFilter';
 import StockSelect from './DevelopStrategy/StockSelect';
 import GraphTypeSelect from "./DevelopStrategy/GraphTypeSelect";
 import IndicatorSelect from "./DevelopStrategy/IndicatorsSelect";
+import SearchBar from "./DevelopStrategy/SearchBar";
+import ShowNotes from './DevelopStrategy/ShowNotes';
 
 import { connect } from "react-redux";
 import { 
@@ -189,40 +191,23 @@ function ConnectedSidebar(props) {
               <StockSelect />
               <GraphTypeSelect />
               <IndicatorSelect />
-
-
-
-              <li onClick={() => collapse('notes', showNotes, setShowNotes, 'notesDetails')} className="items-center">
-                <a className={"text-xs uppercase py-3 font-bold block "}>
-                  <i className={"fas fa-map-marked mr-2 text-sm " }></i>
-                  Notes <FontAwesomeIcon style={{ marginLeft:'37%'}} id='notes' icon={faChevronUp} size='lg'/>
-                </a>
-              </li>
-
-              <li  className="items-center">
-                <div class="shadow flex">
-                  <div style={{ width: '100%'}}>
-                    <Select
-                      onChange={opt => {props.addWindowCoords([opt,'left'])}}
-                      options={dates}
-                      placeholder='Choose Date'
-                    />
-                  </div>
-                </div>
-              </li>
-
-              <li  className="items-center">
-                <div class="shadow flex">
-                  <div style={{ width: '100%', marginTop:'2vh'}}>
-                    <Select
-                      onChange={opt => {props.addWindowCoords([opt,'right'])}}
-                      options={dates}
-                      placeholder='Choose Date'
-                    />
-                  </div>
-                </div>
-              </li>
-
+              <ShowNotes
+                onClick={() => collapse('notes', showNotes, setShowNotes, 'notesDetails')}
+                content={'Notes'}
+                icon={<FontAwesomeIcon style={{ marginLeft:'37%'}} id='notes' icon={faChevronUp} size='lg'/>}
+              />
+              <SearchBar 
+                style={{width: '100%'}} 
+                options={dates} 
+                onChange={opt => {props.addWindowCoords([opt,'left'])}}
+                placeholder={'Choose Date'}
+              />
+              <SearchBar 
+                style={{ width: '100%', marginTop:'2vh'}} 
+                options={dates} 
+                onChange={opt => {props.addWindowCoords([opt,'right'])}}
+                placeholder={'Choose Date'}
+              />
             </ul>
 
             {/* Divider */}
