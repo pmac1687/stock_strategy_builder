@@ -2,7 +2,7 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Resp
 import React, { useEffect } from "react";
 import ReactDOM from 'react-dom';
 import { connect } from "react-redux";
-import { addBarData, } from "../../js/actions/index";
+import { addBarData, } from "../../../js/actions/index";
 import RangeSlider from "bootstrap";
 import Nouislider from 'react-nouislider';
 //import Slider from 'bootstrap-slider';
