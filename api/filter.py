@@ -4,9 +4,10 @@ import keys
 
 def get_abc_arr(lets):
     alphabets_in_lowercase=[]
-    for i in range(97,123):
+    for i in range(65,91):
         alphabets_in_lowercase.append(chr(i))
     abc = alphabets_in_lowercase
+    print(abc)
     ind_1 = abc.index(lets[0])
     ind_2 = abc.index(lets[1]) + 1
     abc = abc[ind_1:ind_2]
@@ -37,7 +38,7 @@ def main(letters, price, period, trend_period):
     
 
 if __name__ == '__main__':
-    letters = ['a','b']
+    letters = ['A','B']
     price = ['0', '1000']
     period = ['1-21-2021', '2-21-2021']
     trend_period = ['12-21-2020']
