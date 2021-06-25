@@ -41,6 +41,8 @@ const mapStateToProps = state => {
     graphCount: state.graphCount,
     graphs: state.graphs,
     stratStockData: state.stratStockData,
+
+    
     win: state.refWindow
    };
 };

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { connect } from "react-redux";
@@ -31,14 +32,14 @@ const ConnectedGraphTypeSelect = (props) => {
             </li>
 
             <li id='graphDetails' style={{ display: 'none'}} className="items-center">
-                <div class="bg-gray-50">
-                    <div class="flex flex-col items-start justify-center ">
-                        <div class="flex flex-col">
-                            <label class="inline-flex items-center mt-3">
-                                <input checked={props.mainGraphType === 'candle'} type="radio" id='candle' onChange={() => props.setMainGraphType('candle')} class="form-radio h-5 w-5 text-gray-600" /><span class="ml-2 text-gray-700">Candlestick</span>
+                <div className="bg-gray-50">
+                    <div className="flex flex-col items-start justify-center ">
+                        <div className="flex flex-col">
+                            <label className="inline-flex items-center mt-3">
+                                <input checked={props.mainGraphType === 'candle'} type="radio" id='candle' onChange={() => props.setMainGraphType('candle')} className="form-radio h-5 w-5 text-gray-600" /><span className="ml-2 text-gray-700">Candlestick</span>
                             </label>
-                            <label class="inline-flex items-center mt-3">
-                                <input type="radio" id='line' checked={props.mainGraphType === 'line'} onChange={() => props.setMainGraphType('line')} class="form-radio h-5 w-5 text-red-600" /><span class="ml-2 text-gray-700">Line Graph</span>
+                            <label className="inline-flex items-center mt-3">
+                                <input type="radio" id='line' checked={props.mainGraphType === 'line'} onChange={() => props.setMainGraphType('line')} className="form-radio h-5 w-5 text-red-600" /><span className="ml-2 text-gray-700">Line Graph</span>
                             </label>
                         </div>
                     </div>
