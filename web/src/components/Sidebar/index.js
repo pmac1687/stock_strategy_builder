@@ -189,7 +189,8 @@ function ConnectedSidebar(props) {
 
 
             {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
+            <div style={{ height:'30px'}}></div>
+            <hr  className="my-4 md:min-w-full" />
             {/* Heading */}
             <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
               No Layout Pages

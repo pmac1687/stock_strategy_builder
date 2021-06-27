@@ -70,4 +70,25 @@
     pointer-events: all;
     position: relative;
   }
+
+.slider__left-value,
+.slider__right-value {
+  color: black;
+  font-size: 12px;
+  margin-top: 20px;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+}
+
+.slider__left-value {
+  left: 6px;
+}
+
+.slider__right-value {
+  right: -4px;
+}
+
   

@@ -8,7 +8,9 @@ import Nouislider from 'react-nouislider';
 //import Slider from 'bootstrap-slider';
 import Slider from 'bootstrap-slider'
 import Multislider from './Multislider';
-import StockByLetterSlider from './StockByLetterSlider'
+import StockByLetterSlider from './StockByLetterSlider';
+import PriceSlider from './PriceSlider';
+import PeriodSlider from './PeriodSlider';
 
 //const Slider = require("bootstrap-slider");
 
@@ -29,6 +31,8 @@ function ConnectedStockFilter(props) {
   return (
     <div>
         <StockByLetterSlider />
+        <PriceSlider />
+        <PeriodSlider />
     </div>
   );
 }

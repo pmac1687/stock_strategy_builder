@@ -18,12 +18,16 @@ import {
   ADD_WINDOWS_SERIES_DATA,
   SET_SHOW_SELECT_STOCK,
   SET_SHOW_GRAPH_TYPE_SELECT,
-  SET_SHOW_INDICATOR_SELECT  
+  SET_SHOW_INDICATOR_SELECT,
+  SET_FILTER_ABC_ARR,
+  SET_FILTER_PRICE_ARR,
+  SET_FILTER_PERIOD_ARR,
+  SET_DATE_RANGE  
 } from "../constants/action-types";
 
 const initialState = {
   mainGraphType: 'candle',
-  strategyStock: '',
+  strategyStock: 'A',
   stratStockData: [],
   tickerList: [],
   showNotes: false,
@@ -38,6 +42,10 @@ const initialState = {
   showSelectStock: false,
   showGraphTypeSelect: false,
   showIndicatorSelect: false,
+  filterAbcArr: [0,25],
+  priceFilterArr: [0,1000],
+  periodFilterArr: ['3-1-2021', '3-1-2020'],
+  dateRange: [],
 };
 
 
@@ -79,6 +87,22 @@ function rootReducer(state = initialState, action) {
   }
   if (action.type === SET_SHOW_INDICATOR_SELECT) {
     return {...state, showIndicatorSelect: action.payload}
+  }
+  if (action.type === SET_FILTER_ABC_ARR) {
+    console.log(action.payload)
+    return {...state, filterAbcArr: action.payload}
+  }
+  if (action.type === SET_FILTER_PRICE_ARR) {
+    console.log(action.payload)
+    return {...state, filterPriceArr: action.payload}
+  }
+  if (action.type === SET_FILTER_PERIOD_ARR) {
+    console.log(action.payload)
+    return {...state, filterPeriodArr: action.payload}
+  }
+  if (action.type === SET_DATE_RANGE) {
+    console.log(action.payload)
+    return {...state, dateRange: action.payload}
   }
   if (action.type === DECREMENT_COUNT) {
     console.log('notes', action.payload)
