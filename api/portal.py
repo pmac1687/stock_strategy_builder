@@ -4,12 +4,23 @@ import json
 from flask_cors import CORS
 import csv
 import main
+import filter
 
 #create flask web app object
 app = Flask(__name__)
 CORS(app)
 
+@app.route("/filter/<filters>")
+def filter_ticks(filters):
+    letters = [filters.split(',')[0], filters.split(',')[1]]
+    price = [filters.split(',')[2], filters.split(',')[3]]
+    period = [filters.split(',')[4], filters.split(',')[5]]
+    trend_period = [filters.split(',')[6]]
+    limit = filters.split(',')[7]
+    print(trend_period)
+    data = filter.main(letters, price, period, trend_period, limit)
 
+    return json.dumps(data)
 
 @app.route("/tickerList")
 def get_tickers():
