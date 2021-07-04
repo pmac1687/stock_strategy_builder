@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import './multirange.css'
 import Multislider from './Multislider';
 import { connect } from "react-redux";
@@ -15,27 +15,29 @@ const mapStateToProps = state => {
      };
   };
 
-const ConnectedPeriodSlider = (props) => {
-    const [dates, setDates] = useState([])
+const ConnectedPeriodSlider = ({ getStockData, stratStockData, dateRange, setDateRange }) => {
     useEffect(() => {
-        props.getStockData()
+        getStockData()
     },[])
 
     useEffect(() => {
         getDates()
-    },[props.stratStockData])
+    },[stratStockData])
 
     function getDates(){
         const dats = [];
-        for(let i=1;i<props.stratStockData.length;i++){
-            dats.push(props.stratStockData[i]['date'])
+        for (let i = 1; i < stratStockData.length; i++){
+            const dat = stratStockData[i]['date'].split('-')
+            const date = `${dat[1]}-${dat[2]}-${dat[0]}`
+            dats.push(date)
         }
-        props.setDateRange(dats)
+
+        setDateRange(dats)
     }
 
     return (
         <>
-            <Multislider dates={props.dateRange} subject={'Choose Period Range'} mapKey={"periodFilter"} ids={['leftPeriod', 'rightPeriod']}  min={0} max={561} />
+            <Multislider margin={'4vw'} dates={dateRange} subject={'Choose Period Range'} mapKey={"periodFilter"} ids={['leftPeriod', 'rightPeriod']}  min={0} max={520} />
         </>
       );
     };

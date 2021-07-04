@@ -1,7 +1,6 @@
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { addBarData, } from "../../js/actions/index";
 
 
 const mapStateToProps = state => {

@@ -19,6 +19,10 @@ def filter_ticks(filters):
     limit = filters.split(',')[7]
     print(trend_period)
     data = filter.main(letters, price, period, trend_period, limit)
+    #data['date'] = data['date'].apply(lambda x : x.strftime())
+    data = data.to_json(orient="records")
+
+    print(data)
 
     return json.dumps(data)
 

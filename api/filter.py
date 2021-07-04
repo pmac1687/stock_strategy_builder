@@ -23,7 +23,7 @@ def build_query(lets, price, period, trend_period, limit):
                  in (select id from master_ticker_list where left(ticker, 1)
                   in ({abc})) and '{period[0]}'::date < date::date and 
                   date::date < '{period[1] if trend_period != '' else trend_period}'::date
-                   {f'limit {limit}' if (limit) else ''};"""
+                   ;"""
     #query = f"select ticker from master_ticker_list where left(ticker, 1) in ({abc});"
     return query
 
@@ -41,24 +41,26 @@ def query_db(query):
 
 def filter_by_price(df, price):
     #only include if close price within price bounds
+    print('before', df)
     ids = set(df['ticker_id'].to_list())
     for _id in ids:
         ser = df[df['ticker_id'] == _id]
         maxed = max(ser['close'])
         mined = min(ser['close'])
         #print(mined,maxed)
-        if mined > int(price[0]) and maxed > int(price[1]):
+        if mined < int(price[0]) or maxed > int(price[1]):
             #print(mined, maxed, ser.index)
             #ser.index is list o indexes to be removed per max or min not
             # in price range
+            print('min/max', mined,maxed)
             df.drop(ser.index, inplace=True)
-    print(df)
     return df
 
 def main(letters, price, period, trend_period, limit):
     query = build_query(letters, price, period, trend_period, limit)
     df = query_db(query)
     df = filter_by_price(df, price)
+    return df
     
 
 if __name__ == '__main__':
@@ -66,4 +68,4 @@ if __name__ == '__main__':
     price = ['0', '2']
     period = ['1-21-2021', '2-21-2021']
     trend_period = ['12-21-2020']
-    main(letters, price, period,trend_period)
+    main(letters, price, period,trend_period,'')

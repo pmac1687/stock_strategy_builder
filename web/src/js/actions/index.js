@@ -22,7 +22,8 @@ import {
   SET_FILTER_ABC_ARR,
   SET_FILTER_PRICE_ARR,
   SET_FILTER_PERIOD_ARR,
-  SET_DATE_RANGE
+  SET_DATE_RANGE,
+  SET_FILTERED_STOCK_ARR
 } from "../constants/action-types";
 import axios from 'axios';
 
@@ -117,6 +118,8 @@ export function setDateRange(payload) {
   return { type: SET_DATE_RANGE, payload}
 };
 
+
+
 export function collapse(payload) {
   console.log('selects tock', payload.func);
   return function(dispatch, getState){
@@ -150,6 +153,26 @@ export function collapse(payload) {
     //return { type: ADD_SERIES_ARRAY}
   return { type: null}
   };
+};
+
+export function setFilteredStockArr(payload) {
+  return function (dispatch, getState) {
+    console.log(4444444444, payload)
+    return   axios.get(`http://localhost:5000/filter/${payload}`, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      }
+    })  
+    .then(res => res.data)
+    .then(data => {
+      console.log('resdata for the table', data)  
+      dispatch({ type: SET_FILTERED_STOCK_ARR, payload: data})
+    })
+    .catch(err => {  
+      console.log(err)  
+    }); 
+    
+  }
 };
 
 export function getWindowsSeriesData() {

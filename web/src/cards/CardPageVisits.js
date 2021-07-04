@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer} from "react";
+import React, {useEffect } from "react";
 import { connect } from "react-redux";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

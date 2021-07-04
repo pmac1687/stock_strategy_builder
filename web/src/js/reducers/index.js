@@ -22,7 +22,8 @@ import {
   SET_FILTER_ABC_ARR,
   SET_FILTER_PRICE_ARR,
   SET_FILTER_PERIOD_ARR,
-  SET_DATE_RANGE  
+  SET_DATE_RANGE,
+  SET_FILTERED_STOCK_ARR,
 } from "../constants/action-types";
 
 const initialState = {
@@ -46,6 +47,7 @@ const initialState = {
   priceFilterArr: [0,1000],
   periodFilterArr: ['3-1-2021', '3-1-2020'],
   dateRange: [],
+  filteredStockArr:[]
 };
 
 
@@ -171,6 +173,10 @@ function rootReducer(state = initialState, action) {
 
   if ( action.type === REMOVE_WINDOW_COORDS) {
     return {...state, refWindow: ['', '']}
+  }
+
+  if ( action.type === SET_FILTERED_STOCK_ARR) {
+    return {...state, filteredStockArr: action.payload}
   }
 
   if ( action.type === ADD_WINDOW_COORDS) {

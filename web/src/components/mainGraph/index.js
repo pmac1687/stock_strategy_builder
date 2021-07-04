@@ -19,11 +19,11 @@ const mapStateToProps = state => {
   };
 
 function ConnectedMainGraph(props){
-    const [graphs, setGraphs] = useState([]);
+    const [graphs] = useState([]);
     const [keyCount, setKeyCount] = useState(0);
-    const [stateCount, setStateCount] = useState(0)
-    const line = <CardLineChart key={keyCount} />;
-    const candle = <CardCandleChart key={keyCount} />
+    //const [stateCount, setStateCount] = useState(0)
+    //const line = <CardLineChart key={keyCount} />;
+    //const candle = <CardCandleChart key={keyCount} />
     const graphArr = {
         'ao': <CardAOChart id='ao' key='1' />,
         'bollinger': <CardBollChart id='bollinger' key='2' />,

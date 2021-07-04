@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './multirange.css';
 import { connect } from "react-redux";
 
@@ -27,7 +27,6 @@ const ConnectedMultiRangeSlider = (props) => {
     "periodFilter": props.setFilterPeriodArr
   }
 
-  const marginR = props.abc ? '': '.6vw';
 
   useEffect(() => {
     console.log(props.filterAbcArr)
@@ -66,8 +65,8 @@ const ConnectedMultiRangeSlider = (props) => {
              <div className="slider__track" />
              <div className="slider__range" />
           </div>
-          <div className="slider__left-value">{props.abc ? props.abc[minVal] : props.dates ? props.dates[minVal] : minVal}</div>
-          <div style={{ marginRight: marginR}} className="slider__right-value">{props.abc ? props.abc[maxVal-1] : props.dates ? props.dates[maxVal] : maxVal}</div>
+          <div name='filter' className="slider__left-value">{props.abc ? props.abc[minVal] : props.dates ? props.dates[minVal] : minVal}</div>
+          <div name='filter' style={{ marginRight: props.margin}} className="slider__right-value">{props.abc ? props.abc[maxVal-1] : props.dates ? props.dates[maxVal] : maxVal}</div>
           <div style={{ marginBottom: '7vh'}} />
 
         </>

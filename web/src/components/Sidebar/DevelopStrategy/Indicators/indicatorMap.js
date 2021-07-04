@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from "react-redux";
-import { faChevronUp, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { 
     collapse,
@@ -58,9 +56,9 @@ const ConnectedIndicatorMap = (props) => {
         <>
             {indicators.map((item, index) => (
                 <React.Fragment key={index}>
-                  <div>
+                  <div style={{marginLeft: '2vw'}}>
                     <label class="inline-flex items-center">
-                      <input type="checkbox" onChange={e => addIndicators(e, item.indicator)} class="form-checkbox" />
+                      <input id='item' type="checkbox" onChange={e => addIndicators(e, item.indicator)} class="form-checkbox" />
                       <span class="ml-2">{item.subject}</span>
                     </label>
                   </div>
