@@ -1,6 +1,7 @@
 # importing the flask library files
 from flask import Flask
-import json
+#import json
+import simplejson as json
 from flask_cors import CORS
 import csv
 import main
@@ -20,9 +21,9 @@ def filter_ticks(filters):
     print(trend_period)
     data = filter.main(letters, price, period, trend_period, limit)
     #data['date'] = data['date'].apply(lambda x : x.strftime())
-    data = data.to_json(orient="records")
+    #data = json.dump(data)
 
-    print(data)
+    #print(data)
 
     return json.dumps(data)
 

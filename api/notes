@@ -147,3 +147,9 @@ volume: "3067000.0"
             'macd_v_low': min(data['macd_value']),
             'macd_s_high': max(data['macd_signal']),
             'macd_s_low': min(data['macd_signal']),
+
+
+
+df_dict['AAU'] = pandas.core.frame.DataFrame
+
+pickle.dumps, pickle.dump

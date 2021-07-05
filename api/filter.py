@@ -1,6 +1,9 @@
 import psycopg2
 import pandas as pd
 import keys
+import json
+import pickle
+import decimal
 
 def get_abc_arr(lets):
     alphabets_in_lowercase=[]
@@ -19,11 +22,19 @@ def get_abc_arr(lets):
 def build_query(lets, price, period, trend_period, limit):
     abc = get_abc_arr(lets)
     #query = f"select * from historical_stock_data where ticker_id in (select id from master_ticker_list where left(ticker, 1) in ('A', 'b'));"
-    query =  f"""select * from historical_stock_data as a where ticker_id
-                 in (select id from master_ticker_list where left(ticker, 1)
-                  in ({abc})) and '{period[0]}'::date < date::date and 
-                  date::date < '{period[1] if trend_period != '' else trend_period}'::date
-                   ;"""
+    #query =  f"""select * from historical_stock_data where ticker_id
+    #             in (select * from master_ticker_list where left(ticker, 1)
+    #              in ({abc})) and '{period[0]}'::date < date::date and 
+    #              date::date < '{period[1] if trend_period != '' else trend_period}'::date
+    #               ;"""
+
+    query = f""" select * from (select * from master_ticker_list 
+                where left(master_ticker_list.ticker,1) in ({abc}))
+                as a left outer join historical_stock_data on 
+                historical_stock_data.ticker_id=a.id where 
+                '{period[0]}'::date < date::date and 
+                date::date < '{period[1] if trend_period != '' 
+                else trend_period}'::date;"""
     #query = f"select ticker from master_ticker_list where left(ticker, 1) in ({abc});"
     return query
 
@@ -34,37 +45,52 @@ def query_db(query):
     cur.execute(query)
     data = cur.fetchall()
     print('len', len(data))
-    df=pd.DataFrame(data, columns=['ticker_id','open', 'close', 'high','low','volume', 'date'])
+    df=pd.DataFrame(data, columns=['ticker_id','ticker','company','id', 'open', 'close', 'high','low','volume', 'date'])
     conn.commit()
     conn.close()
     return df 
 
 def filter_by_price(df, price):
     #only include if close price within price bounds
-    print('before', df)
+    print('before', df.iloc[0])
     ids = set(df['ticker_id'].to_list())
     for _id in ids:
         ser = df[df['ticker_id'] == _id]
         maxed = max(ser['close'])
         mined = min(ser['close'])
         #print(mined,maxed)
-        if mined < int(price[0]) or maxed > int(price[1]):
+        #print(mined, maxed, 'min/max/error')
+        if int(mined) < int(price[0]) or int(maxed) > int(price[1]):
             #print(mined, maxed, ser.index)
             #ser.index is list o indexes to be removed per max or min not
             # in price range
-            print('min/max', mined,maxed)
+            #print('min/max', mined,maxed)
             df.drop(ser.index, inplace=True)
+
+    #df = df.apply(lambda x: str(x) if type(x) == decimal.Decimal else x)
     return df
+
+def split_df_by_ticker(df):
+    df_dict = dict()
+    # or as a dict comprehension: the unique Row value will be the key
+    df_dict = {g: d for g, d in df.groupby('ticker')}
+    print(type(df_dict['AAU']))
+    print(pickle.dumps(df_dict))
+    for _key in df_dict.keys():
+        #df_dict[_key] = df_dict[_key].apply(lambda x: str(x) if type(x) == decimal.Decimal else x)
+        df_dict[_key] = df_dict[_key].to_dict()
+    return df_dict
 
 def main(letters, price, period, trend_period, limit):
     query = build_query(letters, price, period, trend_period, limit)
     df = query_db(query)
     df = filter_by_price(df, price)
+    df = split_df_by_ticker(df)
     return df
     
 
 if __name__ == '__main__':
-    letters = ['A','B']
+    letters = ['A','A']
     price = ['0', '2']
     period = ['1-21-2021', '2-21-2021']
     trend_period = ['12-21-2020']
