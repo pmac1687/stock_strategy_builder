@@ -427,8 +427,7 @@ def add_stockstats_indicators(df):
     #rsi
     stock['rsi_12']
 
-
-    return df
+    return stock
 
 
 def main(tick):

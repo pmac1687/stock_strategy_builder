@@ -1,3 +1,4 @@
 .env
 /keys.py
 node_modules
+/db/keys.py

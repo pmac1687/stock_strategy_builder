@@ -2,6 +2,7 @@ import React, { useEffect, useState} from "react";
 import axios from 'axios';
 import MainGraph from "../components/mainGraph"
 import CardPageVisits from "../cards/CardPageVisits.js";
+import FilterTable from "../components/filterTable"
 import { connect } from "react-redux";
 import {  getCandlestickData } from "../js/actions/index";
 
@@ -43,6 +44,7 @@ function Dashboard(props) {
             <CardPageVisits  />
           </div>
           <div className="w-full xl:w-4/12 px-4">
+            <FilterTable />
           </div>
         </div>
     </>

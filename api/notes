@@ -153,3 +153,29 @@ volume: "3067000.0"
 df_dict['AAU'] = pandas.core.frame.DataFrame
 
 pickle.dumps, pickle.dump
+
+
+for row_index,row in info.iterrows():
+
+f"""update historical_stock_data set rsi_12='{row['rsi-12']}', rsi_6='{row['rsi-6']}',
+rsi_18='{row['rsi-18']}', rsi_24='{row['rsi_18']}', macd='{row['macd']}', macd_sig='{row['macd_sig']}',
+macd_hist='{row['macd_hist']}', boll='{row['boll']}', boll_ub='{row['boll_ub']}', boll_lb='{row['boll_lb']}',
+sma_10='{row['sma_10']}',sma_50='{row['sma_50']}', sma_200='{row['sma_200']}',ema_50='{row['ema_50']}',
+ema_200='{row['ema_200']}',ao='{row['ao']}', fractal_highs='{row['fractal_highs']}',fractal_lows='{row['fractal_lows']}',
+atr='{row['atr']}',smma_5='{row['smma_5']}',smma_50='{row['smma_50']}',smma_200='{row['smma_200']}',momentum='{row['momentum']}',accel_oss='{row['accel_oss']}',alligator_jaw='{row['alligator_jaw']}',
+alligator_teeth='{row['alligator_teeth']}', alligator_lips='{row['alligator_lips']}',
+gator_value1='{row['gator_value1']}', gator_value2='{row['gator_value2']}',f_high='{row['f_high']}',
+f_low='{row['f_low']}' where ticker_id='{row['id']}' and date::date='{row['date']}';"""
+
+['id', 'open', 'close', 'high','low','volume', 'date']
+
+
+ ticker_id | open | close | high | low | volume | date | rsi_12 | rsi_6 | rsi_18 | rsi_24 | macd | macd_sig | macd_hist | boll | boll_ub | boll_lb | sma_10 | sma_50 | sma_200 | ema_10 | ema_50 | ema_200 | ao | fractal_highs | fractal_lows | atr | smma_5 | smma_50 | smma_200 | momentum | accel_oss | alligator_jaw | alligator_teeth | alligator_lips | gator_value1 | gator_value2 | f_high | f_low 
+
+
+     cols = ['ticker_id', 'open', 'close', 'high', 'low', 'volume','date', 'rsi_12', 'rsi_6',
+            'rsi_18', 'rsi_24', 'macd', 'macd_sig', 'macd_hist', 'boll', 'boll_ub',
+            'boll_lb', 'sma_10', 'sma_50', 'sma_200', 'ema_10', 'ema_50', 'ema_200',
+            'ao', 'fractal_highs','fractal_lows' , 'atr', 'smma_5',
+            'smma_50', 'smma_200', 'momentum', 'accel_oss', 'alligator_jaw',
+            'alligator_teeth', 'alligator_lips', 'gator_value1', 'gator_value2', 'f_high', 'f_low']
