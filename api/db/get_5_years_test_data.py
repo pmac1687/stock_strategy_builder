@@ -9,7 +9,7 @@ cur = conn.cursor()
 
 print("Database opened successfully")
 
-with open('../csv/tickets.csv') as csv_file:
+with open('../csv/ticker_list.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
     for row in csv_reader:

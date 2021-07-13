@@ -28,11 +28,9 @@ def build_query(lets, price, period, trend_period, limit):
     #              date::date < '{period[1] if trend_period != '' else trend_period}'::date
     #               ;"""
 
-    query = f""" select * from (select * from master_ticker_list 
-                where left(master_ticker_list.ticker,1) in ({abc}))
-                as a left outer join historical_stock_data on 
-                historical_stock_data.ticker_id=a.id where 
-                '{period[0]}'::date < date::date and 
+    query = f""" select ticker_id, open, close, high, low, volume, date from historical_stock_data where ticker_id in (select id from master_ticker_list 
+                where first_letter in ({abc}))
+                and '{period[0]}'::date < date::date and 
                 date::date < '{period[1] if trend_period != '' 
                 else trend_period}'::date;"""
     #query = f"select ticker from master_ticker_list where left(ticker, 1) in ({abc});"
@@ -45,7 +43,7 @@ def query_db(query):
     cur.execute(query)
     data = cur.fetchall()
     print('len', len(data))
-    df=pd.DataFrame(data, columns=['ticker_id','ticker','company','id', 'open', 'close', 'high','low','volume', 'date'])
+    df=pd.DataFrame(data, columns=['ticker_id','open', 'close', 'high','low','volume', 'date'])
     conn.commit()
     conn.close()
     return df 

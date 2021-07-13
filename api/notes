@@ -179,3 +179,26 @@ f_low='{row['f_low']}' where ticker_id='{row['id']}' and date::date='{row['date'
             'ao', 'fractal_highs','fractal_lows' , 'atr', 'smma_5',
             'smma_50', 'smma_200', 'momentum', 'accel_oss', 'alligator_jaw',
             'alligator_teeth', 'alligator_lips', 'gator_value1', 'gator_value2', 'f_high', 'f_low']
+
+
+
+update master_ticker_list set median=(select percentile_cont(0.5) within group (order by close) from historical_stock_data where ticker_id=) where id={ticker}
+
+
+1,548222485,AA,Alcoa
+2,634421021,AAC,Ares
+
+
+old:
+f""" select id,ticker,company,ticker_id, open, close, high, low, volume, date from (select * from master_ticker_list 
+                where left(master_ticker_list.ticker,1) in ({abc}))
+                as a left outer join historical_stock_data on 
+                historical_stock_data.ticker_id=a.id where 
+                '{period[0]}'::date < date::date and 
+                date::date < '{period[1] if trend_period != '' 
+                else trend_period}'::date;"""
+
+
+
+
+select ticker_id, open, close, high, low, volume, date from historical_stock_data where ticker_id in (select id from master_ticker_list where first_letter in ('A') and '2-21-2021'::date < date::date < '1-21-2021'::date;

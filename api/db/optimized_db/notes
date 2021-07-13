@@ -1,0 +1,77 @@
+f"INSERT INTO historical_stock_data 
+(ticker_id,open,close,high,low,volume,date) 
+VALUES ((select id from master_ticker_list where ticker=%s), 
+%s, %s,%s,%s,%s,%s);",(ticker, row.open, row.close, row.high, 
+row.low, row.volume, index))
+
+
+rsi_12='{row['rsi_12']}', rsi_6='{row['rsi_6']}',
+
+rsi_18='{row['rsi_18']}', rsi_24='{row['rsi_24']}', macd='{row['macd']}',
+
+macd_sig='{row['macd_sig']}',
+
+macd_hist='{row['macd_hist']}', boll='{row['boll']}',
+ 
+boll_ub='{row['boll_ub']}', boll_lb='{row['boll_lb']}',
+
+sma_10='{row['sma_10']}',sma_50='{row['sma_50']}', sma_200='{row['sma_200']}'
+
+,ema_50='{row['ema_50']}',ema_10='{row['ema_10']}',
+
+ema_200='{row['ema_200']}',ao='{row['ao']}',
+
+atr='{row['atr']}',smma_5='{row['smma_5']}',smma_50='{row['smma_50']}'
+
+,smma_200='{row['smma_200']}',momentum='{row['momentum']}',
+
+accel_oss='{row['accel_oss']}',alligator_jaw='{row['alligator_jaw']}',
+
+alligator_teeth='{row['alligator_teeth']}',
+
+alligator_lips='{row['alligator_lips']}',
+
+gator_value1='{row['gator_value1']}', gator_value2='{row['gator_value2']}'
+
+ where ticker_id='{row['ticker_id']}' and date::date='{row['date']}';"""
+
+
+
+
+
+                  open       high        low      close    volume
+dt                                                              
+2019-01-02  25.955000  26.847000  25.480000  26.240000   3067000
+2019-01-03  26.120001  26.850000  25.530001  26.240000   2979900
+2019-01-04  26.840000  28.610001  26.650000  28.340000   5653300
+2019-01-07  28.530001  28.910000  28.146000  28.420000   2441000
+2019-01-08  28.730000  28.847000  27.650000  28.250000   2218300
+...               ...        ...        ...        ...       ...
+2021-06-24  35.930000  36.669998  35.269001  36.349998   6733800
+2021-06-25  36.950001  37.110001  35.779999  35.799999  32496800
+2021-06-28  36.169998  36.610001  35.669998  36.090000   8758200
+2021-06-29  36.549999  38.000000  36.540001  37.529999   8493500
+2021-06-30  37.200001  37.804001  36.680000  36.840000   6047800
+
+
+
+Index(['open', 'High', 'Low', 'Close', 'Volume', 'ticker_id', 'rsi_12',
+       'rsi_6', 'rsi_18', 'rsi_24', 'macd', 'macd_sig', 'macd_hist', 'boll',
+       'boll_ub', 'boll_lb', 'sma_10', 'sma_50', 'sma_200', 'ema_10', 'ema_50',
+       'ema_200', 'date', 'ao', 'fractal_highs', 'fractal_lows', 'atr',
+       'smma_5', 'smma_50', 'smma_200', 'momentum', 'accel_oss',
+       'alligator_jaw', 'alligator_teeth', 'alligator_lips', 'gator_value1',
+       'gator_value2', 'f_high', 'f_low'],
+      dtype='object')
+
+
+
+ ticker_id , date , open , close , high , low , volume , rsi_12 ,
+  rsi_6 , rsi_18 , rsi_24 , macd , macd_sig , macd_hist , boll ,
+  
+   boll_ub , boll_lb , sma_10 , sma_50 , sma_200 , ema_50 , ema_10 ,
+    ema_200 , ao , atr , smma_5 , smma_50 , smma_200 , momentum ,
+     accel_oss , alligator_jaw , alligator_teeth , alligator_lips ,
+      gator_value1 , gator_value2 , f_high , f_low
+      
+      37
