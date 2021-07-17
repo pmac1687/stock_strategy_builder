@@ -77,38 +77,43 @@ def add_tapy_indicators(df):
 def add_stockstats_indicators(df):
     stock = stockstats.StockDataFrame.retype(df)
     #rsi
-    df['rsi_12'] = stock['rsi_12']
-    #del df['rsi_12']
-    del df['rs_12']
-    del df['closepm']
-    del df['closenm']
-    del df['close_-1_d']
-    del df['close_-1_s']
-    del df['closepm_12_smma']
-    del df['closenm_12_smma']
+    try:
+        df['rsi_12'] = stock['rsi_12']
+        #del df['rsi_12']
+        print(df)
+        del df['rs_12']
+        del df['closepm']
+        del df['closenm']
+        del df['close_-1_d']
+        del df['close_-1_s']
+        del df['closepm_12_smma']
+        del df['closenm_12_smma']
 
 
-    df['rsi_6'] = stock['rsi_6']
-    df['rsi_18'] = stock['rsi_18']
-    df['rsi_24'] = stock['rsi_24']
+        df['rsi_6'] = stock['rsi_6']
+        df['rsi_18'] = stock['rsi_18']
+        df['rsi_24'] = stock['rsi_24']
 
-    df['macd'] = stock['macd']
-    df['macd_sig'] = stock['macds']
-    df['macd_hist'] = stock['macdh']
+        df['macd'] = stock['macd']
+        df['macd_sig'] = stock['macds']
+        df['macd_hist'] = stock['macdh']
 
-    df['boll'] = stock['boll']
-    df['boll_ub'] = stock['boll_ub']
-    df['boll_lb'] = stock['boll_lb']
+        df['boll'] = stock['boll']
+        df['boll_ub'] = stock['boll_ub']
+        df['boll_lb'] = stock['boll_lb']
 
-    
-    df['sma_10'] = stock['close_10_sma']
-    df['sma_50'] = stock['close_50_sma']
-    df['sma_200'] = stock['close_200_sma']
-    df['ema_10'] = stock['close_10_ema']
-    df['ema_50'] = stock['close_50_ema']
-    df['ema_200'] = stock['close_200_ema']
 
-    return df
+        df['sma_10'] = stock['close_10_sma']
+        df['sma_50'] = stock['close_50_sma']
+        df['sma_200'] = stock['close_200_sma']
+        df['ema_10'] = stock['close_10_ema']
+        df['ema_50'] = stock['close_50_ema']
+        df['ema_200'] = stock['close_200_ema']
+
+        return df
+
+    except:
+        'miss'
 
 def query_db(data, tick_arr):
     dic = {}

@@ -28,11 +28,25 @@ def build_query(lets, price, period, trend_period, limit):
     #              date::date < '{period[1] if trend_period != '' else trend_period}'::date
     #               ;"""
 
-    query = f""" select ticker_id, open, close, high, low, volume, date from historical_stock_data where ticker_id in (select id from master_ticker_list 
-                where first_letter in ({abc}))
-                and '{period[0]}'::date < date::date and 
-                date::date < '{period[1] if trend_period != '' 
-                else trend_period}'::date;"""
+    #query = f""" select historical_stock_data.ticker_id, open, close, high, low, volume, date, ticker from historical_stock_data, master_ticker_list where historical_stock_data.ticker_id in (select ticker_id, ticker from master_ticker_list 
+    #            where first_letter in ({abc}))
+    #            and '{period[0]}'::date < date::date and 
+    #            date::date < '{period[1] if trend_period != '' 
+    #            else trend_period}'::date;"""
+
+    query  = f"""select * from master_ticker_list as a
+                where a.first_letter in ({abc}); select ticker_id, 
+                open, close, high, low, volume, date 
+                from historical_stock_data 
+                left outer join on historical_stock_data.ticker_id=a.ticker_id;"""
+
+                #(select * from master_ticker_list 
+                #where master_ticker_list.first_letter in ({abc}))
+                #as a left outer join historical_stock_data on 
+                #historical_stock_data.ticker_id=a.id where 
+                #'{period[0]}'::date < date::date and 
+                #date::date < '{period[1] if trend_period != '' 
+                #else trend_period}'::date;"""
     #query = f"select ticker from master_ticker_list where left(ticker, 1) in ({abc});"
     return query
 
