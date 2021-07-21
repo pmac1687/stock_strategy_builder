@@ -224,8 +224,9 @@ def get_stock_data(tick):
     conn = psycopg2.connect(database="postgres", user=keys.user, password=keys.password, host=keys.host, port="5432")
     cur = conn.cursor()
     #cur.execute(f"select * from master_ticker_list limit 5;")
-    cur.execute(f"select * from historical_stock_data where ticker_id in (select id from master_ticker_list where ticker='{tick}');")
+    cur.execute(f"select * from historical_stock_data where ticker_id in (select ticker_id from master_ticker_list where ticker='{tick}');")
     data = cur.fetchall()
+    print(data,'get_stock_data')
     conn.commit()
     conn.close()
     return data
@@ -431,7 +432,10 @@ def add_stockstats_indicators(df):
 
 
 def main(tick):
+    tick = tick.upper()
+    print(tick)
     data = get_stock_data(tick)
+    print(data)
     data = convert_to_pandas(data)
     return data
 

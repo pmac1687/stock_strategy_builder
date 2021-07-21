@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import './assets/styles/tailwind.css';
 import './assets/styles/index.css';
@@ -7,8 +7,17 @@ import Sidebar from './components/Sidebar';
 import AdminNavbar from './components/AdminNavbar';
 import HeaderStats from './components/HeaderStats';
 import FooterAdmin from './components/FooterAdmin';
+import { connect } from "react-redux";
 
-function App() {
+
+import { 
+  getStockData,
+} from "./js/actions/index";
+
+function ConnectedApp({ getStockData }) {
+  useEffect(() => {
+    getStockData()
+  }, [getStockData])
   return (
     <>
       <Sidebar />
@@ -25,5 +34,12 @@ function App() {
     </>
   );
 }
+
+const App = connect(
+  null,
+  {
+      getStockData,
+  }
+  )(ConnectedApp);
 
 export default App;

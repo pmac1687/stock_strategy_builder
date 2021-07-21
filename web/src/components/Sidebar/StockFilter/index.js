@@ -24,6 +24,7 @@ const mapStateToProps = state => {
 };
 
 function ConnectedStockFilter(props) {
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     const names = document.getElementsByName('filter')

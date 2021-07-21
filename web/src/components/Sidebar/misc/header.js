@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Header = () => (
+const Header = (props) => (
     <>
     <hr className="my-4 md:min-w-full" />
     {/* Heading */}
     <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-      Develop Strategy
+      {props.title}
     </h6>
     </>
 );

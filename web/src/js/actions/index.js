@@ -23,7 +23,8 @@ import {
   SET_FILTER_PRICE_ARR,
   SET_FILTER_PERIOD_ARR,
   SET_DATE_RANGE,
-  SET_FILTERED_STOCK_ARR
+  SET_FILTERED_STOCK_ARR,
+  SET_MASTER_DATE_RANGE
 } from "../constants/action-types";
 import axios from 'axios';
 
@@ -248,6 +249,24 @@ export function getTickerList() {
         .then(data => {
           console.log('resdata', data)  
           dispatch({ type: LOAD_TICKER_LIST, payload: data})
+        })
+        .catch(err => {  
+          console.log(err)  
+        });  
+  };
+}
+
+export function getMasterDateRange() {
+  return function(dispatch) {
+    return   axios.get(`http://localhost:5000/dateRange`, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          }
+        })  
+        .then(res => res.data)
+        .then(data => {
+          console.log('resdata', data)  
+          dispatch({ type: SET_MASTER_DATE_RANGE, payload: data})
         })
         .catch(err => {  
           console.log(err)  

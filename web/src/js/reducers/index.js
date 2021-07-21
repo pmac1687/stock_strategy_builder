@@ -24,11 +24,12 @@ import {
   SET_FILTER_PERIOD_ARR,
   SET_DATE_RANGE,
   SET_FILTERED_STOCK_ARR,
+  SET_MASTER_DATE_RANGE,
 } from "../constants/action-types";
 
 const initialState = {
   mainGraphType: 'candle',
-  strategyStock: 'A',
+  strategyStock: 'CNTY',
   stratStockData: [],
   tickerList: [],
   showNotes: false,
@@ -47,7 +48,8 @@ const initialState = {
   priceFilterArr: [0,1000],
   periodFilterArr: ['3-1-2021', '3-1-2020'],
   dateRange: [],
-  filteredStockArr:[]
+  filteredStockArr: [],
+  masterDateRange: [],
 };
 
 
@@ -64,6 +66,10 @@ function rootReducer(state = initialState, action) {
   if (action.type === LOAD_STRATEGY_DATA) {
     console.log(action.payload)
     return {...state, stratStockData: action.payload}
+  }
+  if (action.type === SET_MASTER_DATE_RANGE) {
+    console.log(action.payload)
+    return {...state, masterDateRange: action.payload}
   }
   if (action.type === LOAD_TICKER_LIST) {
     console.log(action.payload)

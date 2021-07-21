@@ -1,0 +1,1 @@
+export const LOAD_TICKER_LIST = 'LOAD_TICKER_LIST';

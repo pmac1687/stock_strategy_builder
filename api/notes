@@ -202,3 +202,105 @@ f""" select id,ticker,company,ticker_id, open, close, high, low, volume, date fr
 
 
 select ticker_id, open, close, high, low, volume, date from historical_stock_data where ticker_id in (select id from master_ticker_list where first_letter in ('A') and '2-21-2021'::date < date::date < '1-21-2021'::date;
+
+
+
+
+
+f"""select open, close,high,low, volume, date, ticker_id from 
+       historical_stock_data inner join master_ticker_list
+       on historical_stock_data.ticker_id=master_ticker_list.ticker_id 
+       where master_ticker_list.first_letter in({abc});"""
+
+
+SELECT a.verification_id, a.worker_id, a.state, a.proofs, b.Name 
+FROM worker_details_verification a 
+     LEFT OUTER JOIN worker_details b ON a.worker_id = b.worker_id 
+WHERE a.state = 'Initial';
+
+
+select b.open, b.close,b.high,b.low, b.volume, b.date, a.ticker_id from master_ticker_list a inner join historical_stock_data b on a.ticker_id=b.ticker_id where a.first_letter in ('A');
+       ;
+
+    #query = f"select * from historical_stock_data where ticker_id in (select id from master_ticker_list where left(ticker, 1) in ('A', 'b'));"
+    #query =  f"""select * from historical_stock_data where ticker_id
+    #             in (select * from master_ticker_list where left(ticker, 1)
+    #              in ({abc})) and '{period[0]}'::date < date::date and 
+    #              date::date < '{period[1] if trend_period != '' else trend_period}'::date
+    #               ;"""
+
+    #query = f""" select historical_stock_data.ticker_id, open, close, high, low, volume, date, ticker from historical_stock_data, master_ticker_list where historical_stock_data.ticker_id in (select ticker_id, ticker from master_ticker_list 
+    #            where first_letter in ({abc}))
+    #            and '{period[0]}'::date < date::date and 
+    #            date::date < '{period[1] if trend_period != '' 
+    #            else trend_period}'::date;"""
+
+ # query  = f"""select * from master_ticker_list as a
+ #             where a.first_letter in ({abc}); select ticker_id, 
+ #             open, close, high, low, volume, date 
+ #             from historical_stock_data 
+ #             left outer join on historical_stock_data.ticker_id=a.ticker_id where
+ #             ;"""
+
+                #(select * from master_ticker_list 
+                #where master_ticker_list.first_letter in ({abc}))
+                #as a left outer join historical_stock_data on 
+                #historical_stock_data.ticker_id=a.id where 
+                #'{period[0]}'::date < date::date and 
+                #date::date < '{period[1] if trend_period != '' 
+                #else trend_period}'::date;"""
+    #query = f"select ticker from master_ticker_list where left(ticker, 1) in ({abc});"
+
+
+
+
+select 
+
+
+ ticker_id , date , open , close , high , low , volume , rsi_12 , rsi_6 ,
+  rsi_18 , rsi_24 , macd , macd_sig , macd_hist , boll , boll_ub , boll_lb ,
+   sma_10 , sma_50 , sma_200 , ema_50 , ema_10 , ema_200 , ao , atr , smma_5 
+, smma_50 , smma_200 , momentum , accel_oss , alligator_jaw , alligator_teeth 
+   , alligator_lips , gator_value1 , gator_value2 , f_high , f_low 
+
+
+
+           'open':open,
+        'close':close,
+        'high':high,
+        'low':low,
+        'volume':volume,
+        'date':date
+
+
+
+ticker route return:
+
+  'date': row_index.split(' ')[0],
+    #        'close': str(row['Close']),
+    #        'high': str(row['High']),
+    #        'low': str(row['Low']),
+    #        'volume': str(row['volume']),
+    #        #bollinger
+    #        'boll': str(row['boll']),
+    #        'boll_ub': str(row['boll_ub']),
+    #        'boll_lb': str(row['boll_lb']),
+    #        #awesome
+    #        'ao': str(row['ao']),
+    #        #rsi
+    #        'rsi_6': str(row['rsi_12']),
+    #        #ma
+    #        'ma' : str(row['ma']),
+    #        'ma_div': str(row['ma_div']),
+    #        #trending
+    #        'trend_close': str(row['trend_close']),
+    #        'trend_ma': str(row['trend_ma']),
+    #        #fractals
+    #        'fractal_highs': row['fractal_highs'],
+    #        'fractal_lows': row['fractal_lows'],
+    #        'f_lows': str(row['f_low']),
+    #        'f_highs': str(row['f_high']),
+    #        #macd
+    #        'macd_value': str(row['macd_value']),
+    #        'macd_signal': str(row['macd_signal']),
+    #        'macd_h': str(row['macd_h']),

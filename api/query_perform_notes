@@ -1,0 +1,33 @@
+took  --- 121.12638854980469 seconds --- :::
+    
+    query = f"""select b.open, b.close,b.high,b.low, b.volume, b.date, a.ticker_id 
+        from master_ticker_list a inner join historical_stock_data b
+       on a.ticker_id=b.ticker_id where a.first_letter in ({abc})
+       ;"""
+------------------------------------------------------------------------------
+
+took --- 0.6141047477722168 seconds ---
+
+select a.ticker_id, a.first_letter, a.company from master_ticker_list
+ a where a.ticker in ('A');
+
+
+ ------------------------------------------------------------------------------
+took --- 108.18371677398682 seconds ---
+
+
+select b.open, b.close,b.high,b.low, b.volume, b.date, b.ticker_id from historical_stock_data b,
+master_ticker_list a where a.first_letter in ({abc}) and a.ticker_id=b.ticker_id;
+
+-------------------------------------------------------------------------------
+--- 8.105701446533203 seconds ---
+
+select b.open, b.close,b.high,b.low, b.volume, b.date, b.ticker_id from historical_stock_data b,
+master_ticker_list a where a.first_letter in ({abc}) and a.ticker_id=b.ticker_id and 
+'{period[0]}'::date < date::date and date::date < '{period[1] if trend_period != '' else trend_period}'::date ;
+
+----------------------------------------------------------------------------
+
+took --- 0.4660947322845459 seconds ---!!!!!
+
+

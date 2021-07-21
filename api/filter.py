@@ -4,6 +4,7 @@ import keys
 import json
 import pickle
 import decimal
+import time
 
 def get_abc_arr(lets):
     alphabets_in_lowercase=[]
@@ -21,43 +22,28 @@ def get_abc_arr(lets):
 
 def build_query(lets, price, period, trend_period, limit):
     abc = get_abc_arr(lets)
-    #query = f"select * from historical_stock_data where ticker_id in (select id from master_ticker_list where left(ticker, 1) in ('A', 'b'));"
-    #query =  f"""select * from historical_stock_data where ticker_id
-    #             in (select * from master_ticker_list where left(ticker, 1)
-    #              in ({abc})) and '{period[0]}'::date < date::date and 
-    #              date::date < '{period[1] if trend_period != '' else trend_period}'::date
-    #               ;"""
+    print(trend_period,'tppppppp')
+    query = f"""select b.open, b.close,b.high,b.low, b.volume, b.date, 
+                b.ticker_id, a.ticker, a.median_close, a.company from historical_stock_data b, master_ticker_list a 
+                where a.first_letter in ({abc}) and median_close > {price[0]} and 
+                median_close < {price[1]} and a.ticker_id=b.ticker_id and '{period[0]}'::date < 
+                date::date and date::date < 
+                '{period[1] if trend_period[0] == '0' else trend_period[0]}'::date ;"""
 
-    #query = f""" select historical_stock_data.ticker_id, open, close, high, low, volume, date, ticker from historical_stock_data, master_ticker_list where historical_stock_data.ticker_id in (select ticker_id, ticker from master_ticker_list 
-    #            where first_letter in ({abc}))
-    #            and '{period[0]}'::date < date::date and 
-    #            date::date < '{period[1] if trend_period != '' 
-    #            else trend_period}'::date;"""
+    print(query)
 
-    query  = f"""select * from master_ticker_list as a
-                where a.first_letter in ({abc}); select ticker_id, 
-                open, close, high, low, volume, date 
-                from historical_stock_data 
-                left outer join on historical_stock_data.ticker_id=a.ticker_id;"""
-
-                #(select * from master_ticker_list 
-                #where master_ticker_list.first_letter in ({abc}))
-                #as a left outer join historical_stock_data on 
-                #historical_stock_data.ticker_id=a.id where 
-                #'{period[0]}'::date < date::date and 
-                #date::date < '{period[1] if trend_period != '' 
-                #else trend_period}'::date;"""
-    #query = f"select ticker from master_ticker_list where left(ticker, 1) in ({abc});"
     return query
 
 def query_db(query):
     conn = psycopg2.connect(database="postgres", user=keys.user, password=keys.password, host=keys.host, port="5432")
     cur = conn.cursor()
     #cur.execute(f"select * from master_ticker_list limit 5;")
+    start_time = time.time()
     cur.execute(query)
     data = cur.fetchall()
+    print("--- %s seconds ---" % (time.time() - start_time))
     print('len', len(data))
-    df=pd.DataFrame(data, columns=['ticker_id','open', 'close', 'high','low','volume', 'date'])
+    df=pd.DataFrame(data, columns=['open', 'close', 'high','low','volume', 'date','ticker_id', 'ticker', 'median_close', 'company'])
     conn.commit()
     conn.close()
     return df 
@@ -86,7 +72,6 @@ def split_df_by_ticker(df):
     df_dict = dict()
     # or as a dict comprehension: the unique Row value will be the key
     df_dict = {g: d for g, d in df.groupby('ticker')}
-    print(type(df_dict['AAU']))
     print(pickle.dumps(df_dict))
     for _key in df_dict.keys():
         #df_dict[_key] = df_dict[_key].apply(lambda x: str(x) if type(x) == decimal.Decimal else x)
@@ -97,7 +82,9 @@ def main(letters, price, period, trend_period, limit):
     query = build_query(letters, price, period, trend_period, limit)
     df = query_db(query)
     df = filter_by_price(df, price)
-    df = split_df_by_ticker(df)
+    #df = split_df_by_ticker(df)
+    #df = df.groupby('ticker_id')
+    print(df)
     return df
     
 
@@ -105,5 +92,5 @@ if __name__ == '__main__':
     letters = ['A','A']
     price = ['0', '2']
     period = ['1-21-2021', '2-21-2021']
-    trend_period = ['12-21-2020']
+    trend_period = '12-21-2020'
     main(letters, price, period,trend_period,'')

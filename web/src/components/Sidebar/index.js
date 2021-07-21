@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { faChevronUp, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CardAOChart from '../mainGraph/CardAOChart';
+import AOChart from '../secondaryGraphs/AOChart';
 import StockFilter from './StockFilter/';
 import StockSelect from './DevelopStrategy/StockSelect';
 import GraphTypeSelect from "./DevelopStrategy/GraphTypeSelect";
@@ -58,12 +58,12 @@ function ConnectedSidebar(props) {
   const arr = [1,2,3,4]
   useEffect(() => {
     const arrs = []
-    props.stratStockData.map((item) => {
+    for (let i = 0; i < props.stratStockData.length; i++){
       arrs.push({
-        'label': item['date'],
-        'value': item['date']
+        'label': item[i]['date'],
+        'value': item[i]['date']
       });
-    });
+    }
     setDates(prev => [...arrs])
     console.log(dates)
   },[props.stratStockData])
@@ -134,9 +134,8 @@ function ConnectedSidebar(props) {
               collapseShow
             }
             >
-            <headerForm />
 
-            <Header />
+            <Header title={'Develop Strategy'} />
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <StockSelect />
               <GraphTypeSelect />

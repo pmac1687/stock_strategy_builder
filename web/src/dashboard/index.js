@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from "react";
 import axios from 'axios';
-import MainGraph from "../components/mainGraph"
+import MainGraph from "../components/mainGraphs"
 import CardPageVisits from "../cards/CardPageVisits.js";
 import FilterTable from "../components/filterTable"
 import { connect } from "react-redux";
