@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
+import CheckBox from '../../elements/CheckBox'
 
 import { 
     collapse,
@@ -55,14 +56,13 @@ const ConnectedIndicatorMap = (props) => {
     return (
         <>
             {indicators.map((item, index) => (
-                <React.Fragment key={index}>
-                  <div style={{marginLeft: '2vw'}}>
-                    <label class="inline-flex items-center">
-                      <input id='item' type="checkbox" onChange={e => addIndicators(e, item.indicator)} class="form-checkbox" />
-                      <span class="ml-2">{item.subject}</span>
-                    </label>
-                  </div>
-                </React.Fragment>
+              <CheckBox
+                key={index}
+                margin={'0vw'}
+                id={'item'}
+                onChangeFunc={e => addIndicators(e, item.indicator)}
+                indicator={item.subject}
+              />
             ))}
         </>
       );

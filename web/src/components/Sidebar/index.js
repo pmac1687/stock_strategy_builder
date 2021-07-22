@@ -13,6 +13,7 @@ import ShowNotes from './DevelopStrategy/ShowNotes';
 import Toggler from "./misc/Toggler";
 import headerForm from "./misc/headerForm";
 import Header from "./misc/header";
+import Dropdown from './elements/DropDown'
 
 import { connect } from "react-redux";
 import { 
@@ -41,8 +42,6 @@ const mapStateToProps = state => {
     graphCount: state.graphCount,
     graphs: state.graphs,
     stratStockData: state.stratStockData,
-
-    
     win: state.refWindow
    };
 };
@@ -145,45 +144,33 @@ function ConnectedSidebar(props) {
                 content={'Notes'}
                 icon={<FontAwesomeIcon style={{ marginLeft:'37%'}} id='notes' icon={faChevronUp} size='lg'/>}
               />
-              <SearchBar 
-                style={{width: '100%'}} 
-                options={dates} 
-                onChange={opt => {props.addWindowCoords([opt,'left'])}}
-                placeholder={'Choose Date'}
-              />
-              <SearchBar 
-                style={{ width: '100%', marginTop:'2vh'}} 
-                options={dates} 
-                onChange={opt => {props.addWindowCoords([opt,'right'])}}
-                placeholder={'Choose Date'}
-              />
             </ul>
 
-            {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
-            {/* Heading */}
-            <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Stock Filter
-            </h6>
-            {/* Navigation */}
 
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-              <li onClick={() => collapse('strategy', showStrategyFilter, setShowStrategyFilter, 'strategyFilter')} className="items-center">
-                <a
-                  className="text-gray-800 hover:text-gray-600 text-xs uppercase py-3 font-bold block"
-                  to="/auth/login"
-                >
-                  <i className="fas fa-fingerprint text-gray-500 mr-2 text-sm"></i>{" "}
-                  Filter <FontAwesomeIcon style={{ marginLeft: '3vw'}} id='strategy' icon={faChevronUp} size='lg'/>
-                </a>
+              {/* Divider */}
+              <hr className="my-4 md:min-w-full" />
+              {/* Heading */}
+              <h6 className="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+                Stock Filter
+              </h6>
+              {/* Navigation */}
+
+            <ul style={{ marginLeft: '-2rem'}}>
+              <Dropdown
+                onClickFunc={() => collapse('strategy', showStrategyFilter, setShowStrategyFilter, 'strategyFilter')}
+                title={'Filter'}
+                id={'strategy'}
+                margin={'3vw'}
+                marginL={'2.5rem'}
+              />
+
+
+              <li id='strategyFilter' style={{ display: 'none'}} className="items-center">
+                <div class="shadow flex">
+                  <StockFilter />
+                </div>
               </li>
             </ul>
-
-            <li id='strategyFilter' style={{ display: 'none'}} className="items-center">
-              <div class="shadow flex">
-                <StockFilter />
-              </div>
-            </li>
 
 
 
@@ -196,7 +183,7 @@ function ConnectedSidebar(props) {
             </h6>
             {/* Navigation */}
 
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
+            <ul style={{ paddingLeft: '-2em'}} className="md:flex-col md:min-w-full flex flex-col list-none ">
               <li className="items-center">
                 <a
                   className="text-gray-800 hover:text-gray-600 text-xs uppercase py-3 font-bold block"

@@ -4,7 +4,8 @@ import StockByLetterSlider from './StockByLetterSlider';
 import PriceSlider from './PriceSlider';
 import PeriodSlider from './PeriodSlider';
 import TrendPeriod from './trendPeriod';
-import RadioButtons from './radioButtons';
+import CheckBoxBank from './CheckBoxBank';
+import Button from "../../filterTable/elements/Button";
 
 
 //const Slider = require("bootstrap-slider");
@@ -53,13 +54,13 @@ function ConnectedStockFilter(props) {
       <PriceSlider />
       <PeriodSlider />
       <TrendPeriod />
-      <RadioButtons style={{marginLeft: '3vw'}} />
-      <input
-        style={{ marginTop: '2vh', marginBottom:'3vh', marginLeft:'4vw'}}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        type='submit'
-        value='Filter'
+      <CheckBoxBank style={{marginLeft: ''}} />
+      <Button
+        name={'Filter'}
+        className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"}
+        margin={'3vw'}
       />
+
     </form>
   );
 }
