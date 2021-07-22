@@ -7,11 +7,6 @@ import TrendPeriod from './trendPeriod';
 import CheckBoxBank from './CheckBoxBank';
 import Button from "../../filterTable/elements/Button";
 
-
-//const Slider = require("bootstrap-slider");
-
-//var slider = new Slider('#ex2', {});
-
 import { 
   setFilteredStockArr,
 } from "../../../js/actions/index";
@@ -32,10 +27,8 @@ function ConnectedStockFilter(props) {
     for (let i = 0; i < names.length; i++){
       console.log(names[i])
     }
-    const openCloseTrend = names[7].checked
     const filterLetters = names[8].checked
     const filterPrice = names[9].checked
-    const filterMATrend =names[10].checked
     const letters =  filterLetters ? [names[0].innerText, names[1].innerText] : ['A', 'Z']
     const priceRange = filterPrice ? [names[2].innerText, names[3].innerText] : ['0', '1000']
     const period = [names[4].innerText, names[5].innerText]

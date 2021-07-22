@@ -41,7 +41,14 @@ const ConnectedPeriodSlider = ({ getStockData, stratStockData, dateRange, setDat
 
     return (
         <>
-            <Multislider margin={'2.75vw'} dates={masterDateRange} subject={'Choose Period Range'} mapKey={"periodFilter"} ids={['leftPeriod', 'rightPeriod']}  min={0} max={628} />
+            <Multislider
+                margin={'2.75vw'}
+                dates={masterDateRange}
+                subject={'Choose Period Range'}
+                mapKey={"periodFilter"} ids={['leftPeriod', 'rightPeriod']}
+                min={0}
+                max={628}
+            />
         </>
       );
     };

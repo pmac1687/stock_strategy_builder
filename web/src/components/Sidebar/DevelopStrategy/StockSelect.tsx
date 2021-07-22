@@ -1,10 +1,9 @@
 import React from 'react';
-import Select from 'react-select';
 import { connect } from "react-redux";
-import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DropDown from '../elements/DropDown';
 import SearchSelect from '../elements/SearchSelect';
+import { ValueType } from 'react-select/lib/types';
+
 
 import { 
     setStrategyStock, 
@@ -14,31 +13,50 @@ import {
     setShowSelectStock, 
   } from "../../../js/actions/index";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: { tickerList: any; showSelectStock: any; }) => {
   return { 
     tickerList: state.tickerList,
     showSelectStock: state.showSelectStock,
    };
 };
 
-const ConnectedStockSelect = (props) => {
+type Props = {
+  setStrategyStock: ValueType<{ value: string; label: string; }>,
+  getStockData: () => void,
+  getCandlestickData: () => void,
+  collapse: ({}) => void,
+  setShowSelectStock: () => void,
+  tickerList: [],
+  showSelectStock: boolean,
+}
+
+const ConnectedStockSelect = ({
+  setStrategyStock,
+  getStockData,
+  getCandlestickData,
+  collapse,
+  setShowSelectStock,
+  tickerList,
+  showSelectStock,
+}: Props) => {
 
 
     return (
         <>
             <DropDown
-              onClickFunc={() => props.collapse({ 'id': 'stock', 'bool': props.showSelectStock, 'func': 'SET_SHOW_SELECT_STOCK', 'action': 'stockSearch' })}
+              onClickFunc={() => collapse({ 'id': 'stock', 'bool': showSelectStock, 'func': 'SET_SHOW_SELECT_STOCK', 'action': 'stockSearch' })}
               title={'Stock'}
               id={'stock'}
               margin={'41%'}
+              marginL={''}
 
             />
             <SearchSelect
               id={'stockSearch'}
               display={'none'}
               width={'100%'}
-              onChangeFunc={opt => { props.setStrategyStock(opt.label.split(' ')[0]); props.getStockData(); props.getCandlestickData() }}
-              options={props.tickerList}
+              onChangeFunc={(opt: { label: string, value: number }) => { setStrategyStock(opt.label.split(' ')[0]); getStockData(); getCandlestickData() }}
+              options={tickerList}
             />
         </>
       );

@@ -1,6 +1,14 @@
-import React from 'react'
+import React from 'react';
 
-const Row = ({ key, volume, median, company, ticker }) => {
+type Props = {
+    key: number,
+    volume: number,
+    median: number,
+    company: string,
+    ticker: string,
+  }
+
+const Row = ({ key, volume, median, company, ticker }: Props) => {
     return (
         <>
             <tr key={key}>
