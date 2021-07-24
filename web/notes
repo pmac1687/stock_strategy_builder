@@ -1,4 +1,104 @@
 todos:
-  -make it where second ref adds display back for ref points on graph
-      when you save one graph, thaan go to add second the ref dots dont show on graph
-  -make ref dots on graph draggable
+  -add candlestick data to postgres db 
+
+
+
+historyData
+
+historyDataArray
+
+seriesWindows
+
+windowsSeriesData -->> mapped for maintable from graph
+
+windowsStocks -->> mapped as above for stock name
+
+    addSeriesArray,
+    removeWindowCoords,
+    getWindowsSeriesData 
+
+0: Object { Close: 36, High: 37, Low: 36, … }
+​​
+Close: 36
+​​
+High: 37
+​​
+Low: 36
+​​
+accel_oss: 0
+​​
+alligator_jaw: 32
+​​
+alligator_lips: 34
+​​
+alligator_teeth: 33
+​​
+ao: 0
+​​
+atr: 1
+​​
+boll: 34
+​​
+boll_lb: 30
+​​
+boll_ub: 37
+​​
+date: "Fri, 01 Feb 2019 00:00:00 GMT"
+​​
+ema_10: 35
+​​
+ema_200: 34
+​​
+ema_50: 34
+​​
+fractal_highs: "0.0"
+​​
+fractal_lows: "0.0"
+​​
+gator_value1: -1
+​​
+gator_value2: 1
+​​
+green: true
+​​
+ma: 36
+​​
+ma_div: ""
+​​
+macd_h: 0
+​​
+macd_signal: 0
+​​
+macd_value: 1
+​​
+momentum: 67
+​​
+open: 36
+​​
+rsi_12: 64
+​​
+rsi_18: 63
+​​
+rsi_24: 62
+​​
+rsi_6: 66
+​​
+sma_10: 35
+​​
+sma_200: 33
+​​
+sma_50: 33
+​​
+smma_200: 0
+​​
+smma_5: 35
+​​
+smma_50: 0
+​​
+ticker_id: 9
+​​
+trend_close: ""
+​​
+trend_ma: "down"
+​​
+volume: 6611900

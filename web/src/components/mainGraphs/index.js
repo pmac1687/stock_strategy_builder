@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from "react";
-import CardCandleChart from "./CardCandleChart";
-import CardLineChart from "./CardLineChart";
+import CardCandleChart from "./CandleChart";
+import CardLineChart from "./LineChart";
 import BollChart from '../secondaryGraphs/BollChart';
 import MAChart from '../secondaryGraphs/MAChart';
 import RSIChart from '../secondaryGraphs/RSIChart';

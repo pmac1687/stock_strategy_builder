@@ -28,7 +28,7 @@ import {
   removeGraph, 
   addFirstGraph,
   decrementGraphCount,
-  addWindowCoords, 
+  //addWindowCoords, 
 } from "../../js/actions/index";
 
 import Select from 'react-select';
@@ -53,11 +53,12 @@ function ConnectedSidebar(props) {
   const [showIndicators, setShowIndicators] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
   const [showStrategyFilter, setShowStrategyFilter] = useState(false);
-  const [dates, setDates] = useState([]);
-  const arr = [1,2,3,4]
+  //const [dates, setDates] = useState([]);
+  const arr = [1, 2, 3, 4]
+  /*
   useEffect(() => {
     const arrs = []
-    for (let i = 0; i < props.stratStockData.length; i++){
+    for (const i in Object.keys(props.stratStockData)){
       arrs.push({
         'label': item[i]['date'],
         'value': item[i]['date']
@@ -66,7 +67,7 @@ function ConnectedSidebar(props) {
     setDates(prev => [...arrs])
     console.log(dates)
   },[props.stratStockData])
-
+  */
   useEffect(() => {
     console.log('window', props.win)
   },[props.win])
@@ -227,7 +228,7 @@ const Sidebar = connect(
     removeGraph, 
     addFirstGraph,
     decrementGraphCount,
-    addWindowCoords
+    //addWindowCoords
    }
   )(ConnectedSidebar);
 

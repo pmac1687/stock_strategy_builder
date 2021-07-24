@@ -129,9 +129,17 @@ def get_table(dates):
     print('tick', dates)
     tick = dates.split(',')[2]
     data = new_main.main(tick)
-    data = main.get_table_series_data(data, dates)
-    print(7)
-    return json.dump(data)
+    #data = main.get_table_series_data(data, dates)
+    print(data)
+    columns = data.columns
+    tick_dic = {}
+    for row_index,row in data.iterrows():
+        dic = {}
+        for col in columns:
+            dic[col] = row[col]
+            if col == columns[-1]:
+                tick_dic[str(row_index)] = dic
+    return tick_dic
 
 @app.route("/dateRange")
 def get_date_range():

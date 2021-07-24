@@ -1,21 +1,30 @@
-import { 
-  SET_MAIN_GRAPH_TYPE,
+import {
+  // select stock //`
   SET_STRATEGY_STOCK,
   LOAD_STRATEGY_DATA,
+  LOAD_CANDLESTICK,
+  // zoom graph  ///
+  FILTER_GRAPH_DATA,
+  GET_REF_COORDS,
+  // main table -- zoom data//
+  ADD_WINDOWS_SERIES_DATA,
+  ADD_SERIES_ARRAY, 
+
+  
+  SET_MAIN_GRAPH_TYPE,
+
+
   LOAD_TICKER_LIST,
   SHOW_NOTES,
-  LOAD_CANDLESTICK,
   ADD_GRAPH,
   INCREMENT_COUNT,
   REMOVE_GRAPH,
   ADD_CLOSE_GRAPH,
   DECREMENT_COUNT,
-  FILTER_GRAPH_DATA,
-  GET_REF_COORDS,
-  ADD_WINDOW_COORDS,
-  ADD_SERIES_ARRAY, 
-  REMOVE_WINDOW_COORDS,
-  ADD_WINDOWS_SERIES_DATA,
+
+  //ADD_WINDOW_COORDS,
+  //REMOVE_WINDOW_COORDS,
+
   SET_SHOW_SELECT_STOCK,
   SET_SHOW_GRAPH_TYPE_SELECT,
   SET_SHOW_INDICATOR_SELECT,
@@ -28,19 +37,25 @@ import {
 } from "../constants/action-types";
 
 const initialState = {
-  mainGraphType: 'candle',
+  // select stock //
   strategyStock: 'CNTY',
   stratStockData: [],
-  tickerList: [],
-  showNotes: false,
   candlestickData: [],
-  graphs: ['candle'],
-  graphCount: 1,
+  // zoom graph // 
   refCoords: [],
-  refWindow: [],
-  windowsStocks: [],
+  // main table - zoom data ////
   seriesWindows: [],
   windowsSeriesData: [],
+
+
+  mainGraphType: 'candle',
+  showNotes: false,
+  graphs: ['candle'],
+  tickerList: [],
+  graphCount: 1,
+  refWindow: [],
+  windowsStocks: [],
+
   showSelectStock: false,
   showGraphTypeSelect: false,
   showIndicatorSelect: false,
@@ -54,11 +69,7 @@ const initialState = {
 
 
 function rootReducer(state = initialState, action) {
-  //////// NEW STUFF ////////
-  if (action.type === SET_MAIN_GRAPH_TYPE) {
-    console.log(action.payload)
-    return {...state, mainGraphType: action.payload}
-  }
+  ///////  set stock ///////
   if (action.type === SET_STRATEGY_STOCK) {
     console.log(action.payload)
     return {...state, strategyStock: action.payload}
@@ -66,6 +77,78 @@ function rootReducer(state = initialState, action) {
   if (action.type === LOAD_STRATEGY_DATA) {
     console.log(action.payload)
     return {...state, stratStockData: action.payload}
+  }
+  if (action.type === LOAD_CANDLESTICK) {
+    console.log('notes', action.payload)
+    return {...state, candlestickData: action.payload}
+  }
+  //////// zoom graph /////////////
+  if ( action.type === GET_REF_COORDS) {
+    console.log('action.REDUCER.FILTER', action.payload)
+    return {...state, refCoords: [...action.payload]}
+  }
+  if ( action.type === FILTER_GRAPH_DATA) {
+    console.log('action.REDUCER.FILTER', state.refCoords)
+    let withinRange = false
+    const stratArr = []
+    const candleArr = []
+    console.log('state.stratStockData reducer', state.stratStockData.length)
+    for(const i in Object.keys(state.stratStockData)){
+      const dat = state.stratStockData[i];
+      console.log('ref date reducer',dat,dat.date)
+      if(dat.date === state.refCoords[1]){
+        withinRange = false;
+        stratArr.push(dat);
+        candleArr.push(state.candlestickData[i]);
+        break
+      }
+      if(withinRange === true){
+        stratArr.push(dat);
+        candleArr.push(state.candlestickData[i]);
+      }
+      if(dat.date === state.refCoords[0]){
+        withinRange = true;
+        stratArr.push(dat);
+        candleArr.push(state.candlestickData[i]);
+      }
+    }
+    return {...state, candlestickData: [...candleArr], stratStockData: [...stratArr]}
+  }
+  ////// main table -- zoom dat /////////////////////
+  if ( action.type === ADD_WINDOWS_SERIES_DATA) {
+    console.log('action.REDUCER.FILTER', action.payload)
+    return {...state, windowsSeriesData: [...state.windowsSeriesData,  action.payload]}
+  }
+
+  if ( action.type === ADD_SERIES_ARRAY) {
+    let coords = state.refCoords;
+    const arr = []
+    let within = false
+    if(coords[0] && coords[1]){
+      coords = coords.sort()
+      for(const i in Object.keys(state.stratStockData)){
+        const dat = state.stratStockData[i];
+        if(dat['date'] === coords[1]){
+          arr.push(dat['date']);
+          within = false;
+          break
+        }
+        if(within === true){
+          arr.push(dat['date'])
+        }
+        if(dat['date'] === coords[0]){
+          arr.push(dat['date']);
+          within = true
+        }
+      }
+      return {...state, seriesWindows: [...state.seriesWindows, arr], windowsStocks: [...state.windowsStocks, state.strategyStock]}
+    }
+  }
+
+  //////// NEW STUFF ////////
+  if (action.type === SET_MAIN_GRAPH_TYPE) {
+    console.log(action.payload)
+    return {...state, mainGraphType: action.payload}
   }
   if (action.type === SET_MASTER_DATE_RANGE) {
     console.log(action.payload)
@@ -142,49 +225,18 @@ function rootReducer(state = initialState, action) {
     return {...state, graphs: filtered}
   }
 
-  if ( action.type === GET_REF_COORDS) {
-    console.log('action.REDUCER.FILTER', action.payload)
-    return {...state, refCoords: [...action.payload]}
-  }
 
-  if ( action.type === ADD_WINDOWS_SERIES_DATA) {
-    console.log('action.REDUCER.FILTER', action.payload)
-    return {...state, windowsSeriesData: [...state.windowsSeriesData,  action.payload]}
-  }
 
-  if ( action.type === ADD_SERIES_ARRAY) {
-    let coords = state.refWindow;
-    const arr = []
-    let within = false
-    if(coords[0] && coords[1]){
-      coords = coords.sort()
-      for(let i=0;i<state.stratStockData.length;i++){
-        const dat = state.stratStockData[i];
-        if(dat['date'] === coords[1]){
-          arr.push(dat['date']);
-          within = false;
-          break
-        }
-        if(within === true){
-          arr.push(dat['date'])
-        }
-        if(dat['date'] === coords[0]){
-          arr.push(dat['date']);
-          within = true
-        }
-      }
-      return {...state, seriesWindows: [...state.seriesWindows, arr], windowsStocks: [...state.windowsStocks, state.strategyStock]}
-    }
-  }
 
+/*
   if ( action.type === REMOVE_WINDOW_COORDS) {
     return {...state, refWindow: ['', '']}
   }
-
+*/
   if ( action.type === SET_FILTERED_STOCK_ARR) {
     return {...state, filteredStockArr: action.payload}
   }
-
+/*
   if ( action.type === ADD_WINDOW_COORDS) {
     console.log('action.window.coords', action.payload)
     if(action.payload[1] === 'left'){
@@ -194,33 +246,7 @@ function rootReducer(state = initialState, action) {
       return {...state, refWindow: [state.refWindow[0], action.payload[0]['label']]}
     }
   }
-
-  if ( action.type === FILTER_GRAPH_DATA) {
-    console.log('action.REDUCER.FILTER', state.refCoords)
-    let withinRange = false
-    const stratArr = []
-    const candleArr = []
-    for(let i=0;i < state.stratStockData.length;i++){
-      const dat = state.stratStockData[i];
-      if(dat.date === state.refCoords[1]){
-        withinRange = false;
-        stratArr.push(dat);
-        candleArr.push(state.candlestickData[i]);
-        break
-      }
-      if(withinRange === true){
-        stratArr.push(dat);
-        candleArr.push(state.candlestickData[i]);
-      }
-      if(dat.date === state.refCoords[0]){
-        withinRange = true;
-        stratArr.push(dat);
-        candleArr.push(state.candlestickData[i]);
-      }
-    }
-    return {...state, candlestickData: [...candleArr], stratStockData: [...stratArr]}
-  }
-
+*/
   return state;
 }
 

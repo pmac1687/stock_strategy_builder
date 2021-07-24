@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import DropDown from '../elements/DropDown';
 import SearchSelect from '../elements/SearchSelect';
-import { ValueType } from 'react-select/lib/types';
+import Select, { ValueType } from 'react-select';
 
 
 import { 
@@ -13,15 +13,15 @@ import {
     setShowSelectStock, 
   } from "../../../js/actions/index";
 
-const mapStateToProps = (state: { tickerList: any; showSelectStock: any; }) => {
+const mapStateToProps = (state) => {
   return { 
     tickerList: state.tickerList,
     showSelectStock: state.showSelectStock,
    };
 };
-
+/*
 type Props = {
-  setStrategyStock: ValueType<{ value: string; label: string; }>,
+  setStrategyStock: (opt: ValueType<{ value: string, label: string }, false>) => void,
   getStockData: () => void,
   getCandlestickData: () => void,
   collapse: ({}) => void,
@@ -29,6 +29,7 @@ type Props = {
   tickerList: [],
   showSelectStock: boolean,
 }
+*/
 
 const ConnectedStockSelect = ({
   setStrategyStock,
@@ -38,7 +39,7 @@ const ConnectedStockSelect = ({
   setShowSelectStock,
   tickerList,
   showSelectStock,
-}: Props) => {
+}) => {
 
 
     return (
@@ -55,7 +56,7 @@ const ConnectedStockSelect = ({
               id={'stockSearch'}
               display={'none'}
               width={'100%'}
-              onChangeFunc={(opt: { label: string, value: number }) => { setStrategyStock(opt.label.split(' ')[0]); getStockData(); getCandlestickData() }}
+              onChangeFunc={(opt) => { setStrategyStock(opt?.label.split(' ')[0]); getStockData(); getCandlestickData() }}
               options={tickerList}
             />
         </>

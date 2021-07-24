@@ -4,7 +4,8 @@ import MainGraph from "../components/mainGraphs"
 import CardPageVisits from "../cards/CardPageVisits.js";
 import FilterTable from "../components/filterTable"
 import { connect } from "react-redux";
-import {  getCandlestickData } from "../js/actions/index";
+import { getCandlestickData } from "../js/actions/index";
+import MainTable from "../components/MainTable";
 
 function mapStateToProps(state) {
   return {
@@ -41,7 +42,8 @@ function Dashboard(props) {
         </div>
         <div className="flex flex-wrap mt-4">
           <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-            <CardPageVisits  />
+          <CardPageVisits />
+          <MainTable />
           </div>
           <div className="w-full xl:w-4/12 px-4">
             <FilterTable />

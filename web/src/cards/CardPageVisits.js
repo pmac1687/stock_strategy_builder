@@ -1,4 +1,4 @@
-import React, {useEffect } from "react";
+import React, {useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,7 +11,7 @@ const mapStateToProps = state => {
     historyData: state.masterHistoryData,
     historyDataArray: state.pageHistoryDataArr,
     seriesWindows: state.seriesWindows,
-    windowsSeriesData: state.windowsSeriesData,
+    windowsSeriesData: [],
     windowsStocks: state.windowsStocks
    };
 };
@@ -19,10 +19,14 @@ const mapStateToProps = state => {
 
 
 function ConnectedCardPageVisits(props) {
+  const [ tableItems, setTableItems] = useState([])
   useEffect(() => {
-    props.windowsSeriesData.map((item, index) => {
-      console.log(item)
-    })
+    const arr = [];
+    for ( const index in Object.keys(props.windowsSeriesData) ){
+      arr.push(props.windowsSeriesData[index])
+    };
+    setTableItems(prev => arr);
+    console.log(tableItems)
   },[props.windowsSeriesData])
 
   function collapse(item){
@@ -114,11 +118,12 @@ function ConnectedCardPageVisits(props) {
               </tr>
             </thead>
             <tbody>
-              {props.windowsSeriesData && props.windowsSeriesData.map((item, index) => (
-                <>
+              {/*{props.windowsSeriesData && props.windowsSeriesData.map((item, index) => (*/}
+              {tableItems && tableItems.map((item) => (
+              <>
                 <tr key={item['name']}>
-                  <th onClick={() => collapse(item[0]['dates'])} style={{display: 'flex', alignItems: 'center', justifyContent:'center', marginTop:'8vh'}} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
-                    {props.windowsStocks[index]} - {item[0]['dates'].split(',')[0]}/{item[0]['dates'].split(',')[1]}<div style={{ marginLeft: '15%'}}></div><FontAwesomeIcon id={`${item[0]['dates']}1`} icon={faChevronUp} size='lg'/>
+                  <th onClick={() => collapse(item[0]['date'])} style={{display: 'flex', alignItems: 'center', justifyContent:'center', marginTop:'8vh'}} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
+                    {''} - {item[0]['date'].split(',')[0]}/{item[0]['date'].split(',')[1]}<div style={{ marginLeft: '15%'}}></div><FontAwesomeIcon id={`${item[0]['date']}1`} icon={faChevronUp} size='lg'/>
                   </th>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
                     <div id='flex'>
@@ -127,8 +132,8 @@ function ConnectedCardPageVisits(props) {
                     <div id='flex'>
                       <div id={item[0]['ma_close'] > 0 ? 'green': 'red'}>{item[0]['close_trend']}</div>
                     </div>
-                  </td>
-                  <td  className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                    </td>
+                    <td  className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
                     <div id='flex'><div id='green' >{`${item[0]['high']}`}</div>/<div id='red'>{item[0]['low']}</div></div>
                     <div>${item[0]['h_l_spread']}/ {item[0]['h_l_spread_perc']}%</div>
                   </td>
@@ -198,7 +203,7 @@ function ConnectedCardPageVisits(props) {
                     </div>
                   </td>
                 </tr>
-                <table id={item[0]['dates']} style={{ display: 'none'}}  className="items-center w-full bg-transparent border-collapse">
+                <table id={item[0]['date']} style={{ display: 'none'}}  className="items-center w-full bg-transparent border-collapse">
                   <thead>
                     <tr>
                       <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
@@ -249,26 +254,26 @@ function ConnectedCardPageVisits(props) {
                     </tr>
                   </thead>
                   <tbody>
-                  {item.map((dats) => (
-                      <tr>
-                        <th style={{display: 'flex', alignItems: 'center', justifyContent:'center'}} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
-                          {props.windowsStocks[index]}-{dats['date']}<div style={{ marginLeft: '15%'}}></div><FontAwesomeIcon id='stock' icon={faChevronUp} size='lg'/>
-                        </th>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                          <div id='flex'>
-                            <div id='green'>{`${dats['boll_ub']}`} /</div>
-                            <div id='red'>{dats['boll_lb']}</div>
-                          </div>
-                          <div id='flex'>
-                            <div id='green'>{`${dats['boll_ub_div_arr']}`} /</div>
-                            <div id='red'>{dats['boll_lb_div_arr']}</div>
-                          </div>
-                          <div id='flex'>
-                            <div id='green'>{`${dats['boll_ub_div_perc_arr']}`} /</div>
-                            <div id='red'>{dats['boll_lb_div_perc_arr']}</div>
-                          </div>
-                        </td>
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                      {item.map((dats) => (
+                        <tr>
+                          <th style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
+                            {''}-{dats['date']}<div style={{ marginLeft: '15%' }}></div><FontAwesomeIcon id='stock' icon={faChevronUp} size='lg' />
+                          </th>
+                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                            <div id='flex'>
+                              <div id='green'>{`${dats['boll_ub']}`} /</div>
+                              <div id='red'>{dats['boll_lb']}</div>
+                            </div>
+                            <div id='flex'>
+                              <div id='green'>{`${dats['boll_ub_div_arr']}`} /</div>
+                              <div id='red'>{dats['boll_lb_div_arr']}</div>
+                            </div>
+                            <div id='flex'>
+                              <div id='green'>{`${dats['boll_ub_div_perc_arr']}`} /</div>
+                              <div id='red'>{dats['boll_lb_div_perc_arr']}</div>
+                            </div>
+                          </td>
+                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
                           <div id='flex'>
                             <div >{`${dats['macd_value']}`} /</div>
                             <div >{dats['macd_signal']}</div>
@@ -340,13 +345,12 @@ function ConnectedCardPageVisits(props) {
                             <div>{dats['vol_div_perc']} %</div>
                           </div>
                         </td>
-                      </tr>
-                ))}
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </>
               ))}
-
             </tbody>
           </table>
         </div>
