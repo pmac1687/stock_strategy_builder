@@ -137,7 +137,6 @@ export function setShowNotes(payload) {
 
 export function addGraph(payload, getState) {
   return function(dispatch, getState){
-    const { graphs } = getState();
     console.log('payload', payload)
     dispatch({ type: ADD_GRAPH, payload: payload})
   }
@@ -145,7 +144,6 @@ export function addGraph(payload, getState) {
 
 export function removeGraph(payload, getState) {
   return function(dispatch, getState){
-    const { graphs } = getState();
     console.log('payload', payload)
     dispatch({ type: REMOVE_GRAPH, payload: payload})
 

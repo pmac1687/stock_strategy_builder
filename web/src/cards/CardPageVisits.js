@@ -27,7 +27,7 @@ function ConnectedCardPageVisits(props) {
     };
     setTableItems(prev => arr);
     console.log(tableItems)
-  },[props.windowsSeriesData])
+  },[props.windowsSeriesData, tableItems])
 
   function collapse(item){
     const svg = document.getElementById(`${item}1`)

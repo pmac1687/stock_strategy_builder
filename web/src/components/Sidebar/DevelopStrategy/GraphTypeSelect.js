@@ -1,9 +1,6 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
-import Select from 'react-select';
+import React from 'react';
 import { connect } from "react-redux";
-import { faChevronUp, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RadioButton from '../elements/RadioButton';
 import Dropdown from '../elements/DropDown'
 

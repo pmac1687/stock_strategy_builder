@@ -1,5 +1,4 @@
-import React, { useEffect, useState} from "react";
-import axios from 'axios';
+import React, { useEffect} from "react";
 import MainGraph from "../components/mainGraphs"
 import CardPageVisits from "../cards/CardPageVisits.js";
 import FilterTable from "../components/filterTable"
@@ -17,9 +16,6 @@ function mapStateToProps(state) {
 
 function Dashboard(props) {
 
-  const [stockData] = useState([]);
-  const [setStock] = useState('');
-  const [historyData] = useState([]);
   useEffect(() => {
     //props.getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps

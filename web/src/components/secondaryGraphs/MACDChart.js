@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { LineChart, Line,Bar, ResponsiveContainer, XAxis, YAxis, Legend, Tooltip, ComposedChart } from 'recharts';
+import {  Line,Bar, ResponsiveContainer, XAxis, YAxis, Legend, Tooltip, ComposedChart } from 'recharts';
 import { connect } from "react-redux";
 
 

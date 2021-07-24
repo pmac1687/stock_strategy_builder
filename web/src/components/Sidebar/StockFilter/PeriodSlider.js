@@ -17,27 +17,17 @@ const mapStateToProps = state => {
      };
   };
 
-const ConnectedPeriodSlider = ({ getStockData, stratStockData, dateRange, setDateRange, getMasterDateRange, masterDateRange }) => {
+const ConnectedPeriodSlider = ({  stratStockData, dateRange, setDateRange, getMasterDateRange, masterDateRange }) => {
     useEffect(() => {
         getMasterDateRange();
-    },[])
+    },[getMasterDateRange])
 
     useEffect(() => {
         //getDates();
         console.log(masterDateRange)
     },[masterDateRange])
 
-    function getDates(){
-        const dats = [];
-        for (let i = 0; i < masterDateRange.length; i++){
-            const dat = stratStockData[i]['date'].split('-')
-            console.log('dates', dat)
-            const date = `${dat[1]}-${dat[2]}-${dat[0]}`
-            dats.push(date)
-        }
 
-        setDateRange(dats)
-    }
 
     return (
         <>

@@ -1,9 +1,8 @@
 import React, { useEffect, useState} from 'react';
-import {ComposedChart, ReferenceDot,ReferenceArea, Bar,Line, XAxis, YAxis, Tooltip, ErrorBar, ResponsiveContainer} from 'recharts'
+import {ComposedChart, ReferenceDot,ReferenceArea, Bar,Line, XAxis, YAxis, Tooltip, ResponsiveContainer} from 'recharts'
 
 import { connect } from "react-redux";
 import { 
-  addBarData, 
   filterGraphData, 
   addRefCoords, 
   getStockData, 
@@ -25,11 +24,8 @@ const mapStateToProps = state => {
 function ConnectedCardCandleChart(props){
   const [refAreaLeft, setRefAreaLeft] = useState()
   const [refAreaRight, setRefAreaRight] = useState()
-  const [leftDot, setLeftDot] = useState();
-  const [rightDot, setRightDot] = useState();
-  const [refsOff, setRefsOff] = useState(true);
+  const [refsOff] = useState(true);
   const [rWindow, setRWindow] = useState([]);
-  const refArr = []
   const heights = [
     '90%',
     '56%',
@@ -42,19 +38,19 @@ function ConnectedCardCandleChart(props){
   useEffect(() => {
     setRWindow(prev => props.refWindow);
     console.log(rWindow);
-  },[props.refWindow])
+  },[props.refWindow, rWindow])
 
   useEffect(() => {
     console.log(refAreaLeft,'rleft');
     console.log(refAreaRight, 'rright')
   },[refAreaLeft, refAreaRight])
-
+/*
   function removeRefs(){
     const ref1 = document.getElementById('dot1');
     const ref2 = document.getElementById('dot2');
     ref1.style.display = 'none'
     ref2.style.display = 'none'
-  }
+  }*/
 
   function zoom(){
     const arr = [refAreaLeft, refAreaRight]

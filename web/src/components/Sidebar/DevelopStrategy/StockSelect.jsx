@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from "react-redux";
 import DropDown from '../elements/DropDown';
 import SearchSelect from '../elements/SearchSelect';
-import Select, { ValueType } from 'react-select';
 
 
 import { 

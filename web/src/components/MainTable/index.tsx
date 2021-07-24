@@ -24,8 +24,7 @@ type Props = {
 }
 */
 
-const ConnectedMainTable = ({
-    }) => (
+const ConnectedMainTable = () => (
     <>
         <TableHeader />
         <div className="block w-full overflow-x-auto">

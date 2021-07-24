@@ -2,15 +2,11 @@ import React, { useEffect } from "react";
 import {
     ComposedChart,
     Line,
-    LineChart,
-    Area,
     Bar,
     XAxis,
     YAxis,
-    CartesianGrid,
     Tooltip,
     Legend,
-    Scatter,
     ResponsiveContainer,
   } from 'recharts';
 import { connect } from "react-redux";

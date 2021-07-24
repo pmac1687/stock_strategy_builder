@@ -1,8 +1,7 @@
 import React from 'react';
-import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line} from 'recharts'
+import {XAxis, YAxis, Legend, ResponsiveContainer, LineChart, Line} from 'recharts'
 
 import { connect } from "react-redux";
-import { addBarData, } from "../../js/actions/index";
 
 
 const mapStateToProps = state => {

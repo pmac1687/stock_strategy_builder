@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect} from "react";
 import CardCandleChart from "./CandleChart";
 import CardLineChart from "./LineChart";
 import BollChart from '../secondaryGraphs/BollChart';
@@ -19,11 +19,7 @@ const mapStateToProps = state => {
   };
 
 function ConnectedMainGraph(props){
-    const [graphs] = useState([]);
-    const [keyCount, setKeyCount] = useState(0);
-    //const [stateCount, setStateCount] = useState(0)
-    //const line = <CardLineChart key={keyCount} />;
-    //const candle = <CardCandleChart key={keyCount} />
+
     const graphArr = {
         'ao': <AOChart id='ao' key='1' />,
         'bollinger': <BollChart id='bollinger' key='2' />,
@@ -38,7 +34,7 @@ function ConnectedMainGraph(props){
     useEffect(() => {
         console.log(props.graphs)
     }, [props.graphs])
-
+/*
     function chooseMainGraph(){
         if(props.mainGraphType === 'line'){
             if(graphs.length !== 0){
@@ -65,7 +61,7 @@ function ConnectedMainGraph(props){
                 setKeyCount(prev => prev + 1)
             }
         }
-    }
+    }*/
     return (
         <>
         {props.graphs.map((item, index) => (

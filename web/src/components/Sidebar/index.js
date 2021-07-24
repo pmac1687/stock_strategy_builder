@@ -11,7 +11,6 @@ import IndicatorSelect from "./DevelopStrategy/IndicatorsSelect";
 import SearchBar from "./DevelopStrategy/SearchBar";
 import ShowNotes from './DevelopStrategy/ShowNotes';
 import Toggler from "./misc/Toggler";
-import headerForm from "./misc/headerForm";
 import Header from "./misc/header";
 import Dropdown from './elements/DropDown'
 
