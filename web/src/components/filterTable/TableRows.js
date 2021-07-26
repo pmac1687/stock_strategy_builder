@@ -13,10 +13,6 @@ const mapStateToProps = state => {
      };
   };
 const ConnectedTableRows = ({ filteredStockArr }) => {
-    useEffect(() => {
-        // filteredStockArr && console.log(filteredStockArr['AACG']['volume'])
-        console.log(filteredStockArr)
-    }, [filteredStockArr])
     return (
         <tbody style={{ width: '100em' }}>
             {filteredStockArr && Object.keys(filteredStockArr).map((key, ind) => (

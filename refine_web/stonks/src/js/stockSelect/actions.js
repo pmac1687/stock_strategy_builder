@@ -10,16 +10,13 @@ export function setShowSelectStock() {
 }
 
 export function collapse(payload) {
-  console.log('selects tock', payload.func);
   return function (dispatch, getState) {
     const show = payload.bool;
-    console.log('show', show);
     if (show === false) {
       const ele = document.getElementById(payload.id);
       ele.style.transform = 'rotate(180deg)';
       //func(prev => true);
       dispatch({ type: payload.func, payload: true });
-      console.log('booo', payload.bool);
       if (payload.action !== 'notesDetails') {
         const ele2 = document.getElementById(payload.action);
         ele2.style.display = 'block';
@@ -47,7 +44,6 @@ export function collapse(payload) {
 export function getStockData() {
   return function (dispatch, getState) {
     const { strategyStock } = getState();
-    console.log('strratta', strategyStock);
     return axios
       .get(`http://localhost:5000/${strategyStock}`, {
         headers: {
@@ -56,11 +52,11 @@ export function getStockData() {
       })
       .then(res => res.data)
       .then(data => {
-        console.log('resdata', data);
+        console.log('getStockData, api call redux-actions', data);
         dispatch({ type: LOAD_STRATEGY_DATA, payload: data });
       })
       .catch(err => {
-        console.log(err);
+        console.log('getStockData, api call redux-actions',err);
       });
   };
 }
@@ -68,7 +64,6 @@ export function getStockData() {
 export function getCandlestickData() {
   return function (dispatch, getState) {
     const { strategyStock } = getState();
-    console.log('strratta', strategyStock);
     return axios
       .get(`http://localhost:5000/candlestick/${strategyStock}`, {
         headers: {
@@ -77,11 +72,11 @@ export function getCandlestickData() {
       })
       .then(res => res.data)
       .then(data => {
-        console.log('resdata', data);
+        console.log(' getCandlestickData(),api call actions- redux', data);
         dispatch({ type: LOAD_CANDLESTICK, payload: data });
       })
       .catch(err => {
-        console.log(err);
+        console.log(' getCandlestickData(),api call actions- redux',err);
       });
   };
 }

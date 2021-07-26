@@ -67,9 +67,6 @@ function ConnectedSidebar(props) {
     console.log(dates)
   },[props.stratStockData])
   */
-  useEffect(() => {
-    console.log('window', props.win)
-  },[props.win])
 
   useEffect(() => {
     props.addFirstGraph(props.mainGraphType)
@@ -77,7 +74,6 @@ function ConnectedSidebar(props) {
 
   useEffect(() => {
     props.getTickerList();
-    console.log('lisssststs', props.tickerList)
   }, [])
 
   function collapse(item, show, func, collapseItem){
@@ -118,7 +114,6 @@ function ConnectedSidebar(props) {
       props.removeGraph(id);
       props.decrementGraphCount();
     }
-    console.log('checked',e.target.checked)
   }
 
   

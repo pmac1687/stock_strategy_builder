@@ -30,10 +30,7 @@ function ConnectedMAChart(props) {
     '14%',
     '12.5%'
   ];
-  useEffect(() => {
-    console.log(2)
-  }, [props.stratStockData]);
-  
+
 
   
   return (

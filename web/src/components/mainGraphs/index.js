@@ -31,9 +31,6 @@ function ConnectedMainGraph(props){
         
     }
 
-    useEffect(() => {
-        console.log(props.graphs)
-    }, [props.graphs])
 /*
     function chooseMainGraph(){
         if(props.mainGraphType === 'line'){

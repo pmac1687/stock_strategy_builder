@@ -42,7 +42,6 @@ export function setStrategyStock(payload) {
 export function getStockData() {
   return function(dispatch, getState) {
     const { strategyStock } = getState()
-    console.log('strratta', strategyStock)
     return   axios.get(`http://localhost:5000/${strategyStock}`, {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -50,11 +49,11 @@ export function getStockData() {
         })  
         .then(res => res.data)
         .then(data => {
-          console.log('resdata', data)  
+          console.log('getStockData(), api call actions-redux', data)  
           dispatch({ type: LOAD_STRATEGY_DATA, payload: data})
         })
         .catch(err => {  
-          console.log(err)  
+          console.log('getStockData(), api call actions-redux',err)  
         });  
   };
 }
@@ -62,7 +61,6 @@ export function getStockData() {
 export function getCandlestickData() {
   return function(dispatch, getState) {
     const { strategyStock } = getState()
-    console.log('strratta', strategyStock)
     return   axios.get(`http://localhost:5000/candlestick/${strategyStock}`, {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -70,16 +68,17 @@ export function getCandlestickData() {
         })  
         .then(res => res.data)
         .then(data => {
-          console.log('resdata', data)  
+          console.log('getCandlestickData(), api call actions redux', data)  
           dispatch({ type: LOAD_CANDLESTICK, payload: data})
         })
         .catch(err => {  
-          console.log(err)  
+          console.log('getCandlestickData(), api call actions redux',err)  
         });  
   };
 }
 ////////// Zoom candle graph ///////////
 export function addRefCoords(payload) {
+  console.log('ref area coords, actions redux',payload)
   return { type: GET_REF_COORDS, payload }
 };
 
@@ -90,10 +89,8 @@ export function filterGraphData() {
 export function getWindowsSeriesData() {
   return function(dispatch, getState) {
     const { strategyStock, seriesWindows } = getState()
-    console.log(seriesWindows.length)
     const ind = seriesWindows.length - 1
     const end = seriesWindows[ind].length -1
-    console.log('strratta', seriesWindows)
     return   axios.get(`http://localhost:5000/table/${seriesWindows[ind][0]},${seriesWindows[ind][end]},${strategyStock}`, {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -101,11 +98,11 @@ export function getWindowsSeriesData() {
         })  
         .then(res => res.data)
         .then(data => {
-          console.log('resdata for the table', data)  
+          console.log('getWindowsSeriesData(), api call actions-redux', data)  
           dispatch({ type: ADD_WINDOWS_SERIES_DATA, payload: data})
         })
         .catch(err => {  
-          console.log(err)  
+          console.log('getWindowsSeriesData(), api call actions-redux',err)  
         });  
   };
 }
@@ -137,14 +134,12 @@ export function setShowNotes(payload) {
 
 export function addGraph(payload, getState) {
   return function(dispatch, getState){
-    console.log('payload', payload)
     dispatch({ type: ADD_GRAPH, payload: payload})
   }
 };
 
 export function removeGraph(payload, getState) {
   return function(dispatch, getState){
-    console.log('payload', payload)
     dispatch({ type: REMOVE_GRAPH, payload: payload})
 
   }
@@ -193,16 +188,13 @@ export function setDateRange(payload) {
 
 
 export function collapse(payload) {
-  console.log('selects tock', payload.func);
   return function(dispatch, getState){
     const show = payload.bool;
-    console.log('show', show)
     if(show===false){
       const ele = document.getElementById(payload.id)
       ele.style.transform  = 'rotate(180deg)';
       //func(prev => true);
       dispatch({ type: payload.func, payload: true})
-      console.log('booo', payload.bool)
       if(payload.action !== 'notesDetails'){
         const ele2 = document.getElementById(payload.action)
         ele2.style.display = 'block'
@@ -229,7 +221,6 @@ export function collapse(payload) {
 
 export function setFilteredStockArr(payload) {
   return function (dispatch, getState) {
-    console.log(4444444444, payload)
     return   axios.get(`http://localhost:5000/filter/${payload}`, {
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -237,11 +228,11 @@ export function setFilteredStockArr(payload) {
     })  
     .then(res => res.data)
     .then(data => {
-      console.log('resdata for the table', data)  
+      console.log('setFilteredStockArr, api call actions-redux', data)  
       dispatch({ type: SET_FILTERED_STOCK_ARR, payload: data})
     })
     .catch(err => {  
-      console.log(err)  
+      console.log('setFilteredStockArr, api call actions-redux',err)  
     }); 
     
   }
@@ -259,11 +250,11 @@ export function getTickerList() {
         })  
         .then(res => res.data)
         .then(data => {
-          console.log('resdata', data)  
+          console.log('getTickerList(), api call actions-redux', data)  
           dispatch({ type: LOAD_TICKER_LIST, payload: data})
         })
         .catch(err => {  
-          console.log(err)  
+          console.log('getTickerList(), api call actions-redux',err)  
         });  
   };
 }
@@ -277,11 +268,11 @@ export function getMasterDateRange() {
         })  
         .then(res => res.data)
         .then(data => {
-          console.log('resdata', data)  
+          console.log('getMasterDateRange(), api call actions redux', data)  
           dispatch({ type: SET_MASTER_DATE_RANGE, payload: data})
         })
         .catch(err => {  
-          console.log(err)  
+          console.log('getMasterDateRange(), api call actions redux',err)  
         });  
   };
 }

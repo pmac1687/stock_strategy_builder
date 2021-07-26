@@ -8,7 +8,7 @@ import {
   getStockData, 
   getCandlestickData,
   addSeriesArray,
-  //removeWindowCoords,
+  removeWindowCoords,
   getWindowsSeriesData  
 } from "../../js/actions/index";
 
@@ -18,6 +18,7 @@ const mapStateToProps = state => {
     candlestickData: state.candlestickData,
     graphCount: state.graphCount,
     refWindow: state.refWindow,
+    seriesWindows: state.seriesWindows,
    };
 };
 
@@ -37,13 +38,8 @@ function ConnectedCardCandleChart(props){
   ]
   useEffect(() => {
     setRWindow(prev => props.refWindow);
-    console.log(rWindow);
-  },[props.refWindow, rWindow])
+  },[props.refWindow])
 
-  useEffect(() => {
-    console.log(refAreaLeft,'rleft');
-    console.log(refAreaRight, 'rright')
-  },[refAreaLeft, refAreaRight])
 /*
   function removeRefs(){
     const ref1 = document.getElementById('dot1');
@@ -54,14 +50,13 @@ function ConnectedCardCandleChart(props){
 
   function zoom(){
     const arr = [refAreaLeft, refAreaRight]
-    console.log('refarr',arr)
     // setRefAreaLeft(prev => '');
     // setRefAreaRight(prev => '');
     if(refAreaRight && refAreaLeft){
       if (refAreaRight !== refAreaLeft){
         props.addRefCoords(arr)
       }
-    }
+    };
     props.filterGraphData()
   }
 

@@ -48,19 +48,13 @@ function ConnectedCardHistoryChart(props){
     }, [state.master]);
     
     useEffect(() => {
-        console.log(state.masterData)
-    }, [state.masterData])
-    useEffect(() => {
         if(props.stock.length > 0){
-          console.log('stockkkkkkkkkk', props.stock);
           props.getHistoryData();
         }   
         // eslint-disable-next-line react-hooks/exhaustive-deps 
       }, [props.stock]);
     useEffect(() => {
-        console.log('!!!!!', props.data)
         if(props.master.length > 0){
-          console.log('propppppps',props.data)
           dispatch({ type: 'set', arr: props.master});
           //formatData();
         }
@@ -93,7 +87,6 @@ function ConnectedCardHistoryChart(props){
     */
       function formatData(){
         const arr = [];
-        console.log('masterrrrrrrr', state.master)
         for(let i=0;i<state.master[1].length;i++){
             //console.log(state.master[1][i]);
             const price = state.master[1][i];
@@ -106,7 +99,6 @@ function ConnectedCardHistoryChart(props){
             const dic = {'name': state.master[0], 'price': price, 'ao': ao, 'date': date, 'percent': Math.abs(percent)};
             arr.push(dic);
         };
-        console.log('arggggggggg',arr);
         props.addHistoryGraphData(arr);
         props.addMasterHistoryData(arr);
         //dispatch({ type: 'setData', arr: arr});

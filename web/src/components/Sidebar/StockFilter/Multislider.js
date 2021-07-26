@@ -26,12 +26,6 @@ const ConnectedMultiRangeSlider = (props) => {
     "priceFilter": props.setFilterPriceArr,
     "periodFilter": props.setFilterPeriodArr
   }
-
-
-  useEffect(() => {
-    console.log(props.filterAbcArr)
-  },[props.filterAbcArr])
-
     return (
         <>
           <div style={{ marginBottom: '2vh'}}>{props.subject}</div>

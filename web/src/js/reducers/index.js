@@ -45,7 +45,7 @@ const initialState = {
   refCoords: [],
   // main table - zoom data ////
   seriesWindows: [],
-  windowsSeriesData: [],
+  windowsSeriesData: {},
 
 
   mainGraphType: 'candle',
@@ -71,31 +71,28 @@ const initialState = {
 function rootReducer(state = initialState, action) {
   ///////  set stock ///////
   if (action.type === SET_STRATEGY_STOCK) {
-    console.log(action.payload)
     return {...state, strategyStock: action.payload}
   }
   if (action.type === LOAD_STRATEGY_DATA) {
-    console.log(action.payload)
+    console.log('load strat stock reducers',action.payload)
     return {...state, stratStockData: action.payload}
   }
   if (action.type === LOAD_CANDLESTICK) {
-    console.log('notes', action.payload)
+    console.log('load candlestick', action.payload)
     return {...state, candlestickData: action.payload}
   }
   //////// zoom graph /////////////
   if ( action.type === GET_REF_COORDS) {
-    console.log('action.REDUCER.FILTER', action.payload)
     return {...state, refCoords: [...action.payload]}
   }
   if ( action.type === FILTER_GRAPH_DATA) {
-    console.log('action.REDUCER.FILTER', state.refCoords)
     let withinRange = false
     const stratArr = []
     const candleArr = []
-    console.log('state.stratStockData reducer', state.stratStockData.length)
-    for(const i in Object.keys(state.stratStockData)){
-      const dat = state.stratStockData[i];
-      console.log('ref date reducer',dat,dat.date)
+    console.log('action getrefcoords  stratstockdata', state.stratStockData)
+    for(const i in Object.keys(state.candlestickData)){
+      const dat = state.candlestickData[i];
+      console.log('dat, stratstockdata -- refcoords', dat.date, state.refCoords)
       if(dat.date === state.refCoords[1]){
         withinRange = false;
         stratArr.push(dat);
@@ -116,8 +113,7 @@ function rootReducer(state = initialState, action) {
   }
   ////// main table -- zoom dat /////////////////////
   if ( action.type === ADD_WINDOWS_SERIES_DATA) {
-    console.log('action.REDUCER.FILTER', action.payload)
-    return {...state, windowsSeriesData: [...state.windowsSeriesData,  action.payload]}
+    return { ...state, windowsSeriesData: { ...state.windowsSeriesData, ...action.payload }}
   }
 
   if ( action.type === ADD_SERIES_ARRAY) {
@@ -147,27 +143,21 @@ function rootReducer(state = initialState, action) {
 
   //////// NEW STUFF ////////
   if (action.type === SET_MAIN_GRAPH_TYPE) {
-    console.log(action.payload)
     return {...state, mainGraphType: action.payload}
   }
   if (action.type === SET_MASTER_DATE_RANGE) {
-    console.log(action.payload)
     return {...state, masterDateRange: action.payload}
   }
   if (action.type === LOAD_TICKER_LIST) {
-    console.log(action.payload)
     return {...state, tickerList: action.payload}
   }
   if (action.type === SHOW_NOTES) {
-    console.log('notes', action.payload)
     return {...state, showNotes: action.payload}
   }
   if (action.type === LOAD_CANDLESTICK) {
-    console.log('notes', action.payload)
     return {...state, candlestickData: action.payload}
   }
   if (action.type === INCREMENT_COUNT) {
-    console.log('notes', action.payload)
     return {...state, graphCount: state.graphCount + 1}
   }
   if (action.type === SET_SHOW_SELECT_STOCK) {
@@ -180,27 +170,21 @@ function rootReducer(state = initialState, action) {
     return {...state, showIndicatorSelect: action.payload}
   }
   if (action.type === SET_FILTER_ABC_ARR) {
-    console.log(action.payload)
     return {...state, filterAbcArr: action.payload}
   }
   if (action.type === SET_FILTER_PRICE_ARR) {
-    console.log(action.payload)
     return {...state, filterPriceArr: action.payload}
   }
   if (action.type === SET_FILTER_PERIOD_ARR) {
-    console.log(action.payload)
     return {...state, filterPeriodArr: action.payload}
   }
   if (action.type === SET_DATE_RANGE) {
-    console.log(action.payload)
     return {...state, dateRange: action.payload}
   }
   if (action.type === DECREMENT_COUNT) {
-    console.log('notes', action.payload)
     return {...state, graphCount: state.graphCount - 1}
   }
   if (action.type === ADD_CLOSE_GRAPH) {
-    console.log('notes', action.payload)
     const arr = []
     for(let i=0;i<state.graphs.length;i++){
       if(i===0){
@@ -213,12 +197,9 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === ADD_GRAPH) {
-    console.log('action.payload', action.payload)
     return {...state, graphs: [...state.graphs, action.payload]}
   }
   if (action.type === REMOVE_GRAPH) {
-    console.log('action.payload', action.payload)
-    console.log('state.graphs', state.graphs)
     const filtered = state.graphs.filter((item) => 
       item !== action.payload
     )

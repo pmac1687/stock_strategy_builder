@@ -24,6 +24,8 @@ type Props = {
 }
 */
 
+
+
 const ConnectedMainTable = () => (
     <>
         <TableHeader />

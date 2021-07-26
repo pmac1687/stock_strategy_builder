@@ -16,14 +16,11 @@ function ConnectedCardSocialTraffic(props) {
 
   useEffect(() => {
     if(props.remoteData !== undefined){
-      console.log('effectsocial',props.remoteData)
       formatData(props.remoteData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.remoteData]);
-  useEffect(() => {
-    console.log('social data',props.data)
-  }, [props.data])
+
   function formatData(dats){
     const arg = [];
     for (let x=0;x<dats.length;x++){
@@ -40,7 +37,6 @@ function ConnectedCardSocialTraffic(props) {
 
   function reverseArr(){
     const revArr = props.data.reverse();
-    console.log('revarr', revArr)
     const arr = [];
     for(let x=0;x<revArr.length;x++){
       arr.push(revArr[x])

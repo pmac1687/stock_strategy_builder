@@ -17,7 +17,7 @@ import {
 function ConnectedApp({ getStockData }) {
   useEffect(() => {
     getStockData()
-  }, [getStockData])
+  }, [])
   return (
     <>
       <Sidebar />

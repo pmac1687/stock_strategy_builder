@@ -54,7 +54,6 @@ def get_tickers():
     print('hello')
     data = new_main.get_ticker_list()
     arr = []
-    print(data,'where is it')
     for i in data:
         dic = {
             "label": f'{i[1]}  {i[3]}',
@@ -67,9 +66,7 @@ def get_tickers():
 def get_candlestick(ticker):
     data = candlestick_main.main(ticker)
     arr = []
-    data['date'] = data['date'].apply(lambda x: x.strftime("%Y-%m-%d"))
     for row_index,row in data.iterrows():
-        print(row['open'], row['Close'], row['date'])
         if row['green'] == True:
             open_green =  str(row['open'])
             close_green =  str(row['Close'])
@@ -99,8 +96,6 @@ def get_candlestick(ticker):
             }
             arr.append(dic)
         
-    print(arr)
-
     return json.dumps(arr)
 
 
@@ -111,9 +106,9 @@ def get_historical(ticker):
     data['date'] = data['date'].apply(lambda x: x.strftime("%Y-%m-%d"))
     print(data['date'])
     columns = data.columns
-    print(columns)
     tick_dic = {}
     for row_index,row in data.iterrows():
+        print(row, 'row')
         dic = {}
         for col in columns:
             dic[col] = row[col]
@@ -124,6 +119,12 @@ def get_historical(ticker):
     #print(data.to_dict())
     return tick_dic
 
+def make_dict(cols, num):
+    dic = {}
+    for itm in cols:
+        dic[itm] = num
+    return dic
+
 @app.route("/table/<dates>")
 def get_table(dates):
     print('tick', dates)
@@ -132,13 +133,23 @@ def get_table(dates):
     #data = main.get_table_series_data(data, dates)
     print(data)
     columns = data.columns
+    max_dic = make_dict(columns,-10000000000)
+    min_dic = make_dict(columns,100000000000)
     tick_dic = {}
     for row_index,row in data.iterrows():
         dic = {}
         for col in columns:
             dic[col] = row[col]
+            print(row[col], 'row[col')
+            if type(row[col]) == int and type(row[col]) != str and type(row[col]) != bool:
+                if row[col] > max_dic[col]:
+                    max_dic[col] = row[col]
+                if row[col] < min_dic[col]:
+                    min_dic[col] = row[col]
             if col == columns[-1]:
                 tick_dic[str(row_index)] = dic
+    tick_dic['max'] = max_dic
+    tick_dic['min'] = min_dic
     return tick_dic
 
 @app.route("/dateRange")

@@ -22,13 +22,6 @@ const ConnectedPeriodSlider = ({  stratStockData, dateRange, setDateRange, getMa
         getMasterDateRange();
     },[getMasterDateRange])
 
-    useEffect(() => {
-        //getDates();
-        console.log(masterDateRange)
-    },[masterDateRange])
-
-
-
     return (
         <>
             <Multislider

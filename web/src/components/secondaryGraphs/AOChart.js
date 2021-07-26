@@ -12,7 +12,6 @@ const mapStateToProps = state => {
 
 function ConnectedAOChart(props) {
   useEffect(() => {
-    console.log(2)
   }, [props.stratStockData]);
   const heights = [
     '0%',

@@ -16,17 +16,6 @@ function mapStateToProps(state) {
 
 function Dashboard(props) {
 
-  useEffect(() => {
-    //props.getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  useEffect(() => {
-    console.log('ceejwgcjhjhccjhj', props.dataAO)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.dataAO])
-
-
-  
   return (
     <>
         <div className="flex flex-wrap">

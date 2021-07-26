@@ -16,7 +16,7 @@ def get_stock_data(tick):
     cur = conn.cursor()
     #cur.execute(f"select * from master_ticker_list limit 5;")
     now = time.time()
-    cur.execute(f"select date, open, Close from historical_stock_data where historical_stock_data.ticker_id in (select ticker_id from master_ticker_list where ticker='{tick}');")
+    cur.execute(f"select date, open, Close from historical_stock_data where historical_stock_data.ticker_id in (select ticker_id from master_ticker_list where ticker='{tick}') order by date asc;")
     data = cur.fetchall()
     print(data,'get_stock_data')
     conn.commit()
@@ -49,6 +49,8 @@ def main(tick):
                 dic[cols[i]] = arr
 
     df = pd.DataFrame(dic, columns=cols)
+    df['date'] = df['date'].apply(lambda x: x.strftime("%Y-%m-%d"))
+    df.sort_values(by='date')
     data = get_candle_stats(df)
     return data
 

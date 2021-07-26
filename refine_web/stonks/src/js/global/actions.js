@@ -11,11 +11,11 @@ export function getTickerList() {
       })
       .then(res => res.data)
       .then(data => {
-        console.log('resdata', data);
+        console.log('getTickerList api call, actions-redux', data);
         dispatch({ type: LOAD_TICKER_LIST, payload: data });
       })
       .catch(err => {
-        console.log(err);
+        console.log('getTickerList api call, actions-redux',err);
       });
   };
 }

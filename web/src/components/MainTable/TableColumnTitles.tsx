@@ -8,7 +8,7 @@ const titles = [
     ['MACD', 'Signal', 'Value'],
 ];
 
-const TableColumnTitles = () => {
+function TableColumnTitles(){
     return (
         <>
             {titles.map((item, index) => (

@@ -50,7 +50,6 @@ const ConnectedIndicatorMap = (props) => {
         props.removeGraph(id);
         props.decrementGraphCount();
       }
-      console.log('checked',e.target.checked)
     }
 
     return (

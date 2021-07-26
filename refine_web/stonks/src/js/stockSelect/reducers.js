@@ -30,22 +30,18 @@ interface Props {
 
 function stockSelectrootReducer(state = initialState, action: { type: never, payload: never }): Props {
   if (action.type === SET_STRATEGY_STOCK) {
-    console.log(action.payload);
     return { ...state, strategyStock: action.payload };
   }
   if (action.type === SET_SHOW_SELECT_STOCK) {
     return { ...state, showSelectStock: action.payload };
   }
   if (action.type === SHOW_NOTES) {
-    console.log('notes', action.payload);
     return { ...state, showNotes: action.payload };
   }
   if (action.type === LOAD_STRATEGY_DATA) {
-    console.log(action.payload);
     return { ...state, stratStockData: action.payload };
   }
   if (action.type === LOAD_CANDLESTICK) {
-    console.log('notes', action.payload);
     return { ...state, candlestickData: action.payload };
   }
   return state;

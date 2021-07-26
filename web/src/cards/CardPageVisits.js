@@ -26,8 +26,7 @@ function ConnectedCardPageVisits(props) {
       arr.push(props.windowsSeriesData[index])
     };
     setTableItems(prev => arr);
-    console.log(tableItems)
-  },[props.windowsSeriesData, tableItems])
+  },[props.windowsSeriesData])
 
   function collapse(item){
     const svg = document.getElementById(`${item}1`)

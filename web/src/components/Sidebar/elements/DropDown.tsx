@@ -12,7 +12,7 @@ type Props = {
 
 const DropDown = ({ onClickFunc, title, id, margin, marginL }: Props) => (
     <li style={{ marginLeft: `${marginL}`}} onClick={onClickFunc} className="items-center" >
-      <a href='blah' className={"text-xs uppercase py-3 font-bold block " }>
+      <a  className={"text-xs uppercase py-3 font-bold block " }>
         <i className={"fas fa-tv mr-2 text-sm "}></i>
         { title } <FontAwesomeIcon style={{ marginLeft:`${margin}`}} id={id} icon={faChevronUp} size='lg'/>
       </a>

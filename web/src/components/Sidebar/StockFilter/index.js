@@ -24,9 +24,6 @@ function ConnectedStockFilter(props) {
   const handleSubmit = (e) => {
     e.preventDefault()
     const names = document.getElementsByName('filter')
-    for (let i = 0; i < names.length; i++){
-      console.log(names[i])
-    }
     const filterLetters = names[8].checked
     const filterPrice = names[9].checked
     const letters =  filterLetters ? [names[0].innerText, names[1].innerText] : ['A', 'Z']
@@ -34,7 +31,6 @@ function ConnectedStockFilter(props) {
     const period = [names[4].innerText, names[5].innerText]
     const tPeriod = names[6].value ? names[6].value : '0';
     const slug = `${letters[0]},${letters[1]},${priceRange[0]},${priceRange[1]},${period[0]},${period[1]},${tPeriod},`
-    console.log('slug',slug)
     props.setFilteredStockArr(slug)
   }
 

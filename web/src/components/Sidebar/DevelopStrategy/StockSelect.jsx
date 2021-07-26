@@ -43,8 +43,8 @@ const ConnectedStockSelect = ({
 
     return (
         <>
-            <DropDown
-              onClickFunc={() => collapse({ 'id': 'stock', 'bool': showSelectStock, 'func': 'SET_SHOW_SELECT_STOCK', 'action': 'stockSearch' })}
+        <DropDown
+          onClickFunc={(e) => { collapse({ 'id': 'stock', 'bool': showSelectStock, 'func': 'SET_SHOW_SELECT_STOCK', 'action': 'stockSearch' }) }}
               title={'Stock'}
               id={'stock'}
               margin={'41%'}

@@ -14,7 +14,7 @@ def get_stock_data(tick):
     cur = conn.cursor()
     #cur.execute(f"select * from master_ticker_list limit 5;")
     now = time.time()
-    cur.execute(f"select * from historical_stock_data where historical_stock_data.ticker_id in (select ticker_id from master_ticker_list where ticker='{tick}');")
+    cur.execute(f"select historical_stock_data.*, master_ticker_list.ticker, master_ticker_list.company from historical_stock_data, master_ticker_list where historical_stock_data.ticker_id in (select ticker_id from master_ticker_list where ticker='{tick}');")
     data = cur.fetchall()
     print(data,'get_stock_data')
     conn.commit()
@@ -99,7 +99,7 @@ def get_dataframe(data):
             'rsi_18' , 'rsi_24' ,'macd_value' , 'macd_signal' , 'macd_h' , 'boll' , 'boll_ub' , 'boll_lb' ,
              'sma_10' , 'sma_50' , 'sma_200' , 'ema_50' , 'ema_10' , 'ema_200' , 'ao', 'atr' , 'smma_5' 
             , 'smma_50' , 'smma_200' , 'momentum' , 'accel_oss' , 'alligator_jaw' , 'alligator_teeth' 
-             , 'alligator_lips' , 'gator_value1' , 'gator_value2', 'fractal_highs', 'fractal_lows' ]
+             , 'alligator_lips' , 'gator_value1' , 'gator_value2', 'fractal_highs', 'fractal_lows', 'ticker', 'company' ]
 
     dic = {}
     for i in range(len(cols)):
