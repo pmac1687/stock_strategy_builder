@@ -19,11 +19,7 @@ const titles = [
 
 const ConnectedTRows = ({ windowsSeriesData, windowsStocks }) => {
     const [dataArr, setDataArr] = useState([])
-    useEffect(() => {
-        for (const keys in Object.keys(windowsSeriesData)) {
-            console.log(keys, windowsSeriesData[keys])
-        }
-    }, [windowsSeriesData])
+
     
     return (
         <tr>

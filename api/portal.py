@@ -129,12 +129,14 @@ def make_dict(cols, num):
 def get_table(dates):
     print('tick', dates)
     tick = dates.split(',')[2]
-    data = new_main.main(tick)
+    d1 = dates.split(',')[0]
+    d2 = dates.split(',')[1]
+    data = new_main.main(tick, d1, d2)
     #data = main.get_table_series_data(data, dates)
     print(data)
     columns = data.columns
-    max_dic = make_dict(columns,-10000000000)
-    min_dic = make_dict(columns,100000000000)
+    max_dic = make_dict(columns,-100000)
+    min_dic = make_dict(columns,1000000)
     tick_dic = {}
     for row_index,row in data.iterrows():
         dic = {}
@@ -150,6 +152,7 @@ def get_table(dates):
                 tick_dic[str(row_index)] = dic
     tick_dic['max'] = max_dic
     tick_dic['min'] = min_dic
+    print(tick_dic['max'],tick_dic['min'])
     return tick_dic
 
 @app.route("/dateRange")

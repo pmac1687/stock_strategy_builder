@@ -304,3 +304,9 @@ ticker route return:
     #        'macd_value': str(row['macd_value']),
     #        'macd_signal': str(row['macd_signal']),
     #        'macd_h': str(row['macd_h']),
+    
+    
+    select *, ticker, company from historical_stock_data, master_ticker_list a  where historical_stock_data.ticker_id in (select a.ticker_id, a.company, a.ticker from master_ticker_list where a.ticker='AAL') and date::date > '2020-03-04'::date and date::date < '2020-10-08'::date limit 5 ;
+
+    315
+    

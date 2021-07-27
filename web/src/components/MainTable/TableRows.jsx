@@ -1,15 +1,20 @@
 import React from 'react';
 import TRows from './elements/TRows';
 import { connect } from "react-redux";
-
+import MaxTRow from './elements/MaxTRow';
+import { windowsSeriesDataType } from './util/apiTypes'
+/*
 type Props = {
-    windowsSeriesData: {} 
+    windowsSeriesData: windowsSeriesDataType
+    strategyStock: string,
+    data: windowsSeriesDataType
 }
+*/
 
-
-const mapStateToProps = (state: Props) => {
+const mapStateToProps = (state) => {
     return { 
-      windowsSeriesData: state.windowsSeriesData,
+        windowsSeriesData: state.windowsSeriesData,
+        strategyStock: state.strategyStock,
       //windowsStocks: state.windowsStocks
      };
 };
@@ -23,8 +28,9 @@ const titles = [
     ['MACD', 'Signal', 'Value'],
 ];
 
-const ConnectedTableRows = ({ windowsSeriesData }: Props) => (
+const ConnectedTableRows = ({ windowsSeriesData, strategyStock }) => (
     <tbody>
+        <MaxTRow ticker={strategyStock} data={windowsSeriesData} />
         {windowsSeriesData && Object.keys(windowsSeriesData).map((item, index) => (
             <TRows />
         ))}
