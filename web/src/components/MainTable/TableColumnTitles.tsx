@@ -1,14 +1,10 @@
 import React from 'react';
 
-const titles = [
-    ['Ticker'],
-    ['Close', 'High', 'Low', 'Volume'],
-    ['High/Low', 'Spread'],
-    ['MACD', 'Divergence'],
-    ['MACD', 'Signal', 'Value'],
-];
+type Props = {
+    titles: string[][],
+}
 
-function TableColumnTitles(){
+function TableColumnTitles({ titles }: Props){
     return (
         <>
             {titles.map((item, index) => (

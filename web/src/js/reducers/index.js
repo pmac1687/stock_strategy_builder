@@ -1,5 +1,6 @@
 import {
   // select stock //`
+  LOAD_TICKER_LIST,
   SET_STRATEGY_STOCK,
   LOAD_STRATEGY_DATA,
   LOAD_CANDLESTICK,
@@ -14,7 +15,6 @@ import {
   SET_MAIN_GRAPH_TYPE,
 
 
-  LOAD_TICKER_LIST,
   SHOW_NOTES,
   ADD_GRAPH,
   INCREMENT_COUNT,
@@ -35,36 +35,48 @@ import {
   SET_FILTERED_STOCK_ARR,
   SET_MASTER_DATE_RANGE,
 } from "../constants/action-types";
-
+import {
+  useDummy,
+  StratStockData,
+  TickerList,
+  MasterDateRange, 
+  CandlestickData,
+  WindowsSeriesData,
+  FilteredStockArr
+} from '../dummy'
 const initialState = {
+  // on load // 
+  tickerList: useDummy ? TickerList : [],
+  masterDateRange: useDummy ? MasterDateRange : [],
+
   // select stock //
   strategyStock: 'CNTY',
-  stratStockData: [],
-  candlestickData: [],
+  stratStockData: useDummy ? StratStockData : [],
+  candlestickData: useDummy ? CandlestickData: [],
   // zoom graph // 
   refCoords: [],
   // main table - zoom data ////
   seriesWindows: [],
-  windowsSeriesData: {},
+  windowsSeriesData: useDummy ? WindowsSeriesData : {},
+  ///// collapse bools  ///////////
+  showSelectStock: false,
+  showGraphTypeSelect: false,
+  showIndicatorSelect: false,
+  showNotes: false,
+
 
 
   mainGraphType: 'candle',
-  showNotes: false,
   graphs: ['candle'],
-  tickerList: [],
   graphCount: 1,
   refWindow: [],
   windowsStocks: [],
 
-  showSelectStock: false,
-  showGraphTypeSelect: false,
-  showIndicatorSelect: false,
   filterAbcArr: [0,25],
   priceFilterArr: [0,1000],
   periodFilterArr: ['3-1-2021', '3-1-2020'],
   dateRange: [],
-  filteredStockArr: [],
-  masterDateRange: [],
+  filteredStockArr: useDummy ? FilteredStockArr: [],
 };
 
 
@@ -92,7 +104,6 @@ function rootReducer(state = initialState, action) {
     console.log('action getrefcoords  stratstockdata', state.stratStockData)
     for(const i in Object.keys(state.candlestickData)){
       const dat = state.candlestickData[i];
-      console.log('dat, stratstockdata -- refcoords', dat.date, state.refCoords)
       if(dat.date === state.refCoords[1]){
         withinRange = false;
         stratArr.push(dat);

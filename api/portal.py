@@ -135,8 +135,8 @@ def get_table(dates):
     #data = main.get_table_series_data(data, dates)
     print(data)
     columns = data.columns
-    max_dic = make_dict(columns,-100000)
-    min_dic = make_dict(columns,1000000)
+    max_dic = make_dict(columns,-1000000000)
+    min_dic = make_dict(columns,10000000000)
     tick_dic = {}
     for row_index,row in data.iterrows():
         dic = {}

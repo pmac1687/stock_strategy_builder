@@ -17,24 +17,22 @@ const titles = [
 ];
   
 
-const ConnectedTRows = ({ windowsSeriesData, windowsStocks }) => {
+const TRows = ({ ticker, data, item, date, titles  }) => {
     const [dataArr, setDataArr] = useState([])
-
-    
     return (
         <tr>
-            <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left">
-                <div>hello</div>
+            <th className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                <pre>{ticker}  { date }</pre>
             </th>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-                <div>hello</div>
-            </td>
+            {data[item] && titles.map((itm, index) => (
+                <td key={index} className="px-6 bg-gray-100 text-gray-600 align-middle border border-solid border-gray-200 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left">
+                    {itm.map((itms, index) => (
+                        <div key={index}>{itms} : {data[item][itms]}</div>
+                    ))}
+                </td>
+            ))}
         </tr>
     )
 };
-
-const TRows  = connect(
-    mapStateToProps,
-    )(ConnectedTRows);
 
 export default TRows;

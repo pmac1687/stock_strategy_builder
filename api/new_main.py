@@ -130,6 +130,7 @@ def main(tick, d1, d2):
     tick = tick.upper()
     data = get_stock_data(tick, d1, d2)
     df = get_dataframe(data)
+    df['date'] = df['date'].apply(lambda x: x.strftime("%m-%d-%Y"))
     return df
 
 def get_dates():

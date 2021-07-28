@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import TableHeader from './TableHeader';
 import TableColumnTitles from './TableHead';
 import TableRows from './TableRows';
+import SubTable from './SubTable';
 
 
 const mapStateToProps = (state: { masterHistoryData: any; pageHistoryDataArr: any; seriesWindows: any; windowsSeriesData: any; windowsStocks: any; }) => {
@@ -34,6 +35,7 @@ const ConnectedMainTable = () => (
                 <TableColumnTitles />
                 <TableRows />
             </table>
+            <SubTable />
         </div>
 
     </>

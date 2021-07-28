@@ -2,7 +2,8 @@ import React from 'react';
 import TRows from './elements/TRows';
 import { connect } from "react-redux";
 import MaxTRow from './elements/MaxTRow';
-import { windowsSeriesDataType } from './util/apiTypes'
+import { windowsSeriesDataType } from './util/apiTypes';
+import SubTable from './SubTable'
 /*
 type Props = {
     windowsSeriesData: windowsSeriesDataType
@@ -29,12 +30,12 @@ const titles = [
 ];
 
 const ConnectedTableRows = ({ windowsSeriesData, strategyStock }) => (
-    <tbody>
-        <MaxTRow ticker={strategyStock} data={windowsSeriesData} />
-        {windowsSeriesData && Object.keys(windowsSeriesData).map((item, index) => (
-            <TRows />
-        ))}
-    </tbody>
+    <>
+        {windowsSeriesData['max'] &&
+            <tbody>
+                <MaxTRow ticker={strategyStock} dataMin={windowsSeriesData['min']} dataMax={windowsSeriesData['max']}/>
+            </tbody >}
+    </>
 );
 
 const TableRows  = connect(
