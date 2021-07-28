@@ -49,7 +49,7 @@ export function getTickerList() {
   if (useDummy) {
     return { type: LOAD_TICKER_LIST, payload: TickerList }
   } else {
-    return function (dispatch) {
+    return function (dispatch: (arg0: { type: string; payload: any; }) => void) {
       return axios.get(`http://localhost:5000/tickerList`, {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -71,7 +71,7 @@ export function getMasterDateRange() {
   if (useDummy) {
     return { type: SET_MASTER_DATE_RANGE, payload: MasterDateRange }
   } else {
-    return function (dispatch) {
+    return function (dispatch: (arg0: { type: string; payload: {} }) => void) {
       return axios.get(`http://localhost:5000/dateRange`, {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -92,7 +92,7 @@ export function getMasterDateRange() {
 /////////  select stock sidebar ///////
 
 
-export function setStrategyStock(payload) {
+export function setStrategyStock(payload: any) {
   return { type: SET_STRATEGY_STOCK, payload }
 };
 
@@ -101,7 +101,7 @@ export function getStockData() {
     return { type: LOAD_STRATEGY_DATA, payload: StratStockData }
     
   } else {
-    return function (dispatch, getState) {
+    return function (dispatch: (arg0: { type: string; payload: any; }) => void, getState: () => { strategyStock: any; }) {
       const { strategyStock } = getState()
       return axios.get(`http://localhost:5000/${strategyStock}`, {
         headers: {
@@ -124,7 +124,7 @@ export function getCandlestickData() {
   if (useDummy) {
     return { type: LOAD_CANDLESTICK, payload: CandlestickData}
   }
-  return function(dispatch, getState) {
+  return function(dispatch: (arg0: { type: string; payload: any; }) => void, getState: () => { strategyStock: any; }) {
     const { strategyStock } = getState()
     return   axios.get(`http://localhost:5000/candlestick/${strategyStock}`, {
           headers: {
@@ -142,7 +142,7 @@ export function getCandlestickData() {
   };
 }
 ////////// Zoom candle graph ///////////
-export function addRefCoords(payload) {
+export function addRefCoords(payload: any) {
   console.log('ref area coords, actions redux',payload)
   return { type: GET_REF_COORDS, payload }
 };
@@ -155,7 +155,7 @@ export function getWindowsSeriesData() {
   if (useDummy) {
     return { type: ADD_WINDOWS_SERIES_DATA, payload: WindowsSeriesData }
   } else {
-    return function (dispatch, getState) {
+    return function (dispatch: (arg0: { type: string; payload: any; }) => void, getState: () => { strategyStock: any; seriesWindows: any; }) {
       const { strategyStock, seriesWindows } = getState()
       const ind = seriesWindows.length - 1
       const end = seriesWindows[ind].length - 1
@@ -181,11 +181,11 @@ export function addSeriesArray() {
 };
 
 //////// filtered stock table ///////
-export function setFilteredStockArr(payload) {
+export function setFilteredStockArr(payload: any) {
   if (useDummy) {
     return { type: SET_FILTERED_STOCK_ARR, payload: FilteredStockArr}
   }
-  return function (dispatch, getState) {
+  return function (dispatch: (arg0: { type: string; payload: any; }) => void, getState: any) {
     return   axios.get(`http://localhost:5000/filter/${payload}`, {
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -207,37 +207,37 @@ export function setFilteredStockArr(payload) {
 
 /////////// NEW STUFF /////////
 
-export function setMainGraphType(payload) {
+export function setMainGraphType(payload: string) {
   return { type: SET_MAIN_GRAPH_TYPE, payload }
 };
 
 
-export function setShowNotes(payload) {
+export function setShowNotes(payload: any) {
   return { type: SHOW_NOTES, payload }
 };
 
-export function addGraph(payload, getState) {
-  return function(dispatch, getState){
+export function addGraph(payload: any, getState: any) {
+  return function(dispatch: (arg0: { type: string; payload: any; }) => void, getState: any){
     dispatch({ type: ADD_GRAPH, payload: payload})
   }
 };
 
-export function removeGraph(payload, getState) {
-  return function(dispatch, getState){
+export function removeGraph(payload: any, getState: any) {
+  return function(dispatch: (arg0: { type: string; payload: any; }) => void, getState: any){
     dispatch({ type: REMOVE_GRAPH, payload: payload})
 
   }
 };
 
-export function incrementGraphCount(payload) {
+export function incrementGraphCount(payload: any) {
   return { type: INCREMENT_COUNT, payload}
 };
 
-export function decrementGraphCount(payload) {
+export function decrementGraphCount(payload: any) {
   return { type: DECREMENT_COUNT, payload}
 };
 
-export function addFirstGraph(payload) {
+export function addFirstGraph(payload: any) {
   return { type: ADD_CLOSE_GRAPH, payload}
 };
 
@@ -253,35 +253,39 @@ export function setShowIndicatorSelect() {
   return { type: SET_SHOW_INDICATOR_SELECT}
 };
 
-export function setFilterAbcArr(payload) {
+export function setFilterAbcArr(payload: any) {
   return { type: SET_FILTER_ABC_ARR, payload}
 };
 
-export function setFilterPriceArr(payload) {
+export function setFilterPriceArr(payload: any) {
   return { type: SET_FILTER_PRICE_ARR, payload}
 };
 
-export function setFilterPeriodArr(payload) {
+export function setFilterPeriodArr(payload: any) {
   return { type: SET_FILTER_PERIOD_ARR, payload}
 };
 
-export function setDateRange(payload) {
+export function setDateRange(payload: any) {
   return { type: SET_DATE_RANGE, payload}
 };
 
 
 
-export function collapse(payload) {
-  return function(dispatch, getState){
+export function collapse(payload: { id: any; bool: any; func: any; action: any; }) {
+  return function(dispatch: (arg0: { type: any; payload: boolean; }) => void, getState: any){
     const show = payload.bool;
     if(show===false){
       const ele = document.getElementById(payload.id)
-      ele.style.transform  = 'rotate(180deg)';
+      if (ele) {
+        ele.style.transform = 'rotate(180deg)'
+      }
       //func(prev => true);
       dispatch({ type: payload.func, payload: true})
       if(payload.action !== 'notesDetails'){
         const ele2 = document.getElementById(payload.action)
-        ele2.style.display = 'block'
+        if (ele2) {
+          ele2.style.display = 'block'
+        }
       }else{
         dispatch({ type: SHOW_NOTES, payload: true})
         //props.setShowNotes(true)
@@ -289,11 +293,15 @@ export function collapse(payload) {
     };
     if(show===true){
       const ele = document.getElementById(payload.id)
-      ele.style.transform  = 'rotate(360deg)';
+      if (ele) {
+        ele.style.transform = 'rotate(360deg)';
+      }
       dispatch({ type: payload.func, payload: false})
       if(payload.action !== 'notesDetails'){
         const ele2 = document.getElementById(payload.action)
-        ele2.style.display = 'none'
+        if (ele2) {
+          ele2.style.display = 'none'
+        }
       }else {
         dispatch({ type: SHOW_NOTES, payload: false})
       }

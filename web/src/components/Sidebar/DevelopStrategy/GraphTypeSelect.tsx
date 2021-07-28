@@ -9,26 +9,34 @@ import {
     setShowSelectStock,
     setMainGraphType
 
-  } from "../../../js/actions/index";
+} from "../../../js/actions/index";
+  
+type Props = {
+  showGraphTypeSelect: boolean,
+  mainGraphType: string
 
-const mapStateToProps = state => {
+}
+
+const mapStateToProps = (state: Props) => {
   return { 
     showGraphTypeSelect: state.showGraphTypeSelect,
     mainGraphType: state.mainGraphType,
    };
 };
 
-const ConnectedGraphTypeSelect = (props) => {
+const ConnectedGraphTypeSelect = ({ showGraphTypeSelect, mainGraphType}: Props) => {
 
 
     return (
         <>
 
             <Dropdown
-              onClickFunc={() => props.collapse({ 'id': 'graph', 'bool': props.showGraphTypeSelect, 'func': 'SET_SHOW_GRAPH_TYPE_SELECT', 'action': 'graphDetails' })}
+              onClickFunc={() => collapse({ 'id': 'graph', 'bool': showGraphTypeSelect, 'func': 'SET_SHOW_GRAPH_TYPE_SELECT', 'action': 'graphDetails' })}
               title={'Graph Type'}
               id={'graph'}
               margin={'18%'}
+              marginL={''}
+          
             />
 
             <li id='graphDetails' style={{ display: 'none'}} className="items-center">
@@ -37,14 +45,14 @@ const ConnectedGraphTypeSelect = (props) => {
                         <div className="flex flex-col">
                           <RadioButton
                             label={'Candlestick'}
-                            checked={props.mainGraphType === 'candle'}
-                            onChangeFunc={() => props.setMainGraphType('candle')}
+                            checked={mainGraphType === 'candle'}
+                            onChangeFunc={() => setMainGraphType('candle')}
                             id={'candle'}
                           />
                           <RadioButton
                             id={'line'}
-                            checked={props.mainGraphType === 'line'}
-                            onChangeFunc={() => props.setMainGraphType('line')}
+                            checked={mainGraphType === 'line'}
+                            onChangeFunc={() => setMainGraphType('line')}
                             label={'Line Graph'}
                           />
                         </div>

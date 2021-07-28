@@ -5,25 +5,30 @@ import DropDown from '../elements/DropDown'
 
 import { 
     collapse
-  } from "../../../js/actions/index";
+} from "../../../js/actions/index";
+  
+type Props = {
+  showIndicatorSelect: boolean
+}
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: Props) => {
   return { 
     showIndicatorSelect: state.showIndicatorSelect,
 
    };
 };
 
-const ConnectedIndicatorSelect = (props) => {
+const ConnectedIndicatorSelect = ({ showIndicatorSelect }: Props) => {
 
 
     return (
         <>
             <DropDown
-              onClickFunc={() => props.collapse({ 'id': 'indicators', 'bool': props.showIndicatorSelect, 'func': 'SET_SHOW_INDICATOR_SELECT', action: 'indicatorDetails' })}
+              onClickFunc={() => collapse({ 'id': 'indicators', 'bool': showIndicatorSelect, 'func': 'SET_SHOW_INDICATOR_SELECT', action: 'indicatorDetails' })}
               title={'Indicators'}
               id={'indicators'}
-              margin={'20%'}
+          margin={'20%'}
+          marginL={''}
             />
             <Indicators />
         </>

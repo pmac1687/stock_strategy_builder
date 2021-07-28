@@ -55,7 +55,7 @@ const ConnectedStockSelect = ({
               id={'stockSearch'}
               display={'none'}
               width={'100%'}
-              onChangeFunc={(opt) => { setStrategyStock(opt?.label.split(' ')[0]); getStockData(); getCandlestickData() }}
+              onChangeFunc={(opt) => { setStrategyStock(opt.label.split(' ')[0]); getStockData(); getCandlestickData() }}
               options={tickerList}
             />
         </>
